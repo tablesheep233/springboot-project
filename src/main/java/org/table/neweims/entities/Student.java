@@ -1,7 +1,7 @@
 package org.table.neweims.entities;
 
 public class Student {
-    private Integer id;
+    private String id;
 
     private String name;
 
@@ -13,11 +13,11 @@ public class Student {
 
     private Integer userId;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
