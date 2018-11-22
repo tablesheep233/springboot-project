@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.table.neweims.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="org.table.neweims.entities.Student">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="clazz" jdbcType="VARCHAR" property="clazz" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, major, department, clazz, user_id
+  </sql>
+
+</mapper>

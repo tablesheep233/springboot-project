@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Please Register</title>
+    <script th:src="@{/mystatic/js/myjs.js}"></script>
+</head>
+<body>
+    <div>
+        <form id="register" method="post" th:action="@{/user/register}">
+            用户名:
+            <input type="text" id="username" name="username" onblur="checkName()" onclick="cleanMsg()">
+            <span id="msg"></span>
+            <br>
+            密码:
+            <input type="password" name="password">
+            <br>
+            <input type="submit" value="注册">
+        </form>
+    </div>
+</body>
+</html>

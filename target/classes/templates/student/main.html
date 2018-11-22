@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>student main</title>
+</head>
+<body>
+    <div>
+        <span>这是头部</span>
+        <a th:href="@{/logout}">退出</a>
+    </div>
+    <div>
+        <span>这是侧边栏</span>
+        <ul>
+            <li><a th:href="@{/loginUser/info}">基础信息</a></li>
+            <li>学生信息</li>
+            <li>个人简历</li>
+            <li>职业应聘</li>
+        </ul>
+    </div>
+    <div>
+        <span>这是内容区</span>
+    </div>
+</body>
+</html>
