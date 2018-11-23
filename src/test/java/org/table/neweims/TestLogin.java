@@ -44,7 +44,7 @@ public class TestLogin {
 
         username.setValueAttribute("1540706134");
 
-        password.setValueAttribute("858916094abc");
+        password.setValueAttribute(" ");
 
         HtmlButtonInput button = (HtmlButtonInput) page.getElementById("Submit");
 

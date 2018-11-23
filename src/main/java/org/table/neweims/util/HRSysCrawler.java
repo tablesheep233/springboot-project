@@ -35,14 +35,16 @@ public class HRSysCrawler {
             try{
                 mainPage = submit.click();
                 client.waitForBackgroundJavaScript(20000);
-            } catch (IOException e){
-                throw new MyException("学号或密码错误",e);
+            }catch (IOException e){
+                throw new RuntimeException(e);
             }
             HtmlPage stuPage = (HtmlPage) mainPage.getFrameByName("main").getEnclosedPage();
             HtmlPage infoPage = ((HtmlTableDataCell)stuPage.getByXPath("//tr[@title='个人信息查询']/td").get(0)).click();
             table = (HtmlTable) infoPage.getByXPath("//td[@class='tablehead']/table").get(0);
         } catch (IOException e) {
             throw new MyException("学生系统服务器异常",e);
+        } catch (RuntimeException e){
+            throw new MyException("学号或密码错误",e);
         }
 
         if(table != null){

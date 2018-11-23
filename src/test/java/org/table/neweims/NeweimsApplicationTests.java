@@ -18,8 +18,6 @@ public class NeweimsApplicationTests {
     @Test
     public void contextLoads() {
 
-        HRSysCrawler hrSysCrawler = new HRSysCrawler();
-        System.out.println(hrSysCrawler.pyStuInfo("15407061034","858916094abc").getClazz());
     }
 
 
