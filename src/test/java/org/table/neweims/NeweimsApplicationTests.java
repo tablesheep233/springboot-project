@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.table.neweims.entities.User;
 import org.table.neweims.mapper.UserMapper;
+import org.table.neweims.util.HRSysCrawler;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -17,7 +18,8 @@ public class NeweimsApplicationTests {
     @Test
     public void contextLoads() {
 
-
+        HRSysCrawler hrSysCrawler = new HRSysCrawler();
+        System.out.println(hrSysCrawler.pyStuInfo("15407061034","858916094abc").getClazz());
     }
 
 
