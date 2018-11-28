@@ -5,6 +5,10 @@ public class Resume {
 
     private String name;
 
+    private String email;
+
+    private String tel;
+
     private String intention;
 
     private Integer wages;
@@ -32,7 +36,23 @@ public class Resume {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     public String getIntention() {
@@ -40,7 +60,7 @@ public class Resume {
     }
 
     public void setIntention(String intention) {
-        this.intention = intention == null ? null : intention.trim();
+        this.intention = intention;
     }
 
     public Integer getWages() {
@@ -56,7 +76,7 @@ public class Resume {
     }
 
     public void setSkill(String skill) {
-        this.skill = skill == null ? null : skill.trim();
+        this.skill = skill;
     }
 
     public String getExperience() {
@@ -64,7 +84,7 @@ public class Resume {
     }
 
     public void setExperience(String experience) {
-        this.experience = experience == null ? null : experience.trim();
+        this.experience = experience;
     }
 
     public String getIntroduce() {
@@ -72,7 +92,7 @@ public class Resume {
     }
 
     public void setIntroduce(String introduce) {
-        this.introduce = introduce == null ? null : introduce.trim();
+        this.introduce = introduce;
     }
 
     public String getImgPath() {
@@ -80,7 +100,7 @@ public class Resume {
     }
 
     public void setImgPath(String imgPath) {
-        this.imgPath = imgPath == null ? null : imgPath.trim();
+        this.imgPath = imgPath;
     }
 
     public Integer getUserId() {

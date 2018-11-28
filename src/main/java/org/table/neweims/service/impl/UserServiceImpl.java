@@ -61,20 +61,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    /**
-     * 更新用户基本信息
-     * @param user
-     * @return
-     */
-    @Override
-    public User userUpInfo(User loginUser) {
-        Session session = SecurityUtils.getSubject().getSession();
-        User user = (User) session.getAttribute("loginUser");
-        loginUser.setId(user.getId());
-        userMapper.updateUser(loginUser);
-        return loginUser;
-    }
-
     @Override
     public Boolean userLogout(User user) {
         return null;
@@ -98,8 +84,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void setUserRole(String roleName) {
         Session session = SecurityUtils.getSubject().getSession();
-        User loginUser = (User) session.getAttribute("loginUser");
-        roleMapper.insertUserRole(loginUser.getId(),roleMapper.selectRoleByName(roleName).getId());
+        Integer userId = (Integer) session.getAttribute("loginUser");
+        roleMapper.insertUserRole(userId,roleMapper.selectRoleByName(roleName).getId());
     }
 
     /**
@@ -110,6 +96,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserInfo(String username) {
         User user = userMapper.selectUserByName(username);
+        user.setPassword("");
+        user.setSalt("");
+        return user;
+    }
+
+    public User getUserInfo(Integer id) {
+        User user = userMapper.selectUserById(id);
         user.setPassword("");
         user.setSalt("");
         return user;

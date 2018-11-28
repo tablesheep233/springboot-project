@@ -16,9 +16,6 @@ public interface UserService {
     //用户登录
     User userLogin(String username);
 
-    //用户信息更改
-    User userUpInfo(User user);
-
     //用户登出
     Boolean userLogout(User user);
 
@@ -29,4 +26,6 @@ public interface UserService {
     void setUserRole(String roleName);
 
     User getUserInfo(String username);
+
+    User getUserInfo(Integer id);
 }

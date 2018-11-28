@@ -12,7 +12,14 @@ public class MyExceptionHandler {
     private static Logger logger = LoggerFactory.getLogger(MyExceptionHandler.class);
 
     @ExceptionHandler
-    public ModelAndView AllHandlerException(Exception e){
+    public ModelAndView allExceptionHandler(Exception e){
+        ModelAndView mv = new ModelAndView();
+
+        return mv;
+    }
+
+    @ExceptionHandler
+    public ModelAndView myExceptionHandler(MyException e){
         ModelAndView mv = new ModelAndView();
 
         return mv;

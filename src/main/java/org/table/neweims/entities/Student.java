@@ -7,9 +7,15 @@ public class Student {
 
     private String major;
 
-    private String department;
-
     private String clazz;
+
+    private String gender;
+
+    private String email;
+
+    private String tel;
+
+    private String birth;
 
     private Integer userId;
 
@@ -37,14 +43,6 @@ public class Student {
         this.major = major == null ? null : major.trim();
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department == null ? null : department.trim();
-    }
-
     public String getClazz() {
         return clazz;
     }
@@ -59,5 +57,37 @@ public class Student {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
     }
 }

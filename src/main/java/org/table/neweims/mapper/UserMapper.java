@@ -11,13 +11,12 @@ public interface UserMapper {
     @Insert("insert into tb_user (username,password,salt) values (#{username},#{password},#{salt})")
     void insertUser(User user);
 
-    void updateUser(User user);
-
-
     @Select("select username from tb_user where username = #{name}")
     String selectUserName(String name);
 
     @Select("select * from tb_user where username = #{username}")
     User selectUserByName(String username);
 
+    @Select("select * from tb_user where id = #{id}")
+    User selectUserById(Integer id);
 }

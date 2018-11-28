@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.0.0/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/popper.js/1.14.3/popper.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div>
+       <form th:action="@{/resume}" method="post">
+            <input type="hidden" name="_method" value="put" th:if="${resume!=null}"/>
+            <input type="hidden" name="id" th:if="${resume!=null}" th:value="${resume.id}"/>
+            <div class="form-group">
+                <label>简历名称</label>
+                <input name="name" type="text" class="form-control" th:value="${resume!=null}?${resume.name}" placeholder="My Resume">
+            </div>
+           <div class="form-group">
+               <label>姓名</label>
+               <input type="text" readonly class="form-control" th:value="${stu.name}">
+           </div>
+           <div class="form-group">
+               <label>性别</label>
+               <input type="text" readonly class="form-control" th:value="${stu.gender}=='w'?'女':'男'">
+           </div>
+           <div class="form-group">
+               <label>生日</label>
+               <input type="text" readonly class="form-control" th:value="${stu.birth}">
+           </div>
+           <div class="form-group">
+               <label>专业</label>
+               <input type="text" readonly class="form-control" th:value="${stu.major}">
+           </div>
+            <div class="form-group">
+                <label>求职意向</label>
+                <input name="intention" type="text" class="form-control" th:value="${resume!=null}?${resume.intention}">
+            </div>
+            <div class="form-group">
+               <label>手机号码</label>
+               <input name="tel" type="text" class="form-control" th:value="${resume?.tel!=null}?${resume.tel}:${stu.tel}">
+            </div>
+            <div class="form-group">
+               <label>邮箱</label><br/>
+               <input name="email" type="email" class="form-control" th:value="${resume?.email!=null}?${resume.email}:${stu.email}">
+            </div>
+            <div class="form-group">
+                <label>期望薪资</label><br/>
+                <input name="wages" type="text" class="form-control" th:value="${resume!=null}?${resume.wages}">
+            </div>
+            <div class="form-group">
+                <label>技能</label>
+                <input name="skill" type="text" class="form-control" th:value="${resume!=null}?${resume.skill}">
+            </div>
+            <div class="form-group">
+                <label>工作经验</label>
+                <input name="experience" type="text" class="form-control" th:value="${resume!=null}?${resume.experience}">
+            </div>
+            <div class="form-group">
+                <label>个人简介</label>
+                <input name="introduce" type="text" class="form-control" th:value="${resume!=null}?${resume.introduce}">
+            </div>
+            <button type="submit" class="btn btn-primary" th:text="${resume!=null}?'修改':'添加'">添加</button>
+        </form>
+    </div>
+</body>
+</html>

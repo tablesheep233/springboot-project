@@ -53,6 +53,9 @@ public class HRSysCrawler {
             student.setName(table.getCellAt(0,3).asText());
             student.setMajor(table.getCellAt(0,7).asText());
             student.setClazz(table.getCellAt(2,1).asText());
+            String arg[] = CardInfo.getGenderAndBirth(table.getCellAt(1,1).asText());
+            student.setGender(arg[0]);
+            student.setBirth(arg[1]);
         }
 
         return student;

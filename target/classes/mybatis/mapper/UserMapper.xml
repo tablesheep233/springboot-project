@@ -6,39 +6,8 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
-    <result column="gender" jdbcType="CHAR" property="gender" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="tel" jdbcType="VARCHAR" property="tel" />
-    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
-    <result column="age" jdbcType="INTEGER" property="age" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, username, password, salt, gender, email, tel, birthday, age
-  </sql>
 
-  <update id="updateUser" parameterType="org.table.neweims.entities.User">
-    update tb_user
-    <trim prefix="set" suffixOverrides=",">
-      <if test="gender != null and gender != ''">
-        gender = #{gender},
-      </if>
-      <if test="email != null and email != ''">
-        email = #{email},
-      </if>
-      <if test="tel != null and tel != ''">
-        tel = #{tel},
-      </if>
-      <if test="birthday != null and birthday != ''">
-        birthday = #{birthday},
-      </if>
-      <if test="age != null and age != ''">
-        age = #{age},
-      </if>
-    </trim>
-    <where>
-      id = #{id}
-    </where>
-  </update>
 
 
 

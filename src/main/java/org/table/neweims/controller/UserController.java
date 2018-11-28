@@ -6,10 +6,8 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.table.neweims.entities.User;
 import org.table.neweims.interceptor.Token;
 import org.table.neweims.service.UserService;
@@ -51,12 +49,12 @@ public class UserController {
         user.setUsername(username);
         user.setPassword(password);
         userService.userRegister(user);
-        return "user/login";
+        return "/login";
     }
 
     /**
      * 用户登录
-     * 成功后把用户信息放入session
+     * 成功后把用户id放入session
      * 根据用户角色跳转到对应页面，若无角色代表新用户，跳转选择用户类型
      * @param username
      * @param password
@@ -74,15 +72,12 @@ public class UserController {
         subject.login(token);
 
         User loginUser = userService.getUserInfo(username);
-        session.setAttribute("loginUser",loginUser);
+        session.setAttribute("loginUser",loginUser.getId());
         if (subject.hasRole("student")){
-            session.setAttribute("role","student");
             return "redirect:/student";
         }else if (subject.hasRole("enterprise")){
-            session.setAttribute("role","enterprise");
             return "redirect:/enterprise";
         }else if (subject.hasRole("admin")){
-            session.setAttribute("role","admin");
             return "redirect:/admin";
         }else {
             return "redirect:/choose";
@@ -98,30 +93,15 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/loginUser/chooseRole")
     public String chooseRole(
-            @RequestParam("role") String roleName,
-            HttpSession session){
+            @RequestParam("role") String roleName){
         Subject subject = SecurityUtils.getSubject();
         userService.setUserRole(roleName);
         if (subject.hasRole("student")){
-            session.setAttribute("role","student");
             return "student/main";
         }else {
-            session.setAttribute("role","enterprise");
             return "enterprise/main";
         }
     }
 
-    @RequestMapping("/loginUser/upUserInfo")
-    public String upUserInfo(User loginUser,
-                             HttpSession session){
-        session.setAttribute("loginUser",userService.userUpInfo(loginUser));
-        String role = (String) session.getAttribute("role");
-        return role+"/";
-    }
 
-    @RequestMapping("/loginUser/info")
-    public String userInfo(){
-
-        return "user/info";
-    }
 }

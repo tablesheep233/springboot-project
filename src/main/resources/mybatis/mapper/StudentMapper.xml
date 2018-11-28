@@ -5,12 +5,27 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="major" jdbcType="VARCHAR" property="major" />
-    <result column="department" jdbcType="VARCHAR" property="department" />
     <result column="clazz" jdbcType="VARCHAR" property="clazz" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="birth" jdbcType="VARCHAR" property="birth" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, name, major, department, clazz, user_id
-  </sql>
 
+
+  <update id="updateStu" parameterType="org.table.neweims.entities.Student">
+    update tb_student
+    <trim prefix="set" suffixOverrides=",">
+      <if test="email != null and email != ''">
+        email = #{email},
+      </if>
+      <if test="tel != null and tel != ''">
+        tel = #{tel},
+      </if>
+    </trim>
+    <where>
+      id = #{id}
+    </where>
+  </update>
 </mapper>
