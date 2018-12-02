@@ -7,6 +7,8 @@ public interface StudentService {
 
     MyResult getStuInfo(Integer userId);
 
+    MyResult getStuInfo(String username);
+
     MyResult bindStuInfo(String username,String password);
 
     void setStu(Student student);

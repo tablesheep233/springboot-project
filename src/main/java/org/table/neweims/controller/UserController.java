@@ -2,18 +2,19 @@ package org.table.neweims.controller;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.table.neweims.entities.User;
 import org.table.neweims.interceptor.Token;
 import org.table.neweims.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -44,24 +45,31 @@ public class UserController {
      */
     @PostMapping("/user/register")
     public String register(@RequestParam("username") String username,
-                            @RequestParam("password") String password){
+                            @RequestParam("password") String password,
+                           @RequestParam("confirmPassword") String confirmPassword,
+                           @RequestParam("role") String roleName){
+
+        if(!password.equals(confirmPassword)){
+            return "redirect:/register";
+        }
+
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         userService.userRegister(user);
-        return "/login";
+        userService.setUserRole(username,roleName);
+        return "redirect:/login";
     }
 
     /**
      * 用户登录
      * 成功后把用户id放入session
-     * 根据用户角色跳转到对应页面，若无角色代表新用户，跳转选择用户类型
+     * 重定向到主页
      * @param username
      * @param password
      * @param session
      * @return
      */
-    @Token(saveToken = true)
     @RequestMapping("/user/login")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
@@ -73,35 +81,6 @@ public class UserController {
 
         User loginUser = userService.getUserInfo(username);
         session.setAttribute("loginUser",loginUser.getId());
-        if (subject.hasRole("student")){
-            return "redirect:/student";
-        }else if (subject.hasRole("enterprise")){
-            return "redirect:/enterprise";
-        }else if (subject.hasRole("admin")){
-            return "redirect:/admin";
-        }else {
-            return "redirect:/choose";
-        }
+        return "redirect:/main";
     }
-
-    /**
-     * 首次注册的用户选择用户类型
-     * @param roleName
-     * @return
-     */
-    @Token(removeToken = true)
-    @ResponseBody
-    @RequestMapping("/loginUser/chooseRole")
-    public String chooseRole(
-            @RequestParam("role") String roleName){
-        Subject subject = SecurityUtils.getSubject();
-        userService.setUserRole(roleName);
-        if (subject.hasRole("student")){
-            return "student/main";
-        }else {
-            return "enterprise/main";
-        }
-    }
-
-
 }

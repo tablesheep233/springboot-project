@@ -5,13 +5,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.table.neweims.dto.Page;
+import org.table.neweims.entities.Recruitment;
 import org.table.neweims.entities.Student;
 import org.table.neweims.entities.User;
-import org.table.neweims.mapper.ResumeMapper;
-import org.table.neweims.mapper.RoleMapper;
-import org.table.neweims.mapper.StudentMapper;
-import org.table.neweims.mapper.UserMapper;
+import org.table.neweims.mapper.*;
+import org.table.neweims.service.RecruitmentService;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,16 @@ public class TestMapper {
 
     @Autowired
     ResumeMapper resumeMapper;
-    
+
+    @Autowired
+    ResourceMapper resourceMapper;
+
+    @Autowired
+    RecruitmentService recruitmentService;
+
+    @Autowired
+    RecruitmentMapper recruitmentMapper;
+
     @Test
     public void testUser() {
 
@@ -43,11 +53,17 @@ public class TestMapper {
 
     @Test
     public void testQuery(){
-        User user = new User();
-        user.setUsername("table");
-        //System.out.println(roleMapper.selectUserRole(user));
-        //System.out.println(userMapper.selectUserByName("table"));
-        //System.out.println(userMapper.selectUserName("0"));
+//        List<String> list = resourceMapper.selectPermsByUsername("table");
+//        for (String s:list) {
+//            System.out.println(s);
+//        }
+
+        Page<Recruitment> list = recruitmentService.queryStudentsByPage(1);
+        for (Recruitment s:list.getResult()) {
+            System.out.println(s.getJob());
+        }
+
+//        System.out.println(recruitmentMapper.selectRecritmentCount(6));
     }
 
 
@@ -67,6 +83,5 @@ public class TestMapper {
         for (Map<String,Object> m : list) {
             System.out.println(m.get("rname"));
         }
-        
     }
 }

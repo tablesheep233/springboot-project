@@ -14,11 +14,12 @@ var checkName = function () {
                     if(xhr.responseText=="have" && document.getElementById("register")!=null){
                         //注册页面判断账号是否存在
                         document.getElementById("username").value = "";
-                        msg.innerHTML = "<b>此账号已存在</b>";
-                    }else if (xhr.responseText=="no" && document.getElementById("login")!=null) {
-                        //登录页面判断账号是否存在
-                        msg.innerHTML = "<b>账号不存在</b>";
+                        msg.innerHTML = " tip:此账号已存在";
                     }
+                    // else if (xhr.responseText=="no" && document.getElementById("login")!=null) {
+                    //     //登录页面判断账号是否存在
+                    //     msg.innerHTML = "<b>账号不存在</b>";
+                    // }
                 }
             }
         }
@@ -30,7 +31,6 @@ var checkName = function () {
 }
 
 var cleanMsg = function () {
-
     var msg = document.getElementById("msg");
     //账号合法，清除响应消息
     msg.innerHTML = "";
@@ -55,4 +55,17 @@ function createXmlHttp() {
     }
 
     return xmlHttp;
+}
+
+var validate = function () {
+    var pwd = document.getElementById("password").value;
+    var cpwd = document.getElementById("confirmPassword").value;
+    if (pwd == cpwd) {
+        return true;
+    } else {
+        document.getElementById("password").value = "";
+        document.getElementById("confirmPassword").value = "";
+        document.getElementById("msg").innerHTML = " tip:两次密码不相同";
+        return false;
+    }
 }

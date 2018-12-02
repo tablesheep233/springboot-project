@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.table.neweims.entities.User;
 
+import java.util.List;
+
 
 public interface UserService {
 
@@ -23,9 +25,11 @@ public interface UserService {
     String getUserRole(String username);
 
     //新用户赋予角色
-    void setUserRole(String roleName);
+    void setUserRole(String username,String roleName);
 
     User getUserInfo(String username);
 
     User getUserInfo(Integer id);
+
+    List<String> getUserPerms(String name);
 }

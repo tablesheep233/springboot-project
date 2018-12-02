@@ -8,15 +8,25 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.table.neweims.entities.User;
+import org.table.neweims.service.EnterpriseService;
+import org.table.neweims.service.StudentService;
 import org.table.neweims.service.UserService;
+import org.table.neweims.util.MyResult;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class MyShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EnterpriseService enterpriseService;
+
+    @Autowired
+    private StudentService studentService;
 
     /**
      * 认证
@@ -50,13 +60,30 @@ public class MyShiroRealm extends AuthorizingRealm {
        String username = (String) principalCollection.getPrimaryPrincipal();
 
         Set<String> roles = new HashSet<>();
-        roles.add(userService.getUserRole(username));
+        String role = userService.getUserRole(username);
+        roles.add(role);
+
+        Set<String> perms = new HashSet<>();
+        List<String> plist = userService.getUserPerms(username);
+        for (String p : plist) {
+            perms.add(p);
+        }
+
+
+        if (role!=null&&role.equals("enterprise")){
+            perms.add((String) enterpriseService.isLegalEnterprise(username).get("result"));
+        } else if(role!=null&&role.equals("student")){
+            MyResult result = studentService.getStuInfo(username);
+            if (!result.getTest()){
+                perms.add("stu:need");
+            }else{
+                perms.add("stu:real");
+            }
+        }
+
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setRoles(roles);
-
-
+        info.setStringPermissions(perms);
         return info;
     }
-
-
 }

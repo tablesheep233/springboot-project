@@ -37,7 +37,6 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
                 }
                 boolean removeToken = annotation.removeToken();
                 if (removeToken){
-                    System.out.println(request.getAttribute(tokenName));
                     if (isRepeatSubmit(request,tokenName)){
                         return false;
                     }

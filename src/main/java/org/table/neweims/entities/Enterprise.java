@@ -5,11 +5,17 @@ public class Enterprise {
 
     private String name;
 
+    private String introduction;
+
     private String address;
 
     private String tel;
 
     private String email;
+
+    private Integer status;
+
+    private Integer reviewer;
 
     private String imgPath;
 
@@ -28,7 +34,15 @@ public class Enterprise {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
     public String getAddress() {
@@ -36,7 +50,7 @@ public class Enterprise {
     }
 
     public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+        this.address = address;
     }
 
     public String getTel() {
@@ -44,7 +58,7 @@ public class Enterprise {
     }
 
     public void setTel(String tel) {
-        this.tel = tel == null ? null : tel.trim();
+        this.tel = tel;
     }
 
     public String getEmail() {
@@ -52,7 +66,23 @@ public class Enterprise {
     }
 
     public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
+        this.email = email;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(Integer reviewer) {
+        this.reviewer = reviewer;
     }
 
     public String getImgPath() {
@@ -60,7 +90,7 @@ public class Enterprise {
     }
 
     public void setImgPath(String imgPath) {
-        this.imgPath = imgPath == null ? null : imgPath.trim();
+        this.imgPath = imgPath;
     }
 
     public Integer getUserId() {

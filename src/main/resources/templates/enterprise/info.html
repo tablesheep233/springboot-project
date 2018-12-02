@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/resources/webjars/jquery/3.0.0/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/popper.js/1.14.3/popper.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.js}"></script>
+</head>
+<body>
+<div>
+    <form th:action="@{/enterprise}" method="post">
+        <input type="hidden" name="_method" value="put" th:if="${enterprise!=null}"/>
+        <input type="hidden" name="id" th:value="${enterprise.id}" th:if="${enterprise!=null}"/>
+        <div class="form-group">
+            <label>名称</label>
+            <input name="name" type="text" class="form-control" th:value="${enterprise!=null}?${enterprise.name}">
+        </div>
+        <div class="form-group">
+            <label>简介</label><br/>
+            <input name="introduction" type="text" class="form-control"  th:value="${enterprise!=null}?${enterprise.introduction}">
+        </div>
+        <div class="form-group">
+            <label>地址</label>
+            <input name="address" type="text" class="form-control"  th:value="${enterprise!=null}?${enterprise.address}">
+        </div>
+        <div class="form-group">
+            <label>联系电话</label>
+            <input name="tel" type="text" class="form-control"  th:value="${enterprise!=null}?${enterprise.tel}">
+        </div>
+        <div class="form-group">
+            <label>邮箱</label>
+            <input name="email" type="text" class="form-control"  th:value="${enterprise!=null}?${enterprise.email}">
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="提交"></button>
+    </form>
+</div>
+</body>
+</html>

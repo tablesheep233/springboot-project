@@ -7,10 +7,13 @@
     <result column="wages" jdbcType="INTEGER" property="wages" />
     <result column="grade" jdbcType="VARCHAR" property="grade" />
     <result column="requirement" jdbcType="VARCHAR" property="requirement" />
-    <result column="enterprise_id" jdbcType="INTEGER" property="enterpriseId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, job, wages, grade, requirement, enterprise_id
-  </sql>
+
+
+  <select id="getAllRecruitmentByPage" resultType="org.table.neweims.entities.Recruitment">
+    select * from tb_recruitment where user_id = #{userId}
+  </select>
+
 
 </mapper>

@@ -11,7 +11,7 @@ public class Recruitment {
 
     private String requirement;
 
-    private Integer enterpriseId;
+    private Integer userId;
 
     public Integer getId() {
         return id;
@@ -53,11 +53,11 @@ public class Recruitment {
         this.requirement = requirement == null ? null : requirement.trim();
     }
 
-    public Integer getEnterpriseId() {
-        return enterpriseId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setEnterpriseId(Integer enterpriseId) {
-        this.enterpriseId = enterpriseId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

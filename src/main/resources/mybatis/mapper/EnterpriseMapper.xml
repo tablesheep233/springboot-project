@@ -4,14 +4,99 @@
   <resultMap id="BaseResultMap" type="org.table.neweims.entities.Enterprise">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="tel" jdbcType="VARCHAR" property="tel" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="reviewer" jdbcType="INTEGER" property="reviewer" />
     <result column="img_path" jdbcType="VARCHAR" property="imgPath" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, name, address, tel, email, img_path, user_id
-  </sql>
 
+  <insert id="insertEnterprise" parameterType="org.table.neweims.entities.Enterprise">
+    insert into tb_enterprise
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null and name != ''">
+        name,
+      </if>
+      <if test="introduction != null and introduction != ''">
+        introduction,
+      </if>
+      <if test="tel != null and tel != ''">
+        tel,
+      </if>
+      <if test="address != null and address != ''">
+        address,
+      </if>
+      <if test="email != null and email != ''">
+        email,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="userId != null and userId != ''">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null and name != ''">
+        #{name},
+      </if>
+      <if test="introduction != null and introduction != ''">
+        #{introduction},
+      </if>
+      <if test="tel != null and tel != ''">
+        #{tel},
+      </if>
+      <if test="address != null and address != ''">
+        #{address},
+      </if>
+      <if test="email != null and email != ''">
+        #{email},
+      </if>
+      <if test="status != null">
+        #{status},
+      </if>
+      <if test="userId != null and userId != ''">
+        #{userId},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updataEneterprise" parameterType="org.table.neweims.entities.Enterprise">
+    update tb_enterprise
+    <trim prefix="set" suffixOverrides=",">
+      <if test="name != null and name != ''">
+        name = #{name},
+      </if>
+      <if test="introduction != null and introduction != ''">
+        introduction = #{introduction},
+      </if>
+      <if test="tel != null and tel != ''">
+        tel = #{tel},
+      </if>
+      <if test="address != null and address != ''">
+        address = #{address},
+      </if>
+      <if test="email != null and email != ''">
+        email = #{email},
+      </if>
+      <if test="status != null and status != ''">
+        status = #{status},
+      </if>
+      <if test="reviewer != null and reviewer != ''">
+        reviewer = #{reviewer},
+      </if>
+    </trim>
+    <where>
+      id = #{id}
+    </where>
+  </update>
+
+  <select id="selectEnterpriseStatus" parameterType="string" resultType="integer">
+    SELECT e.status FROM tb_enterprise e
+	LEFT JOIN tb_user u ON u.id=e.user_id
+	WHERE u.username=#{username}
+  </select>
 </mapper>

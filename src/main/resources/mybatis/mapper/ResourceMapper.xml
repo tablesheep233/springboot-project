@@ -3,14 +3,15 @@
 <mapper namespace="org.table.neweims.mapper.ResourceMapper">
   <resultMap id="BaseResultMap" type="org.table.neweims.entities.Resource">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="parentId" jdbcType="INTEGER" property="parentid" />
-    <result column="order" jdbcType="INTEGER" property="order" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, name, url, type, parentId, order
-  </sql>
+  
+  <select id="selectPermsByUsername" parameterType="string" resultType="string">
+    select p.permission from tb_role_resource rr
+      left join tb_resource p on rr.resource_id = p.id
+      left join tb_user_role ur on rr.role_id = ur.role_id
+      left join tb_user u on ur.user_id = u.id
+      where u.username = #{name}
+  </select>
 
 </mapper>

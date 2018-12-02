@@ -33,6 +33,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public MyResult getStuInfo(String username) {
+        Student student = null;
+        MyResult result = null;
+        student = studentMapper.selectStuByUsername(username);
+        if (student != null){
+            return result = new MyResult(true,student);
+        }else{
+            return result = new MyResult(false,null);
+        }
+    }
+
+    @Override
     public MyResult bindStuInfo(String username, String password) throws MyException {
 
         HRSysCrawler hrSysCrawler = new HRSysCrawler();

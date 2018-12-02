@@ -1,12 +1,10 @@
 package org.table.neweims.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.table.neweims.entities.Student;
 import org.table.neweims.service.StudentService;
@@ -14,36 +12,31 @@ import org.table.neweims.util.MyResult;
 
 import javax.servlet.http.HttpSession;
 
-@RequestMapping("/student")
+@RequiresPermissions("student:*")
 @Controller
 public class StudentController {
 
     @Autowired
     private StudentService studentService;
 
-    @RequestMapping("/info")
-    public ModelAndView getStuInfo(HttpSession session){
-        ModelAndView mv = new ModelAndView();
+    @GetMapping("/student/info")
+    public String getStuInfo(HttpSession session,Model model){
         Integer userId = (Integer) session.getAttribute("loginUser");
         MyResult result = studentService.getStuInfo(userId);
         if(!result.getTest()){
-            mv.setViewName("student/bind");
-            return mv;
+            return "student/bind";
         } else {
-            mv.setViewName("student/info");
-            mv.addObject("stuInfo",result.get("result"));
-            return mv;
+            model.addAttribute("stuInfo",result.get("result"));
+            return "student/info";
         }
     }
 
-    @RequestMapping("/bindInfo")
-    public ModelAndView bindStuInfo(@RequestParam("username") String username,
-                               @RequestParam("password") String password){
+    @PostMapping("/student")
+    public String bindStuInfo(@RequestParam("username") String username,
+                               @RequestParam("password") String password,Model model){
         MyResult result = studentService.bindStuInfo(username,password);
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("student/info");
-        mv.addObject("stuInfo",result.get("result"));
-        return mv;
+        model.addAttribute("stuInfo",result.get("result"));
+        return "student/info";
     }
 
     @PutMapping("/student")

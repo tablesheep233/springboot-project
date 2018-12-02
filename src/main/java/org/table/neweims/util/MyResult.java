@@ -29,4 +29,8 @@ public class MyResult extends HashMap<Object,Object> {
     public void setTest(Boolean test) {
         this.test = test;
     }
+
+    public void setResult(Object obj){
+        this.put("result",obj);
+    }
 }
