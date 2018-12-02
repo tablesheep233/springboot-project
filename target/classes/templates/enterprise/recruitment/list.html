@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/resources/webjars/jquery/3.0.0/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/popper.js/1.14.3/popper.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.js}"></script>
+</head>
+<body>
+<div>
+    <h2><a class="btn btn-sm btn-success" th:href="@{/recruitment}">增加简历</a></h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>招聘职业</th>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="recruitment:${recruitmentList}">
+                <td>
+                    [[${recruitment.job}]]
+                </td>
+                <td>
+                    <a th:href="@{/recruitment/}+${recruitment.id}">查看详情</a>
+                    <button th:attr="del_url=@{/recruitment/}+${recruitment.id}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <form id="deleteRecruitmentForm" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+    </form>
+    <script>
+        $(".deleteBtn").click(function () {
+            $("#deleteRecruitmentForm").attr("action",$(this).attr("del_url")).submit();
+        });
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bind</title>
+
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/webjars/font-awesome/5.3.1/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/mystatic/css/sb-admin.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+    <div th:replace="common/nav::topbar"></div>
+
+    <div id="wrapper">
+        <div th:replace="common/nav::sidebar(activeUri='bind.html')"></div>
+
+        <div id="content-wrapper">
+            <div class="card card-login mx-auto mt-5">
+                <div class="card-header">绑 定</div>
+                <div class="card-body">
+                    <form method="post" th:action="@{/student}">
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <input type="text" id="username" name="username" class="form-control" placeholder="Your Username" required="required" autofocus="autofocus">
+                                <label for="username">学 号</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required="required">
+                                <label for="inputPassword">密 码</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-block" value="确认">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scroll to Top Button-->
+    <div th:replace="common/nav::topbut"></div>
+
+    <!-- Logout Modal-->
+    <div th:replace="common/nav::logoutMod"></div>
+    <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
+    <script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
+
+    <script th:src="@{/mystatic/js/sb-admin.js}"></script>
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+</body>
+</html>

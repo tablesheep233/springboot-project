@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Student Info</title>
+
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/webjars/font-awesome/5.3.1/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/mystatic/css/sb-admin.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+    <div th:replace="common/nav::topbar"></div>
+
+    <div id="wrapper">
+        <div th:replace="common/nav::sidebar(activeUri='bind.html')"></div>
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-table"></i>
+                        基本信息</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div>
+                                    <form th:action="@{/student}" method="post">
+                                        <input type="hidden" name="_method" value="put"/>
+                                        <input type="hidden" name="id" th:value="${stuInfo.id}"/>
+
+                                        <div class="row">
+                                            <div class="col-lg-2 form-group">
+                                                <label>学号</label>
+                                                <input type="text" class="form-control" readonly th:value="${stuInfo.id}">
+                                            </div>
+                                            <div class="col-lg-2 form-group">
+                                                <label>姓名</label><br/>
+                                                <input name="name" type="text" class="form-control" readonly th:value="${stuInfo.name}">
+                                            </div>
+                                            <div class="col-lg-1 form-group">
+                                                <label>性别</label>
+                                                <input name="gender" type="text" class="form-control" readonly th:value="${stuInfo.gender}=='w'?'女':'男'">
+                                            </div>
+                                            <div class="col-lg-5 form-group">
+                                                <label>专业</label>
+                                                <input name="major" type="text" class="form-control" readonly th:value="${stuInfo.major}">
+                                            </div>
+                                            <div class="col-lg-2 form-group">
+                                                <label>生日</label>
+                                                <input name="birth" type="text" class="form-control" readonly th:value="${stuInfo.birth}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 form-group">
+                                                <label>班级</label>
+                                                <input name="clazz" type="text" class="form-control" readonly th:value="${stuInfo.clazz}">
+                                            </div>
+                                            <div class="col-lg-3 form-group">
+                                                <label>联系号码</label>
+                                                <input name="tel" type="tel" class="form-control" th:value="${stuInfo!=null}?${stuInfo.tel}">
+                                            </div>
+                                            <div class="col-lg-3 form-group">
+                                                <label>邮箱</label>
+                                                <input name="email" type="email" class="form-control" th:value="${stuInfo!=null}?${stuInfo.email}">
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary" th:text="保存"></button>
+                                        <label th:text="${msg}=='success'?'保存成功':'保存失败'" th:if="${msg!=null}"></label>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+            <!--<div>-->
+                <!--<form th:action="@{/student}" method="post">-->
+                    <!--<input type="hidden" name="_method" value="put"/>-->
+                    <!--<input type="hidden" name="id" th:value="${stuInfo.id}"/>-->
+                    <!--<div class="form-group">-->
+                        <!--<label>学号</label>-->
+                        <!--<input type="text" class="form-control" readonly th:value="${stuInfo.id}">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label>姓名</label><br/>-->
+                        <!--<input name="name" type="text" class="form-control" readonly th:value="${stuInfo.name}">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label>性别</label>-->
+                        <!--<input name="gender" type="text" class="form-control" readonly th:value="${stuInfo.gender}=='w'?'女':'男'">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label>生日</label>-->
+                        <!--<input name="birth" type="text" class="form-control" readonly th:value="${stuInfo.birth}">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label>专业</label>-->
+                        <!--<input name="major" type="text" class="form-control" readonly th:value="${stuInfo.major}">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label>班级</label>-->
+                        <!--<input name="clazz" type="text" class="form-control" readonly th:value="${stuInfo.clazz}">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label>联系号码</label>-->
+                        <!--<input name="tel" type="tel" class="form-control" th:value="${stuInfo!=null}?${stuInfo.tel}">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label>邮箱</label>-->
+                        <!--<input name="email" type="email" class="form-control" th:value="${stuInfo!=null}?${stuInfo.email}">-->
+                    <!--</div>-->
+                    <!--<button type="submit" class="btn btn-primary" th:text="保存"></button>-->
+                    <!--<label th:text="${msg}=='success'?'保存成功':'保存失败'" th:if="${msg!=null}"></label>-->
+                <!--</form>-->
+            <!--</div>-->
+    </div>
+    <!-- Scroll to Top Button-->
+    <div th:replace="common/nav::topbut"></div>
+
+    <!-- Logout Modal-->
+    <div th:replace="common/nav::logoutMod"></div>
+    <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
+    <script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
+
+    <script th:src="@{/mystatic/js/sb-admin.js}"></script>
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+</body>
+</html>

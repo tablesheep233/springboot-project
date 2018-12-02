@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>resume list</title>
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.0.0/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/popper.js/1.14.3/popper.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.js}"></script>
+
+</head>
+<body>
+    <div>
+        <h2><a class="btn btn-sm btn-success" th:href="@{/resume}">增加简历</a></h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>简历名称</th>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="resume:${resumeList}">
+                        <td>
+                            [[${resume.rname}]]
+                        </td>
+                        <td>
+                            <a th:href="@{/resume/}+${resume.id}">查看详情</a>
+                            <button th:attr="del_url=@{/resume/}+${resume.id}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <form id="deleteResumeForm" method="post">
+            <input type="hidden" name="_method" value="delete"/>
+        </form>
+        <script>
+            $(".deleteBtn").click(function () {
+                $("#deleteResumeForm").attr("action",$(this).attr("del_url")).submit();
+            });
+        </script>
+    </div>
+</body>
+</html>

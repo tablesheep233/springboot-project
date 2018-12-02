@@ -1,0 +1,23 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "org.table.neweims.config.ymlpojo.PageConf",
+      "name": "page",
+      "type": "org.table.neweims.config.ymlpojo.PageConf"
+    },
+    {
+      "sourceType": "org.table.neweims.config.DruidConfig",
+      "name": "spring.datasource",
+      "sourceMethod": "duridDataSource()",
+      "type": "javax.sql.DataSource"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "org.table.neweims.config.ymlpojo.PageConf",
+      "name": "page.recruitment-limit",
+      "type": "java.lang.Integer"
+    }
+  ]
+}
