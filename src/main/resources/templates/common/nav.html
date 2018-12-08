@@ -8,7 +8,7 @@
 <body>
     <!--topbar-->
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top" th:fragment="topbar">
-
+        <input type="hidden" id="tip" th:value="${tip}" th:if="${tip!=null}">
         <a class="navbar-brand mr-1" th:href="@{/main}">Hello</a>
 
         <ul class="navbar-nav d-md-inline-block ml-auto">
@@ -37,12 +37,12 @@
             <shiro:hasRole name="student">
             <shiro:hasPermission name="stu:real">
             <li class="nav-item" th:class="${activeUri=='info.html'?'nav-item active':'nav-item'}">
-                <a class="nav-link" th:href="@{/student/info}">
+                <a class="nav-link" th:href="@{/student}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>学生信息</span></a>
             </li>
             <li class="nav-item" th:class="${activeUri=='resume.html'?'nav-item active':'nav-item'}">
-                <a class="nav-link" th:href="@{/resume/list}">
+                <a class="nav-link" th:href="@{/resume}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>个人简历</span></a>
             </li>
@@ -50,7 +50,7 @@
 
             <shiro:hasPermission name="stu:need">
             <li class="nav-item" shiro:hasPermission="student:need" th:class="${activeUri=='bind.html'?'nav-item active':'nav-item'}">
-                <a class="nav-link" th:href="@{/student/info}">
+                <a class="nav-link" th:href="@{/student}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>绑定学生信息</span></a>
             </li>
@@ -98,5 +98,46 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="tipModal" th:fragment="tipModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">tip</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    [[${tip}]]
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" th:fragment="delModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">tip</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    确认删除吗
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="yes">确定</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

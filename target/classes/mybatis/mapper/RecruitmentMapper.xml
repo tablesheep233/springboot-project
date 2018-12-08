@@ -4,6 +4,10 @@
   <resultMap id="BaseResultMap" type="org.table.neweims.entities.Recruitment">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="wages" jdbcType="INTEGER" property="wages" />
     <result column="grade" jdbcType="VARCHAR" property="grade" />
     <result column="requirement" jdbcType="VARCHAR" property="requirement" />
@@ -11,9 +15,137 @@
   </resultMap>
 
 
-  <select id="getAllRecruitmentByPage" resultType="org.table.neweims.entities.Recruitment">
-    select * from tb_recruitment where user_id = #{userId}
+  <select id="getAllRecruitmentByPage" resultType="java.util.Map">
+    select
+      r.id as id , r.job as job , r.area as area ,
+      r.create_time as createTime , r.wages as wages,
+      r. grade as grade , e.name as ename
+    from tb_recruitment r
+    inner join tb_enterprise e on r.user_id = e.user_id
+    <where>
+      e.user_id = #{userId}
+      <if test="name!=null and name!=''">
+        and r.job like #{name}
+      </if>
+    </where>
   </select>
 
+  <select id="selectRecritmentCount" resultType="INTEGER">
+    select count(*) from tb_recruitment
+     <where>
+       user_id = #{userId}
+       <if test="name!=null and name!=''">
+         and job like #{name}
+       </if>
+     </where>
+  </select>
+
+  <select id="queryRecruitmentById" resultType="java.util.Map">
+    select
+      r.id as id , r.job as job , r.area as area ,
+      r.create_time as createTime , r.wages as wages ,
+      r.grade as grade , r.requirement as requirement ,
+      r.tel as tel , r.email as email ,
+      e.name as ename
+    from tb_recruitment r
+    inner join tb_enterprise e on r.user_id = e.user_id
+    where r.id = #{id}
+  </select>
+
+
+  <insert id="insertRecruitment" parameterType="org.table.neweims.entities.Recruitment">
+    insert into tb_recruitment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="job != null and job != ''">
+        job,
+      </if>
+      <if test="email != null and email != ''">
+        email,
+      </if>
+      <if test="tel != null and tel != ''">
+        tel,
+      </if>
+      <if test="area != null and area != ''">
+        area,
+      </if>
+      <if test="wages != null and wages != ''">
+        wages,
+      </if>
+      <if test="grade != null and grade != ''">
+        grade,
+      </if>
+      <if test="requirement != null and requirement != ''">
+        requirement,
+      </if>
+      <if test="createTime != null and createTime != ''">
+        create_time,
+      </if>
+      <if test="userId != null and userId != ''">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="job != null and job != ''">
+        #{job},
+      </if>
+      <if test="email != null and email != ''">
+        #{email},
+      </if>
+      <if test="tel != null and tel != ''">
+        #{tel},
+      </if>
+      <if test="area != null and area != ''">
+        #{area},
+      </if>
+      <if test="wages != null and wages != ''">
+        #{wages},
+      </if>
+      <if test="grade != null and grade != ''">
+        #{grade},
+      </if>
+      <if test="requirement != null and requirement != ''">
+        #{requirement},
+      </if>
+      <if test="createTime != null and createTime != ''">
+        #{createTime},
+      </if>
+      <if test="userId != null and userId != ''">
+        #{userId},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateRecruitment" parameterType="org.table.neweims.entities.Recruitment">
+    update tb_recruitment
+    <trim prefix="set" suffixOverrides=",">
+      <if test="job != null and job != ''">
+        job = #{job},
+      </if>
+      <if test="email != null and email != ''">
+        email = #{email},
+      </if>
+      <if test="tel != null and tel != ''">
+        tel = #{tel},
+      </if>
+      <if test="area != null and area != ''">
+        area = #{area},
+      </if>
+      <if test="wages != null and wages != ''">
+        wages = #{wages},
+      </if>
+      <if test="grade != null and grade != ''">
+        grade =  #{grade},
+      </if>
+      <if test="requirement != null and requirement != ''">
+        requirement = #{requirement},
+      </if>
+      <if test="createTime != null and createTime != ''">
+        create_time = #{createTime},
+      </if>
+    </trim>
+    <where>
+      id = #{id}
+    </where>
+  </update>
 
 </mapper>

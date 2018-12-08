@@ -1,40 +1,98 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.css}" rel="stylesheet">
-    <script type="text/javascript" th:src="@{/resources/webjars/jquery/3.0.0/jquery.js}"></script>
-    <script type="text/javascript" th:src="@{/webjars/popper.js/1.14.3/popper.js}"></script>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.js}"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>resume list</title>
+
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/webjars/font-awesome/5.3.1/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/mystatic/css/sb-admin.css}" rel="stylesheet">
+
 </head>
-<body>
-<div>
-    <form th:action="@{/enterprise}" method="post">
-        <input type="hidden" name="_method" value="put" th:if="${enterprise!=null}"/>
-        <input type="hidden" name="id" th:value="${enterprise.id}" th:if="${enterprise!=null}"/>
-        <div class="form-group">
-            <label>名称</label>
-            <input name="name" type="text" class="form-control" th:value="${enterprise!=null}?${enterprise.name}">
+
+<body id="page-top">
+<div th:replace="common/nav::topbar"></div>
+
+<div id="wrapper">
+    <div th:replace="common/nav::sidebar(activeUri='resume.html')"></div>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <div class="card mb-3">
+                <form th:action="@{/enterprise}" method="post">
+                    <input type="hidden" name="_method" value="put" th:if="${enterprise!=null}"/>
+                    <input type="hidden" name="id" th:value="${enterprise.id}" th:if="${enterprise!=null}"/>
+
+                    <div class="card-header">
+                        <i class="fas fa-table"></i>
+                        编辑信息
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label>名称</label>
+                            <input name="name" type="text" class="form-control" th:value="${enterprise!=null}?${enterprise.name}">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2">
+                                <label>联系电话</label>
+                                <input name="tel" type="text" class="form-control"  th:value="${enterprise!=null}?${enterprise.tel}">
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <label>邮箱</label>
+                                <input name="email" type="text" class="form-control"  th:value="${enterprise!=null}?${enterprise.email}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>地址</label>
+                            <input name="address" type="text" class="form-control"  th:value="${enterprise!=null}?${enterprise.address}">
+                        </div>
+                        <div class="form-group">
+                            <label>简介</label><br/>
+                            <textarea name="introduction" class="form-control">[[${enterprise!=null}?${enterprise.introduction}]]</textarea>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" th:text="提交"></button>
+                    </div>
+                </form>
+            </div>
+
         </div>
-        <div class="form-group">
-            <label>简介</label><br/>
-            <input name="introduction" type="text" class="form-control"  th:value="${enterprise!=null}?${enterprise.introduction}">
-        </div>
-        <div class="form-group">
-            <label>地址</label>
-            <input name="address" type="text" class="form-control"  th:value="${enterprise!=null}?${enterprise.address}">
-        </div>
-        <div class="form-group">
-            <label>联系电话</label>
-            <input name="tel" type="text" class="form-control"  th:value="${enterprise!=null}?${enterprise.tel}">
-        </div>
-        <div class="form-group">
-            <label>邮箱</label>
-            <input name="email" type="text" class="form-control"  th:value="${enterprise!=null}?${enterprise.email}">
-        </div>
-        <button type="submit" class="btn btn-primary" th:text="提交"></button>
-    </form>
+
+    </div>
 </div>
-</body>
-</html>
+<!-- Scroll to Top Button-->
+<div th:replace="common/nav::topbut"></div>
+
+<!-- Logout Modal-->
+<div th:replace="common/nav::logoutMod"></div>
+
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Page level plugin JavaScript-->
+<script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
+<script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
+
+<script th:src="@{/mystatic/js/sb-admin.js}"></script>
+<!-- Core plugin JavaScript-->
+<script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+

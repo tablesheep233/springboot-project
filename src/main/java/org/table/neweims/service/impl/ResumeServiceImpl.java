@@ -22,6 +22,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public List<Map<String, Object>> getResumeList(Integer userId) {
+
         return resumeMapper.selectListResume(userId);
     }
 

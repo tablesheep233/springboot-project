@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>recruitment list</title>
+
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/webjars/font-awesome/5.3.1/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/mystatic/css/sb-admin.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+<div th:replace="common/nav::topbar"></div>
+
+<div id="wrapper">
+    <div th:replace="common/nav::sidebar(activeUri='recruitment.html')"></div>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <div class="card mb-3">
+                <form th:action="@{/recruitment}" method="post">
+                    <input type="hidden" name="_method" value="put" th:if="${recruitment!=null}"/>
+                    <input type="hidden" name="id" th:if="${recruitment!=null}" th:value="${recruitment.id}"/>
+
+                    <div class="card-header">
+                        <i class="fas fa-table"></i>
+                        编辑招聘
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="form-group col-lg-3">
+                                <label>招聘职位</label>
+                                <input name="job" type="text" class="form-control" th:value="${recruitment!=null}?${recruitment.job}" placeholder="My Recruitment">
+                            </div>
+                            <div class="form-group col-lg-1">
+                                <label>薪资</label>
+                                <input name="wages" type="text" class="form-control" th:value="${recruitment!=null}?${recruitment.wages}">
+                            </div>
+                            <div class="form-group col-lg-1">
+                                <label>学历</label>
+                                <input name="grade" type="text" class="form-control" th:value="${recruitment!=null}?${recruitment.grade}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-3">
+                                <label>工作地点</label>
+                                <input name="area" type="text" class="form-control" th:value="${recruitment!=null}?${recruitment.area}">
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>联系号码</label>
+                                <input name="tel" type="text" class="form-control" th:value="${recruitment?.tel!=null}?${recruitment.tel}:${enterprise.tel}">
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>邮箱</label><br/>
+                                <input name="email" type="email" class="form-control" th:value="${recruitment?.email!=null}?${recruitment.email}:${enterprise.email}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>要求</label>
+                            <textarea name="requirement" class="form-control" rows="8">[[${recruitment!=null}?${recruitment.requirement}]]</textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" th:text="${recruitment!=null}?'修改':'添加'">添加</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- Scroll to Top Button-->
+<div th:replace="common/nav::topbut"></div>
+
+<!-- Modal-->
+<div th:replace="common/nav::logoutMod"></div>
+<div th:replace="common/nav::tipModal"></div>
+
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Page level plugin JavaScript-->
+<script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
+<script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
+
+<script th:src="@{/mystatic/js/myjs.js}"></script>
+<script th:src="@{/mystatic/js/sb-admin.js}"></script>
+<!-- Core plugin JavaScript-->
+<script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+

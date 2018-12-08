@@ -19,7 +19,7 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @GetMapping("/student/info")
+    @GetMapping("/student")
     public String getStuInfo(HttpSession session,Model model){
         Integer userId = (Integer) session.getAttribute("loginUser");
         MyResult result = studentService.getStuInfo(userId);

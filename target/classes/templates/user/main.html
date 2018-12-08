@@ -27,7 +27,8 @@
     <div id="wrapper">
         <div th:replace="common/nav::sidebar(activeUri='main.html')"></div>
 
-
+        <h3 shiro:hasPermission="enterprise:please">请填写企业信息</h3>
+        <h3 shiro:hasPermission="enterprise:illegal">请等待管理员审核信息</h3>
 
     </div>
     <!-- Scroll to Top Button-->

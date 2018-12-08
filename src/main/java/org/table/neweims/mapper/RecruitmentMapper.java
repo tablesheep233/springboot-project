@@ -1,5 +1,6 @@
 package org.table.neweims.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -11,8 +12,16 @@ import java.util.Map;
 @Mapper
 public interface RecruitmentMapper {
 
-    List<Recruitment> getAllRecruitmentByPage(@Param("user_id") Integer userId, @Param("data") Map<String,Object> data);
+    List<Map<String,Object>> getAllRecruitmentByPage(@Param("userId") Integer userId,@Param("name") String name, @Param("data") Map<String,Object> data);
 
-    @Select("select count(*) from tb_recruitment where user_id = #{userId}")
-    Integer selectRecritmentCount(Integer userId);
+    Integer selectRecritmentCount(@Param("userId") Integer userId,@Param("name") String name);
+
+    Map<String,Object> queryRecruitmentById(Integer id);
+
+    void insertRecruitment(Recruitment recruitment);
+
+    void updateRecruitment(Recruitment recruitment);
+
+    @Delete("delete from tb_recruitment where id = #{id}")
+    void deleteRecruitment(Integer id);
 }

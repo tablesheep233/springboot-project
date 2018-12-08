@@ -25,7 +25,7 @@
     <div th:replace="common/nav::topbar"></div>
 
     <div id="wrapper">
-        <div th:replace="common/nav::sidebar(activeUri='bind.html')"></div>
+        <div th:replace="common/nav::sidebar(activeUri='info.html')"></div>
 
         <div id="content-wrapper">
 
@@ -89,49 +89,6 @@
                 </div>
             </div>
         </div>
-
-
-
-            <!--<div>-->
-                <!--<form th:action="@{/student}" method="post">-->
-                    <!--<input type="hidden" name="_method" value="put"/>-->
-                    <!--<input type="hidden" name="id" th:value="${stuInfo.id}"/>-->
-                    <!--<div class="form-group">-->
-                        <!--<label>学号</label>-->
-                        <!--<input type="text" class="form-control" readonly th:value="${stuInfo.id}">-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label>姓名</label><br/>-->
-                        <!--<input name="name" type="text" class="form-control" readonly th:value="${stuInfo.name}">-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label>性别</label>-->
-                        <!--<input name="gender" type="text" class="form-control" readonly th:value="${stuInfo.gender}=='w'?'女':'男'">-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label>生日</label>-->
-                        <!--<input name="birth" type="text" class="form-control" readonly th:value="${stuInfo.birth}">-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label>专业</label>-->
-                        <!--<input name="major" type="text" class="form-control" readonly th:value="${stuInfo.major}">-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label>班级</label>-->
-                        <!--<input name="clazz" type="text" class="form-control" readonly th:value="${stuInfo.clazz}">-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label>联系号码</label>-->
-                        <!--<input name="tel" type="tel" class="form-control" th:value="${stuInfo!=null}?${stuInfo.tel}">-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label>邮箱</label>-->
-                        <!--<input name="email" type="email" class="form-control" th:value="${stuInfo!=null}?${stuInfo.email}">-->
-                    <!--</div>-->
-                    <!--<button type="submit" class="btn btn-primary" th:text="保存"></button>-->
-                    <!--<label th:text="${msg}=='success'?'保存成功':'保存失败'" th:if="${msg!=null}"></label>-->
-                <!--</form>-->
-            <!--</div>-->
     </div>
     <!-- Scroll to Top Button-->
     <div th:replace="common/nav::topbut"></div>

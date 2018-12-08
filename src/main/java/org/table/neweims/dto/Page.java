@@ -1,6 +1,7 @@
 package org.table.neweims.dto;
 
 import java.util.List;
+import java.util.Map;
 
 public class Page<T> {
 
@@ -14,13 +15,17 @@ public class Page<T> {
 
     private List<T> result;
 
+    private String search;
+
+    private List<Map<String,Object>> myResult;
+
     public Page(){}
 
     public Page(int currPage, int pageSize,int totalCount){
         this.currPage = currPage;
         this.pageSize = pageSize;
         this.totalCount = totalCount;
-        this.totalPage = ((Double)Math.ceil((double)totalCount/currPage)).intValue();
+        this.totalPage = ((Double)Math.ceil((double)totalCount/pageSize)).intValue();
     }
 
     public int getCurrPage() {
@@ -55,12 +60,28 @@ public class Page<T> {
         this.totalPage = totalPage;
     }
 
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
     public List<T> getResult() {
         return result;
     }
 
     public void setResult(List<T> result) {
         this.result = result;
+    }
+
+    public List<Map<String, Object>> getMyResult() {
+        return myResult;
+    }
+
+    public void setMyResult(List<Map<String, Object>> myResult) {
+        this.myResult = myResult;
     }
 
     @Override

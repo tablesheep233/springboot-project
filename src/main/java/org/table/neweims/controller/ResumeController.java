@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.table.neweims.entities.Resume;
 import org.table.neweims.service.ResumeService;
 import org.table.neweims.service.StudentService;
@@ -17,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 @RequiresPermissions("resume:*")
-@RequestMapping("/resume")
 @Controller
 public class ResumeController {
 
@@ -27,44 +27,47 @@ public class ResumeController {
     @Autowired
     private StudentService studentService;
 
-    @GetMapping("/list")
-    public ModelAndView resumeList(HttpSession session){
+    @GetMapping("/resume")
+    public String resumeList(Model model,HttpSession session){
 
         List<Map<String,Object>> list = resumeService.getResumeList((Integer) session.getAttribute("loginUser"));
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("resumeList",list);
-        mv.setViewName("student/resume/resumelist");
-        return mv;
+        model.addAttribute("resumeList",list);
+        return "student/resume/resumelist";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/resume/{id}")
     public String resumeDetail(@PathVariable("id") Integer id, Model model,HttpSession session){
-        model.addAttribute("stu",studentService.getStuInfo((Integer) session.getAttribute("loginUser")).get("result"));
+        Integer userId = (Integer) session.getAttribute("loginUser");
+        model.addAttribute("stu",studentService.getStuInfo(userId).get("result"));
         model.addAttribute("resume",resumeService.getResume(id));
         return "student/resume/resume";
     }
 
-    @PutMapping
-    public String editResume(Resume resume){
+    @PutMapping("/resume")
+    public String editResume(Resume resume, RedirectAttributes attr){
         resumeService.saveResume(resume);
-        return "redirect:/resume/"+resume.getId();
+        attr.addFlashAttribute("tip","修改成功");
+        return "redirect:/resume";
     }
 
-    @GetMapping
+    @GetMapping("/toaddresume")
     public String toAddResume(Model model,HttpSession session){
-        model.addAttribute("stu",studentService.getStuInfo((Integer) session.getAttribute("loginUser")).get("result"));
+        Integer userId = (Integer) session.getAttribute("loginUser");
+        model.addAttribute("stu",studentService.getStuInfo(userId).get("result"));
         return "student/resume/resume";
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteResume(@PathVariable("id") Integer id){
+    @DeleteMapping("/resume/{id}")
+    public String deleteResume(@PathVariable("id") Integer id, RedirectAttributes attr){
         resumeService.deleteResume(id);
-        return "redirect:/resume/list";
+        attr.addFlashAttribute("tip","删除成功");
+        return "redirect:/resume";
     }
 
-    @PostMapping
-    public String addResume(Resume resume){
+    @PostMapping("/resume")
+    public String addResume(Resume resume, RedirectAttributes attr){
         resumeService.saveResume(resume);
-        return "redirect:/resume/list";
+        attr.addFlashAttribute("tip","添加成功");
+        return "redirect:/resume";
     }
 }

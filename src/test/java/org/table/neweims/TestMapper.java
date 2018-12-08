@@ -58,10 +58,6 @@ public class TestMapper {
 //            System.out.println(s);
 //        }
 
-        Page<Recruitment> list = recruitmentService.queryStudentsByPage(1);
-        for (Recruitment s:list.getResult()) {
-            System.out.println(s.getJob());
-        }
 
 //        System.out.println(recruitmentMapper.selectRecritmentCount(6));
     }

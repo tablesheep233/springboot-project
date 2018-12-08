@@ -5,6 +5,14 @@ public class Recruitment {
 
     private String job;
 
+    private String email;
+
+    private String tel;
+
+    private String area;
+
+    private String createTime;
+
     private Integer wages;
 
     private String grade;
@@ -29,6 +37,14 @@ public class Recruitment {
         this.job = job == null ? null : job.trim();
     }
 
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
     public Integer getWages() {
         return wages;
     }
@@ -51,6 +67,30 @@ public class Recruitment {
 
     public void setRequirement(String requirement) {
         this.requirement = requirement == null ? null : requirement.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public Integer getUserId() {

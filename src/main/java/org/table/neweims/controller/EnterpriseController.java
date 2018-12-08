@@ -33,12 +33,12 @@ public class EnterpriseController {
     @PostMapping
     public String addEnterprise(Enterprise enterprise){
         enterpriseService.addEnterprise(enterprise);
-        return "enterprise/main";
+        return "redirect:/main";
     }
 
     @PutMapping
     public String editEnterprise(Enterprise enterprise){
         enterpriseService.editEnterprise(enterprise);
-        return "enterprise/main";
+        return "redirect:/main";
     }
 }

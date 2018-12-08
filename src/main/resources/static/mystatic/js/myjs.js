@@ -69,3 +69,31 @@ var validate = function () {
         return false;
     }
 }
+
+$(".deleteBtn").click(function () {
+    $("#deleteForm").attr("action",$(this).attr("del_url"));
+    $("#deleteModal").modal({
+        keyboard:true
+    });
+})
+
+$("#yes").click(function () {
+    $("#deleteForm").submit();
+})
+
+$("#cancel").click(function () {
+    $("#deleteForm").attr("action","");
+})
+
+if ($("#searchAurl").length>0) {
+    $(".aurl").click(function () {
+        event.preventDefault();
+        $(location).attr("href",$(this).attr("href")+"&search="+$("#searchAurl").val());
+    })
+}
+
+if ($("#tip").length>0){
+    $("#tipModal").modal({
+        keyboard:true
+    })
+}

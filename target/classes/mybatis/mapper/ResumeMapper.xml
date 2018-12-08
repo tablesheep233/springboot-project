@@ -21,7 +21,7 @@
   </resultMap>
 
   <select id="selectListResume" resultMap="ResumeListMap">
-    select id , name as rname from tb_resume where user_id = #{userId}
+    select id , name as rname ,intention from tb_resume where user_id = #{userId}
   </select>
 
   <update id="updateResume" parameterType="org.table.neweims.entities.Resume">
