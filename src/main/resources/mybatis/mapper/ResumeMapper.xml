@@ -7,11 +7,30 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="tel" jdbcType="VARCHAR" property="tel" />
     <result column="intention" jdbcType="VARCHAR" property="intention" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
     <result column="wages" jdbcType="INTEGER" property="wages" />
     <result column="skill" jdbcType="VARCHAR" property="skill" />
     <result column="experience" jdbcType="VARCHAR" property="experience" />
     <result column="introduce" jdbcType="VARCHAR" property="introduce" />
     <result column="img_path" jdbcType="VARCHAR" property="imgPath" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+
+  <resultMap id="ApplyResumeMap" type="org.table.neweims.dto.ApplyResume">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="birth" jdbcType="VARCHAR" property="birth" />
+    <result column="rname" jdbcType="VARCHAR" property="rname" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="intention" jdbcType="VARCHAR" property="intention" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="wages" jdbcType="INTEGER" property="wages" />
+    <result column="skill" jdbcType="VARCHAR" property="skill" />
+    <result column="experience" jdbcType="VARCHAR" property="experience" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
   
@@ -22,6 +41,47 @@
 
   <select id="selectListResume" resultMap="ResumeListMap">
     select id , name as rname ,intention from tb_resume where user_id = #{userId}
+  </select>
+
+  <select id="selectApplyResumeByPage" resultType="java.util.Map">
+    select rec.job as job ,res.intention as intention ,stu.name as sname,res.education as education,r.time as ctime,r.resume_id as id
+    from tb_resume_recruitment r
+    inner join tb_recruitment rec on rec.id = r.recruitment_id
+    inner join tb_resume res on r.resume_id = res.id
+    inner join tb_student stu on res.user_id = stu.user_id
+    <trim prefix="where" suffixOverrides="and">
+      <if test="userId!=null and userId!=''">
+        rec.user_id = #{userId} and
+      </if>
+      <if test="search!=null and search!=''">
+        rec.job like #{search} and
+      </if>
+    </trim>
+    order by rec.job
+  </select>
+
+  <select id="selectApplyResumeCount" resultType="INTEGER">
+    select count(r.id) from tb_resume_recruitment r
+    <if test="userId!=null and userId!=''">
+      inner join tb_recruitment rec on rec.id = r.recruitment_id
+    </if>
+    <trim prefix="where" suffixOverrides="and">
+      <if test="userId!=null and userId!=''">
+        rec.user_id = #{userId} and
+      </if>
+      <if test="search!=null and search!=''">
+        rec.job like #{search} and
+      </if>
+    </trim>
+  </select>
+
+  <select id="selectApplyResumeById" parameterType="INTEGER" resultMap="ApplyResumeMap">
+    select r.id as id,s.name as name,s.major as major,s.gender as gender,s.birth as birth,
+     r.name as rname,r.email as email,r.tel as tel,r.intention as intention, r.education as education,
+     r.wages as wages,r.skill as skill,r.experience as experience,r.introduce as introduce,r.user_id as userId
+     from db_eims.tb_resume r
+     inner join db_eims.tb_student s on s.user_id = r.user_id
+      where r.id = #{id}
   </select>
 
   <update id="updateResume" parameterType="org.table.neweims.entities.Resume">
@@ -38,6 +98,9 @@
       </if>
       <if test="intention != null and intention != ''">
         intention = #{intention},
+      </if>
+      <if test="education != null and education != ''">
+        education = #{education},
       </if>
       <if test="wages != null and wages != ''">
         wages = #{wages},
@@ -72,6 +135,9 @@
        <if test="intention != null and intention != ''">
          intention,
        </if>
+       <if test="education != null and education != ''">
+         education,
+       </if>
        <if test="wages != null and wages != ''">
          wages,
        </if>
@@ -100,6 +166,9 @@
       </if>
       <if test="intention != null and intention != ''">
         #{intention},
+      </if>
+      <if test="education != null and education != ''">
+        #{education},
       </if>
       <if test="wages != null and wages != ''">
         #{wages},

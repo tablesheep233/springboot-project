@@ -11,6 +11,8 @@ public class Resume {
 
     private String intention;
 
+    private String education;
+
     private Integer wages;
 
     private String skill;
@@ -53,6 +55,14 @@ public class Resume {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
     }
 
     public String getIntention() {

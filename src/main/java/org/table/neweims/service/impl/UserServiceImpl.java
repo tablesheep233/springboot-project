@@ -115,4 +115,13 @@ public class UserServiceImpl implements UserService {
     public List<String> getUserPerms(String name) {
         return resourceMapper.selectPermsByUsername(name);
     }
+
+    @Override
+    public Boolean checkPhone(String phone) {
+        if (userMapper.selectPhone(phone)==null){
+            return false;
+        }else {
+            return true;
+        }
+    }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.table.neweims.mapper.TrackMapper">
-  <resultMap id="BaseResultMap" type="org.table.neweims.entities.Track">
+  <resultMap id="TrackResultMap" type="org.table.neweims.entities.Track">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="begin" jdbcType="VARCHAR" property="begin" />
     <result column="end" jdbcType="VARCHAR" property="end" />
@@ -9,10 +9,82 @@
     <result column="nature" jdbcType="VARCHAR" property="nature" />
     <result column="job" jdbcType="VARCHAR" property="job" />
     <result column="student_id" jdbcType="INTEGER" property="studentId" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, begin, end, employee, nature, job, student_id, user_id
+    id, begin, end, employee, nature, job, student_id
   </sql>
 
+  <select id="selectTrackListByStu" resultMap="TrackResultMap">
+    select * from tb_track
+    where student_id = #{stuId}
+    order by begin
+  </select>
+
+  <insert id="insertTrack" parameterType="org.table.neweims.entities.Track">
+    insert into tb_track
+    <trim prefix="(" suffixOverrides="," suffix=")">
+      <if test="begin != null  and begin != ''">
+        begin,
+      </if>
+      <if test="end != null and end != ''">
+        end,
+      </if>
+      <if test="employee != null and employee != ''">
+        employee,
+      </if>
+      <if test="nature != null">
+        nature,
+      </if>
+      <if test="job != null and job != ''">
+        job,
+      </if>
+      <if test="studentId != null and studentId != ''">
+        student_id,
+      </if>
+    </trim>
+    <trim prefix="values(" suffixOverrides="," suffix=")">
+      <if test="begin != null and begin != ''">
+        #{begin},
+      </if>
+      <if test="end != null and end != ''">
+        #{end},
+      </if>
+      <if test="employee != null and employee != ''">
+        #{employee},
+      </if>
+      <if test="nature != null">
+        #{nature},
+      </if>
+      <if test="job != null and job != ''">
+        #{job},
+      </if>
+      <if test="studentId != null and studentId != ''">
+        #{studentId},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateTrack" parameterType="org.table.neweims.entities.Track">
+    update tb_track
+    <trim prefix="set" suffixOverrides=",">
+      <if test="begin != null and begin != ''">
+        begin = #{begin},
+      </if>
+      <if test="end != null and end != ''">
+        end = #{end},
+      </if>
+      <if test="employee != null and employee != ''">
+        employee = #{employee},
+      </if>
+      <if test="nature != null">
+        nature = #{nature},
+      </if>
+      <if test="job != null and job != ''">
+        job = #{job},
+      </if>
+    </trim>
+    <where>
+      id = #{id}
+    </where>
+  </update>
 </mapper>

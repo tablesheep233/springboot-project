@@ -14,6 +14,7 @@ import org.table.neweims.service.StudentService;
 import org.table.neweims.service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,4 +71,21 @@ public class ResumeController {
         attr.addFlashAttribute("tip","添加成功");
         return "redirect:/resume";
     }
+
+    @ResponseBody
+    @GetMapping("/chooseresume")
+    public List<Map<String,Object>> resumeList(HttpSession session){
+        List<Map<String,Object>> list = resumeService.getResumeList((Integer) session.getAttribute("loginUser"));
+        return list;
+    }
+
+    @ResponseBody
+    @PostMapping("/chooseresume")
+    public Map<String,Object> commit(Integer resumeId, Integer recruitmentId){
+        resumeService.commitRecruitment(resumeId,recruitmentId);
+        Map<String,Object> map = new HashMap<>();
+        map.put("tip","申请成功");
+        return map;
+    }
+
 }

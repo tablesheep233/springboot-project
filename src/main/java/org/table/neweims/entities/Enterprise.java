@@ -1,5 +1,7 @@
 package org.table.neweims.entities;
 
+import org.table.neweims.enums.StatusEnum;
+
 public class Enterprise {
     private Integer id;
 
@@ -13,11 +15,13 @@ public class Enterprise {
 
     private String email;
 
-    private Integer status;
+    private StatusEnum status;
 
     private Integer reviewer;
 
     private String imgPath;
+
+    private String creditNo;
 
     private Integer userId;
 
@@ -69,11 +73,11 @@ public class Enterprise {
         this.email = email;
     }
 
-    public Integer getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 
@@ -91,6 +95,14 @@ public class Enterprise {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public String getCreditNo() {
+        return creditNo;
+    }
+
+    public void setCreditNo(String creditNo) {
+        this.creditNo = creditNo;
     }
 
     public Integer getUserId() {

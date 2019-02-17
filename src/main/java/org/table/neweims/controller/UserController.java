@@ -10,17 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import org.table.neweims.entities.User;
 import org.table.neweims.interceptor.Token;
 import org.table.neweims.service.UserService;
+import org.table.neweims.util.VerificationCode;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private VerificationCode verificationCode;
 
     /**
      * 注册时检查用户名是否重复
@@ -39,25 +41,18 @@ public class UserController {
 
     /**
      * 注册
-     * @param username
-     * @param password
      * @return
      */
     @PostMapping("/user/register")
-    public String register(@RequestParam("username") String username,
-                            @RequestParam("password") String password,
-                           @RequestParam("confirmPassword") String confirmPassword,
+    public String register(User user, @RequestParam("confirmPassword") String confirmPassword,
                            @RequestParam("role") String roleName){
 
-        if(!password.equals(confirmPassword)){
+        if(!user.getPassword().equals(confirmPassword)){
             return "redirect:/register";
         }
 
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
         userService.userRegister(user);
-        userService.setUserRole(username,roleName);
+        userService.setUserRole(user.getUsername(),roleName);
         return "redirect:/login";
     }
 
@@ -82,5 +77,49 @@ public class UserController {
         User loginUser = userService.getUserInfo(username);
         session.setAttribute("loginUser",loginUser.getId());
         return "redirect:/main";
+    }
+
+
+    @ResponseBody
+    @PostMapping("/user/outSms")
+    public String outSms(@RequestParam("uphone") String uPhone,HttpSession session){
+        String phoneNum[] = {uPhone};
+        String smsText = null;
+        try {
+            smsText = verificationCode.outSms(phoneNum);
+        }catch (Exception e){
+
+        }
+        if(smsText!=null){
+            session.setAttribute(uPhone,smsText);
+            session.setMaxInactiveInterval(10*60);
+            return "true";
+        }else {
+            return "false";
+        }
+    }
+
+    @ResponseBody
+    @PostMapping("/user/checkSms")
+    public Map<Object,Object> checkSms(@RequestParam("smscode") String smscode, @RequestParam("uphone") String uPhone, HttpSession session){
+        String ucode = null;
+        Map<Object,Object> map = new HashMap<>();
+        ucode = (String) session.getAttribute(uPhone);
+        if (ucode==null){
+            map.put("rest",false);
+            map.put("tip","验证码已过期");
+        }else if (ucode.equals(smscode)){
+            map.put("rest",true);
+        }else {
+            map.put("rest",false);
+            map.put("tip","验证码错误");
+        }
+        return map;
+    }
+
+    @ResponseBody
+    @PostMapping("/user/checkPhone")
+    public boolean checkPhone(@RequestParam("uphone") String phone){
+        return userService.checkPhone(phone);
     }
 }

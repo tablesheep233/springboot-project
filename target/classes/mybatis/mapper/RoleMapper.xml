@@ -9,10 +9,17 @@
     id, name
   </sql>
 
-  <select id="selectUserRole" parameterType="org.table.neweims.entities.User" resultType="string">
+  <select id="selectUserRole" resultType="string">
       select r.name from tb_user_role ur
         left join tb_role r on r.id = ur.role_id
         left join tb_user u on ur.user_id = u.id
         where u.username = #{username}
+  </select>
+
+  <select id="selectUserRoleById" resultType="string">
+      select r.name from tb_user_role ur
+        left join tb_role r on r.id = ur.role_id
+        left join tb_user u on ur.user_id = u.id
+        where u.id = #{userId}
   </select>
 </mapper>

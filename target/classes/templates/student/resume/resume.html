@@ -45,7 +45,7 @@
 
                         <div class="form-group">
                             <label>简历名称</label>
-                            <input name="name" type="text" class="form-control" th:value="${resume!=null}?${resume.name}" placeholder="My Resume">
+                            <input name="name" required type="text" class="form-control" th:value="${resume!=null}?${resume.name}" placeholder="My Resume">
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-3">
@@ -54,11 +54,15 @@
                             </div>
                             <div class="form-group col-lg-1">
                                 <label>性别</label>
-                                <input type="text" readonly class="form-control" th:value="${stu.gender}=='w'?'女':'男'">
+                                <input type="text" readonly class="form-control" th:value="${stu.gender.text}">
                             </div>
                             <div class="form-group col-lg-2">
                                 <label>生日</label>
                                 <input type="text" readonly class="form-control" th:value="${stu.birth}">
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <label>学历</label>
+                                <input name="education" type="text" class="form-control" th:value="${resume!=null}?${resume.education}">
                             </div>
                         </div>
                         <div class="row">
@@ -71,7 +75,7 @@
                                 <input type="text" readonly class="form-control" th:value="${stu.major}">
                             </div>
                             <div class="form-group col-lg-2">
-                                <label>期望薪资</label><br/>
+                                <label>期望薪资</label>
                                 <input name="wages" type="text" class="form-control" th:value="${resume!=null}?${resume.wages}">
                             </div>
                         </div>
@@ -81,7 +85,7 @@
                                 <input name="tel" type="text" class="form-control" th:value="${resume?.tel!=null}?${resume.tel}:${stu.tel}">
                             </div>
                             <div class="form-group col-lg-3">
-                                <label>邮箱</label><br/>
+                                <label>邮箱</label>
                                 <input name="email" type="email" class="form-control" th:value="${resume?.email!=null}?${resume.email}:${stu.email}">
                             </div>
                         </div>
@@ -125,7 +129,7 @@
 <script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
 <script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
 
-<script th:src="@{/mystatic/js/sb-admin.js}"></script>
+<script th:src="@{/mystatic/js/sb-do.js}"></script>
 <!-- Core plugin JavaScript-->
 <script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
 

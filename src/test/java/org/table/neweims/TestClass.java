@@ -1,16 +1,14 @@
 package org.table.neweims;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.env.Environment;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.table.neweims.config.ymlpojo.PageConf;
+import org.table.neweims.enums.GenderEnum;
+import org.table.neweims.enums.NatureEnum;
 import org.table.neweims.util.MyResult;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@RunWith(SpringRunner.class)
 public class TestClass {
 
     @Autowired
@@ -28,6 +26,9 @@ public class TestClass {
     }
 
     public static void main(String[] args) {
-        System.out.println(9%2);
+        NatureEnum[] natureEnums = NatureEnum.values();
+        for (NatureEnum n:natureEnums) {
+            System.out.println(n.getText());
+        }
     }
 }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>track</title>
+
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/webjars/font-awesome/5.3.1/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/mystatic/css/sb-admin.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+<div th:replace="common/nav::topbar"></div>
+
+<div id="wrapper">
+    <div th:replace="common/nav::sidebar(activeUri='track.html')"></div>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <div class="card mb-3">
+                <form th:action="@{/track}" method="post">
+                    <input type="hidden" name="_method" value="put" th:if="${track!=null}"/>
+                    <input type="hidden" name="id" th:if="${track!=null}" th:value="${track.id}"/>
+                    <input type="hidden" name="studentId" th:value="${track!=null?track.studentId:stuId}"/>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>开始时间</label>
+                            <input name="begin" required type="text" class="form-control" th:value="${track!=null}?${track.begin}" placeholder="1999-09-09">
+                        </div>
+                        <div class="form-group">
+                            <label>结束时间</label>
+                            <input name="end" required type="text" class="form-control" th:value="${track!=null}?${track.end}" placeholder="1999-09-09">
+                        </div>
+                        <div class="form-group">
+                            <label>毕业去向</label>
+                            <select name="nature" class="form-control">
+                                <option th:each="n:${nature}" th:selected="${track?.nature==n}" th:value="${n}" th:text="${n.text}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>公司</label>
+                            <input name="employee" type="text" class="form-control" th:value="${track!=null}?${track.employee}">
+                        </div>
+                        <div class="form-group">
+                            <label>职位</label>
+                            <input name="job" type="text" class="form-control" th:value="${track!=null}?${track.job}">
+                        </div>
+                    </div>
+
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" th:text="${track!=null}?'修改':'添加'">添加</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- Scroll to Top Button-->
+<div th:replace="common/nav::topbut"></div>
+
+<!-- Modal-->
+<div th:replace="common/nav::logoutMod"></div>
+<div th:replace="common/nav::tipModal"></div>
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Page level plugin JavaScript-->
+<script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
+<script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
+
+<script th:src="@{/mystatic/js/myjs-do.js}"></script>
+<!-- Core plugin JavaScript-->
+<script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+

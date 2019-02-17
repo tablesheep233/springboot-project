@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div class="modal fade" id="resumeModal" th:fragment="resumeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">简历详情</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" th:fragment="resumeBody">
+                    <!-- 左侧 -->
+                    <div class="col-sm-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading text-danger text-lg-left" id="resume"></div>
+                            <div class="panel-body">
+                                <i class="fa fa-user mr-1"></i><span class="text-center text-primary" id="name"></span>
+                                <address>
+                                    <div><i class="fa fa-birthday-cake mr-1"></i><span id="birth"></span></div>
+                                    <div><i class="fa fa-venus-mars mr-1"></i><span id="gender"></span></div>
+                                    <div><i class="fa fa-phone mr-1"></i><span id="tel"></span></div>
+                                    <div><i class="fa fa-envelope mr-1"></i><span id="email"></span></div>
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 右侧 -->
+                    <div class="col-sm-9">
+                        <div>
+                            <div><i class="fa fa-anchor mr-1"></i>求职意向<span class="ml-1" id="intention"></span></div>
+                            <div><i class="fa fa-graduation-cap mr-1"></i>学历<span class="ml-1" id="education"></span></div>
+                            <div><i class="fa fa-university mr-1"></i>期望薪资<span class="ml-1" id="wages"></span></div>
+                        </div>
+
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <i class="fa fa-eercast mr-1"></i>个人简介
+                                    </div>
+                                    <div class="panel-body">
+                                        <textarea class="form-control" rows="6" id="introduce" readonly></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <i class="fa fa-eercast mr-1"></i>个人技能
+                                    </div>
+                                    <div class="panel-body">
+                                        <textarea class="form-control" rows="4" id="skill" readonly></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <i class="fa fa-eercast mr-1"></i>工作经验
+                                    </div>
+                                    <div class="panel-body">
+                                        <textarea class="form-control" rows="7" id="experience" readonly></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="enterpriseModal" th:fragment="enterpriseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">企业信息</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div th:fragment="enterpriseBody">
+                    <div>企业名称:<span id="ename"></span></div>
+                    <div>联系号码:<span id="etel"></span></div>
+                    <div>邮箱:<span id="mail"></span></div>
+                    <div>地址:<span id="address"></span></div>
+                    <div>信用代码:<span id="creditno"></span></div>
+                    <div>
+                        <span>简介</span>
+                        <div>
+                            <textarea class="form-control" rows="7" id="introduction" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="srModal" th:fragment="srModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">招聘详情</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <label>招聘职位</label>
+                            <input id="job" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label>薪资</label>
+                            <input id="rwages" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label>学历</label>
+                            <input id="grade" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <label>工作地点</label>
+                            <input id="area" name="area" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label>联系号码</label>
+                            <input id="rtel" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label>邮箱</label><br/>
+                            <input id="remail" type="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>要求</label>
+                        <textarea id="requirement" class="form-control" rows="14"></textarea>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

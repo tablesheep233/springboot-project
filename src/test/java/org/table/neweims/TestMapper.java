@@ -1,14 +1,19 @@
 package org.table.neweims;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.table.neweims.dto.EnterpriseDto;
 import org.table.neweims.dto.Page;
+import org.table.neweims.dto.RecruitmentDto;
 import org.table.neweims.entities.Recruitment;
 import org.table.neweims.entities.Student;
+import org.table.neweims.entities.Track;
 import org.table.neweims.entities.User;
+import org.table.neweims.enums.StatusEnum;
 import org.table.neweims.mapper.*;
 import org.table.neweims.service.RecruitmentService;
 
@@ -41,6 +46,12 @@ public class TestMapper {
     @Autowired
     RecruitmentMapper recruitmentMapper;
 
+    @Autowired
+    EnterpriseMapper enterpriseMapper;
+
+    @Autowired
+    TrackMapper trackMapper;
+
     @Test
     public void testUser() {
 
@@ -57,8 +68,15 @@ public class TestMapper {
 //        for (String s:list) {
 //            System.out.println(s);
 //        }
+        Map<String, Object> data = new HashedMap();
 
-
+        data.put("currPage", 1);
+        data.put("pageSize", 3);
+        List<RecruitmentDto> list = recruitmentMapper.getAllSRByPage(null,null,data);
+        for (RecruitmentDto m:list){
+            System.out.println(m.getId());
+            System.out.println(m.getReviewer());
+        }
 //        System.out.println(recruitmentMapper.selectRecritmentCount(6));
     }
 
@@ -79,5 +97,21 @@ public class TestMapper {
         for (Map<String,Object> m : list) {
             System.out.println(m.get("rname"));
         }
+    }
+
+    @Test
+    public void testTrack(){
+        Track track = new Track();
+        track.setId(5);
+        track.setNature("EMPLOYMENT");
+        trackMapper.updateTrack(track);
+//        Student student = new Student();
+//        student.setId("333");
+//        student.setGender("M");
+//        student.setName("xxx");
+//        student.setMajor("2");
+//        student.setBirth("2");
+//        student.setClazz("2");
+//        studentMapper.insertStudent(student);
     }
 }

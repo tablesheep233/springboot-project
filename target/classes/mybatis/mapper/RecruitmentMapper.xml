@@ -7,13 +7,21 @@
     <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="tel" jdbcType="VARCHAR" property="tel" />
-    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
-    <result column="wages" jdbcType="INTEGER" property="wages" />
+    <result column="create_time" jdbcType="CHAR" property="createTime" />
+    <result column="wages" jdbcType="VARCHAR" property="wages" />
     <result column="grade" jdbcType="VARCHAR" property="grade" />
     <result column="requirement" jdbcType="VARCHAR" property="requirement" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="reviewer" jdbcType="INTEGER" property="reviewer" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
 
+  <resultMap id="RecruitmentDto" type="org.table.neweims.dto.RecruitmentDto">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="reviewer" jdbcType="VARCHAR" property="reviewer" />
+  </resultMap>
 
   <select id="getAllRecruitmentByPage" resultType="java.util.Map">
     select
@@ -22,22 +30,26 @@
       r. grade as grade , e.name as ename
     from tb_recruitment r
     inner join tb_enterprise e on r.user_id = e.user_id
-    <where>
-      e.user_id = #{userId}
-      <if test="name!=null and name!=''">
-        and r.job like #{name}
+    <trim prefix="where" suffixOverrides="and">
+      <if test="userId!=null and userId!=''">
+         e.user_id = #{userId} and
       </if>
-    </where>
+      <if test="name!=null and name!=''">
+         r.job like #{name} and
+      </if>
+    </trim>
   </select>
 
   <select id="selectRecritmentCount" resultType="INTEGER">
     select count(*) from tb_recruitment
-     <where>
-       user_id = #{userId}
-       <if test="name!=null and name!=''">
-         and job like #{name}
+    <trim prefix="where" suffixOverrides="and">
+       <if test="userId!=null and userId!=''">
+         user_id = #{userId} and
        </if>
-     </where>
+       <if test="name!=null and name!=''">
+         job like #{name} and
+       </if>
+    </trim>
   </select>
 
   <select id="queryRecruitmentById" resultType="java.util.Map">
@@ -50,6 +62,22 @@
     from tb_recruitment r
     inner join tb_enterprise e on r.user_id = e.user_id
     where r.id = #{id}
+  </select>
+
+  <select id="getAllSRByPage" resultMap="RecruitmentDto">
+    select
+      r.id as id , r.job as job ,
+      r.status as status ,u.username as reviewer
+      from tb_recruitment r
+      left join tb_user u on r.reviewer = u.id
+    <trim prefix="where" suffixOverrides="and">
+      <if test="userId!=null and userId!=''">
+        r.user_id = #{userId} and
+      </if>
+      <if test="name!=null and name!=''">
+        r.job like #{name} and
+      </if>
+    </trim>
   </select>
 
 
@@ -80,6 +108,9 @@
       <if test="createTime != null and createTime != ''">
         create_time,
       </if>
+      <if test="status != null">
+        status,
+      </if>
       <if test="userId != null and userId != ''">
         user_id,
       </if>
@@ -108,6 +139,9 @@
       </if>
       <if test="createTime != null and createTime != ''">
         #{createTime},
+      </if>
+      <if test="status != null">
+        #{status},
       </if>
       <if test="userId != null and userId != ''">
         #{userId},
@@ -141,6 +175,12 @@
       </if>
       <if test="createTime != null and createTime != ''">
         create_time = #{createTime},
+      </if>
+      <if test="status != null">
+        status = #{status},
+      </if>
+      <if test="reviewer != null and reviewer != ''">
+        reviewer = #{reviewer},
       </if>
     </trim>
     <where>

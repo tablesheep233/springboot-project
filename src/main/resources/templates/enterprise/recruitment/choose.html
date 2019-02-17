@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>recruitment</title>
+
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/webjars/font-awesome/5.3.1/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/mystatic/css/sb-admin.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+<div th:replace="common/nav::topbar"></div>
+
+<div id="wrapper">
+    <div th:replace="common/nav::sidebar(activeUri='recruitment.html')"></div>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <div class="card mb-3">
+            <input type="hidden" id="recruitmentId" th:value="${recruitment.id}">
+                    <div class="card-header">
+                        <i class="fas fa-table"></i>
+                        职位详情
+                    </div>
+
+                    <div class="card-body">
+
+                        <div>
+                            <h5>[[${recruitment.job}]]</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label>薪资:</label>
+                                [[${recruitment.wages}]]
+                            </div>
+                            <div class="col-lg-2">
+                                <label>学历:</label>
+                                [[${recruitment.grade}]]
+                            </div>
+                            <div class="col-lg-3">
+                                <label>工作地点:</label>
+                                [[${recruitment.area}]]
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label>联系号码:</label>
+                                [[${recruitment.tel}]]
+                            </div>
+                            <div class="col-lg-3">
+                                <label>邮箱:</label>
+                                [[${recruitment.email}]]
+                            </div>
+                        </div>
+                        <div>
+                            <label>职位描述</label>
+                            <textarea class="form-control" readonly rows="14">[[${recruitment.requirement}]]</textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="button" id="chooseRecruitment" class="btn btn-primary">申请职位</button>
+                    </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="chooseModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">choose</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- 模态框主体 -->
+            <div id="chooseBody" class="modal-body">
+
+            </div>
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="choosebut">确定</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Scroll to Top Button-->
+<div th:replace="common/nav::topbut"></div>
+
+<!-- Modal-->
+<div th:replace="common/nav::logoutMod"></div>
+<div th:replace="common/nav::tipModal"></div>
+
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Page level plugin JavaScript-->
+<script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
+<script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
+
+<script th:src="@{/mystatic/js/myjs-do.js}"></script>
+<script th:src="@{/mystatic/js/sb-admin.js}"></script>
+<!-- Core plugin JavaScript-->
+<script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+
+</body>
+</html>

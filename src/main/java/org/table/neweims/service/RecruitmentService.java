@@ -1,6 +1,7 @@
 package org.table.neweims.service;
 
 import org.table.neweims.dto.Page;
+import org.table.neweims.dto.RecruitmentDto;
 import org.table.neweims.entities.Recruitment;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface RecruitmentService {
     void saveRecruitment(Recruitment recruitment);
 
     void dropRecruitment(Integer id);
+
+    void recruitmentStatus(Integer id);
+
+    Page<RecruitmentDto> queryRecruitmentStatusByPage(int currPage, String name);
 }

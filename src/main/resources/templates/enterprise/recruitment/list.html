@@ -35,18 +35,18 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <i class="fas fa-table"></i>
-                            我的招聘
+                            职位列表
                         </div>
                         <div class="col-sm-12 col-md-6">
 
-                            <a class="btn btn-outline-primary float-md-right" th:href="@{/toaddrecruitment}">
+                            <a shiro:hasRole="enterprise" class="btn float-md-right" th:href="@{/toaddrecruitment}">
                                 <i class="fas fa-plus"></i>发布招聘</a>
 
-                            <form th:action="@{/recruitment}" class="d-none float-md-right d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                            <form th:if="${page.totalPage!=0}" th:action="@{/recruitment}" class="d-none float-md-right d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                                 <div class="input-group">
                                     <input type="text" th:value="${page?.search!=null}?${page.search}" name="search" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit">
+                                        <button class="btn btn-info" type="submit">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body" th:if="${page.totalPage!=0}">
 
                     <div class="card mb-2" th:each="recruitment:${page.myResult}">
                         <div class="card-header">
@@ -66,7 +66,7 @@
                                     [[${recruitment.job}]]
                                 </div>
                                 <div class="col-sm-12 col-md-6">
-                                    <div class="float-md-right">[[${recruitment.wages}]]</div>
+                                    <div class="float-md-right">薪资:[[${recruitment.wages}]]</div>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                                     [[${recruitment.ename}]]
                                 </div>
                                 <div class="col-sm-12 col-md-6">
-                                    <div class="float-md-right">[[${recruitment.area}]]</div>
+                                    <div class="float-md-right">工作地点:[[${recruitment.area}]]</div>
                                 </div>
                             </div>
                         </div>
@@ -85,13 +85,14 @@
                         <div class="card-footer">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
-                                    <span class="label label-important">[[${recruitment.grade}]]</span>
-                                    <span class="label label-info">[[${recruitment.createTime}]]</span>
+                                    <span class="label label-important">学历:[[${recruitment.grade}]]</span>
+                                    <span class="label label-info">发布时间:[[${recruitment.createTime}]]</span>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="float-md-right">
-                                        <a class="btn btn-sm btn-info" th:href="@{/recruitment/}+${recruitment.id}">查看详情</a>
-                                        <button th:attr="del_url=@{/recruitment/}+${recruitment.id}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+                                        <a shiro:hasRole="student" class="btn btn-sm btn-info" th:href="@{/chooserecruitment/}+${recruitment.id}">查看详情</a>
+                                        <a shiro:hasRole="enterprise" class="btn btn-sm btn-info" th:href="@{/recruitment/}+${recruitment.id}">编辑招聘</a>
+                                        <button shiro:hasRole="enterprise" th:attr="del_url=@{/recruitment/}+${recruitment.id}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
                                     </div>
                                 </div>
                             </div>
@@ -100,21 +101,21 @@
                     </div>
                 </div>
 
-                <div class="card-footer" th:if="${page.totalPage!=1}">
+                <div class="card-footer" th:if="${page.totalPage!=1&&page.totalPage!=0}">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link aurl" th:href="@{/recruitment}+'currPage=1'">首页</a></li>
-                        <li class="page-item" th:if="${page.currPage!=1}"><a class="page-link aurl" th:href="@{/recruitment?}+'currPage='+${page.currPage-1}">上一页</a></li>
-                        <li class="page-item active"><a class="page-link aurl" th:href="@{/recruitment?}+'currPage='+${page.currPage}">[[${page.currPage}]]</a></li>
-                        <li class="page-item" th:if="${page.currPage!=page.totalPage}"><a class="page-link aurl" th:href="@{/recruitment?}+'currPage='+${page.currPage+1}">下一页</a></li>
-                        <li class="page-item"><a class="page-link aurl" th:href="@{/recruitment?}+'currPage='+${page.totalPage}">尾页</a></li>
-                        <li class="page-item">
+                        <li class="paginate_button page-item"><a class="page-link aurl" th:href="@{/recruitment?}+'currPage=1'">首页</a></li>
+                        <li class="paginate_button page-item" th:if="${page.currPage!=1}"><a class="page-link aurl" th:href="@{/recruitment?}+'currPage='+${page.currPage-1}">上一页</a></li>
+                        <li class="paginate_button page-item active"><a class="page-link aurl" th:href="@{/recruitment?}+'currPage='+${page.currPage}">[[${page.currPage}]]</a></li>
+                        <li class="paginate_button page-item" th:if="${page.currPage!=page.totalPage}"><a class="page-link aurl" th:href="@{/recruitment?}+'currPage='+${page.currPage+1}">下一页</a></li>
+                        <li class="paginate_button page-item"><a class="page-link aurl" th:href="@{/recruitment?}+'currPage='+${page.totalPage}">尾页</a></li>
+                        <li class="paginate_button page-item">
                         <form class="form-inline" th:action="@{/recruitment}">
                             <input type="hidden" id="searchAurl" name="search" th:value="${page.search}" th:if="${page.search!=null}">
-                            <select class="page-link" name="currPage">
+                            <select class="paginate_button page-link" name="currPage">
                                 <option th:each="i:${#numbers.sequence(1,page.totalPage)}" th:selected="${page.currPage==i}?selected" th:value="${i}">[[${i}]]</option>
                             </select>
-                            <span class="page-link">/[[${page.totalPage}]]</span>
-                            <input class="page-link" type="submit" value="跳转">
+                            <span class="paginate_button page-link">/[[${page.totalPage}]]</span>
+                            <input class="paginate_button page-link" type="submit" value="跳转">
                         </form>
                         </li>
                     </ul>
@@ -148,7 +149,7 @@
 <script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
 <script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
 
-<script th:src="@{/mystatic/js/myjs.js}"></script>
+<script th:src="@{/mystatic/js/myjs-do.js}"></script>
 <script th:src="@{/mystatic/js/sb-admin.js}"></script>
 <!-- Core plugin JavaScript-->
 <script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>

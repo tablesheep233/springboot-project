@@ -48,11 +48,11 @@
                                 <label>招聘职位</label>
                                 <input name="job" type="text" class="form-control" th:value="${recruitment!=null}?${recruitment.job}" placeholder="My Recruitment">
                             </div>
-                            <div class="form-group col-lg-1">
+                            <div class="form-group col-lg-2">
                                 <label>薪资</label>
                                 <input name="wages" type="text" class="form-control" th:value="${recruitment!=null}?${recruitment.wages}">
                             </div>
-                            <div class="form-group col-lg-1">
+                            <div class="form-group col-lg-3">
                                 <label>学历</label>
                                 <input name="grade" type="text" class="form-control" th:value="${recruitment!=null}?${recruitment.grade}">
                             </div>
@@ -73,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <label>要求</label>
-                            <textarea name="requirement" class="form-control" rows="8">[[${recruitment!=null}?${recruitment.requirement}]]</textarea>
+                            <textarea name="requirement" class="form-control" rows="14">[[${recruitment!=null}?${recruitment.requirement}]]</textarea>
                         </div>
 
                     </div>
@@ -104,8 +104,10 @@
 <script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
 <script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
 
-<script th:src="@{/mystatic/js/myjs.js}"></script>
+<script th:src="@{/mystatic/js/myjs-do.js}"></script>
 <script th:src="@{/mystatic/js/sb-admin.js}"></script>
 <!-- Core plugin JavaScript-->
 <script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+</body>
+</html>
 

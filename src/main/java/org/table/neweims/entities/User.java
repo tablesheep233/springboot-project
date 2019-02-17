@@ -9,6 +9,8 @@ public class User {
 
     private String salt;
 
+    private String uPhone;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class User {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public String getuPhone() {
+        return uPhone;
+    }
+
+    public void setuPhone(String uPhone) {
+        this.uPhone = uPhone;
     }
 }

@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.table.neweims.entities.Student;
 import org.table.neweims.entities.User;
+import org.table.neweims.enums.GenderEnum;
 import org.table.neweims.exception.MyException;
 import org.table.neweims.mapper.StudentMapper;
 import org.table.neweims.service.StudentService;
 import org.table.neweims.util.HRSysCrawler;
 import org.table.neweims.util.MyResult;
+import org.table.neweims.util.SysContext;
 
 @Service(value = "studentService")
 @Transactional
@@ -50,8 +52,7 @@ public class StudentServiceImpl implements StudentService {
         HRSysCrawler hrSysCrawler = new HRSysCrawler();
 
         Student student = hrSysCrawler.pyStuInfo(username,password);
-        Session session = SecurityUtils.getSubject().getSession();
-        student.setUserId((Integer) session.getAttribute("loginUser"));
+        student.setUserId(SysContext.getCurrentUser());
 
         studentMapper.insertStudent(student);
         MyResult result = new MyResult(student);
@@ -61,5 +62,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void setStu(Student student) {
         studentMapper.updateStu(student);
+    }
+
+    @Override
+    public Integer getStuId(Integer userId) {
+        return studentMapper.selectStuId(userId);
     }
 }

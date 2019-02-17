@@ -12,4 +12,6 @@ public interface StudentService {
     MyResult bindStuInfo(String username,String password);
 
     void setStu(Student student);
+
+    Integer getStuId(Integer userId);
 }

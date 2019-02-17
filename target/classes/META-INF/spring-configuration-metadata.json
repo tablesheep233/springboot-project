@@ -2,6 +2,11 @@
   "hints": [],
   "groups": [
     {
+      "sourceType": "org.table.neweims.config.ymlpojo.Code",
+      "name": "code",
+      "type": "org.table.neweims.config.ymlpojo.Code"
+    },
+    {
       "sourceType": "org.table.neweims.config.ymlpojo.PageConf",
       "name": "page",
       "type": "org.table.neweims.config.ymlpojo.PageConf"
@@ -15,8 +20,45 @@
   ],
   "properties": [
     {
+      "sourceType": "org.table.neweims.config.ymlpojo.Code",
+      "defaultValue": 0,
+      "name": "code.id",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "org.table.neweims.config.ymlpojo.Code",
+      "name": "code.key",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.table.neweims.config.ymlpojo.Code",
+      "defaultValue": 0,
+      "name": "code.template-id",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "org.table.neweims.config.ymlpojo.PageConf",
+      "name": "page.apply-limit",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "org.table.neweims.config.ymlpojo.PageConf",
+      "name": "page.enterprise-limit",
+      "type": "java.lang.Integer"
+    },
+    {
       "sourceType": "org.table.neweims.config.ymlpojo.PageConf",
       "name": "page.recruitment-limit",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "org.table.neweims.config.ymlpojo.PageConf",
+      "name": "page.sr-limit",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "org.table.neweims.config.ymlpojo.PageConf",
+      "name": "page.stu-recruitment-limit",
       "type": "java.lang.Integer"
     }
   ]

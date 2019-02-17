@@ -19,4 +19,6 @@ public interface RoleMapper {
 
     @Select("select id from tb_role where name = #{roleName}")
     Role selectRoleByName(String roleName);
+
+    String selectUserRoleById(Integer userId);
 }

@@ -6,6 +6,7 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="uphone" jdbcType="VARCHAR" property="uPhone" />
   </resultMap>
 
 

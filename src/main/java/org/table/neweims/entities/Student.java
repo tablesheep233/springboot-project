@@ -1,5 +1,7 @@
 package org.table.neweims.entities;
 
+import org.table.neweims.enums.GenderEnum;
+
 public class Student {
     private String id;
 
@@ -9,7 +11,7 @@ public class Student {
 
     private String clazz;
 
-    private String gender;
+    private GenderEnum gender;
 
     private String email;
 
@@ -59,12 +61,17 @@ public class Student {
         this.userId = userId;
     }
 
-    public String getGender() {
+    public GenderEnum getGender() {
         return gender;
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        GenderEnum genderEnum = GenderEnum.getGender(gender);
+        if (genderEnum==null){
+            this.gender = GenderEnum.valueOf(gender);
+        }else {
+            this.gender = genderEnum;
+        }
     }
 
     public String getEmail() {

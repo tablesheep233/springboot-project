@@ -32,4 +32,6 @@ public interface UserService {
     User getUserInfo(Integer id);
 
     List<String> getUserPerms(String name);
+
+    Boolean checkPhone(String phone);
 }

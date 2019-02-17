@@ -1,5 +1,7 @@
 package org.table.neweims.entities;
 
+import org.table.neweims.enums.StatusEnum;
+
 public class Recruitment {
     private Integer id;
 
@@ -13,11 +15,15 @@ public class Recruitment {
 
     private String createTime;
 
-    private Integer wages;
+    private String wages;
 
     private String grade;
 
     private String requirement;
+
+    private StatusEnum status;
+
+    private Integer reviewer;
 
     private Integer userId;
 
@@ -45,11 +51,11 @@ public class Recruitment {
         this.createTime = createTime;
     }
 
-    public Integer getWages() {
+    public String getWages() {
         return wages;
     }
 
-    public void setWages(Integer wages) {
+    public void setWages(String wages) {
         this.wages = wages;
     }
 
@@ -91,6 +97,22 @@ public class Recruitment {
 
     public void setArea(String area) {
         this.area = area;
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
+    public Integer getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(Integer reviewer) {
+        this.reviewer = reviewer;
     }
 
     public Integer getUserId() {

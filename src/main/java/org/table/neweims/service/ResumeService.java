@@ -1,5 +1,7 @@
 package org.table.neweims.service;
 
+import org.table.neweims.dto.ApplyResume;
+import org.table.neweims.dto.Page;
 import org.table.neweims.entities.Resume;
 
 import java.util.List;
@@ -14,4 +16,10 @@ public interface ResumeService {
     void saveResume(Resume resume);
 
     void deleteResume(Integer id);
+
+    void commitRecruitment(Integer resumeId,Integer recruitmentId);
+
+    Page<Resume> getApplyResume(Integer userId,String search,Integer currPage);
+
+    ApplyResume getApplyResumeById(Integer id);
 }

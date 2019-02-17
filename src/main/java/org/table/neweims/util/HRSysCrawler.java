@@ -5,6 +5,7 @@ import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
 import org.table.neweims.entities.Student;
+import org.table.neweims.enums.GenderEnum;
 import org.table.neweims.exception.MyException;
 
 import java.io.IOException;
@@ -32,19 +33,28 @@ public class HRSysCrawler {
             pwInput.setValueAttribute(pw);
             HtmlButtonInput submit = (HtmlButtonInput) loginHRPage.getElementById("Submit");
             HtmlPage mainPage = null;
+            HtmlPage stuPage = null;
+
             try{
                 mainPage = submit.click();
+                stuPage = (HtmlPage) mainPage.getFrameByName("main").getEnclosedPage();
                 client.waitForBackgroundJavaScript(20000);
-            }catch (IOException e){
-                throw new RuntimeException(e);
+            }catch (Exception e){
+                throw new RuntimeException("学号或密码错误",e);
             }
-            HtmlPage stuPage = (HtmlPage) mainPage.getFrameByName("main").getEnclosedPage();
-            HtmlPage infoPage = ((HtmlTableDataCell)stuPage.getByXPath("//tr[@title='个人信息查询']/td").get(0)).click();
-            table = (HtmlTable) infoPage.getByXPath("//td[@class='tablehead']/table").get(0);
-        } catch (IOException e) {
-            throw new MyException("学生系统服务器异常",e);
+
+            HtmlPage infoPage = null;
+
+            try{
+                infoPage = ((HtmlTableDataCell)stuPage.getByXPath("//tr[@title='个人信息查询']/td").get(0)).click();
+                table = (HtmlTable) infoPage.getByXPath("//td[@class='tablehead']/table").get(0);
+            }catch (Exception e){
+                throw new RuntimeException("学生系统异常,或处于选课时期",e);
+            }
         } catch (RuntimeException e){
-            throw new MyException("学号或密码错误",e);
+            throw new MyException(e.getMessage(),e);
+        } catch (Exception e) {
+            throw new MyException("学生系统服务器异常",e);
         }
 
         if(table != null){

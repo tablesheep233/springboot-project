@@ -1,29 +1,45 @@
 package org.table.neweims.dto;
 
-import org.table.neweims.entities.Enterprise;
-import org.table.neweims.entities.Recruitment;
-
-import java.util.List;
+import org.table.neweims.enums.StatusEnum;
 
 public class RecruitmentDto {
+    private Integer id;
 
-    private Enterprise enterprise;
+    private String job;
 
-    private List<Recruitment> recruitments;
+    private StatusEnum status;
 
-    public Enterprise getEnterprise() {
-        return enterprise;
+    private String reviewer;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setEnterprise(Enterprise enterprise) {
-        this.enterprise = enterprise;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public List<Recruitment> getRecruitments() {
-        return recruitments;
+    public String getJob() {
+        return job;
     }
 
-    public void setRecruitments(List<Recruitment> recruitments) {
-        this.recruitments = recruitments;
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
+    public String getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(String reviewer) {
+        this.reviewer = reviewer;
     }
 }

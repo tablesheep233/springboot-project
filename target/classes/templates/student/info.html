@@ -53,7 +53,7 @@
                                             </div>
                                             <div class="col-lg-1 form-group">
                                                 <label>性别</label>
-                                                <input name="gender" type="text" class="form-control" readonly th:value="${stuInfo.gender}=='w'?'女':'男'">
+                                                <input name="gender" type="text" class="form-control" readonly th:value="${stuInfo.gender.text}">
                                             </div>
                                             <div class="col-lg-5 form-group">
                                                 <label>专业</label>
@@ -71,11 +71,11 @@
                                             </div>
                                             <div class="col-lg-3 form-group">
                                                 <label>联系号码</label>
-                                                <input name="tel" type="tel" class="form-control" th:value="${stuInfo!=null}?${stuInfo.tel}">
+                                                <input name="tel" type="tel" required class="form-control" th:value="${stuInfo!=null}?${stuInfo.tel}">
                                             </div>
                                             <div class="col-lg-3 form-group">
                                                 <label>邮箱</label>
-                                                <input name="email" type="email" class="form-control" th:value="${stuInfo!=null}?${stuInfo.email}">
+                                                <input name="email" type="email" required class="form-control" th:value="${stuInfo!=null}?${stuInfo.email}">
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary" th:text="保存"></button>

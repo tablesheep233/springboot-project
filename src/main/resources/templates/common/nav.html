@@ -46,6 +46,16 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>个人简历</span></a>
             </li>
+            <li class="nav-item" th:class="${activeUri=='recruitment.html'?'nav-item active':'nav-item'}">
+                <a class="nav-link" th:href="@{/recruitment}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>招聘信息</span></a>
+            </li>
+            <li class="nav-item" th:class="${activeUri=='track.html'?'nav-item active':'nav-item'}">
+                <a class="nav-link" th:href="@{/track}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>毕业动态</span></a>
+            </li>
             </shiro:hasPermission>
 
             <shiro:hasPermission name="stu:need">
@@ -69,7 +79,25 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>招聘信息</span></a>
             </li>
+            <li class="nav-item" th:class="${activeUri=='apply.html'?'nav-item active':'nav-item'}">
+                <a class="nav-link" th:href="@{/apply}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>应聘情况</span></a>
+            </li>
             </shiro:hasPermission>
+            </shiro:hasRole>
+
+            <shiro:hasRole name="admin">
+                <li class="nav-item" th:class="${activeUri=='enterprise.html'?'nav-item active':'nav-item'}">
+                    <a class="nav-link" th:href="@{/allenterprise}">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>企业管理</span></a>
+                </li>
+                <li class="nav-item" th:class="${activeUri=='sr.html'?'nav-item active':'nav-item'}">
+                    <a class="nav-link" th:href="@{/recruitmentStatus}">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>招聘管理</span></a>
+                </li>
             </shiro:hasRole>
         </ul>
     </div>
@@ -89,10 +117,10 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">您选择退出系统,确定要退出吗?</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" th:href="@{/logout}">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                    <a class="btn btn-primary" th:href="@{/logout}">退出</a>
                 </div>
             </div>
         </div>
@@ -108,7 +136,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- 模态框主体 -->
-                <div class="modal-body">
+                <div id="tipbody" class="modal-body">
                     [[${tip}]]
                 </div>
                 <!-- 模态框底部 -->

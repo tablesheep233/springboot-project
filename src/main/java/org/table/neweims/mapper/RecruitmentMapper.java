@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.table.neweims.dto.RecruitmentDto;
 import org.table.neweims.entities.Recruitment;
 
 import java.util.List;
@@ -24,4 +25,7 @@ public interface RecruitmentMapper {
 
     @Delete("delete from tb_recruitment where id = #{id}")
     void deleteRecruitment(Integer id);
+
+    List<RecruitmentDto> getAllSRByPage(@Param("userId") Integer userId, @Param("name") String name, @Param("data") Map<String,Object> data);
+
 }

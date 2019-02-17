@@ -8,7 +8,7 @@ import org.table.neweims.entities.User;
 @Mapper
 public interface UserMapper {
 
-    @Insert("insert into tb_user (username,password,salt) values (#{username},#{password},#{salt})")
+    @Insert("insert into tb_user (username,password,salt,uphone) values (#{username},#{password},#{salt},#{uPhone})")
     void insertUser(User user);
 
     @Select("select username from tb_user where username = #{name}")
@@ -19,4 +19,7 @@ public interface UserMapper {
 
     @Select("select * from tb_user where id = #{id}")
     User selectUserById(Integer id);
+
+    @Select("select uphone from tb_user where uphone = #{phone}")
+    String selectPhone(String phone);
 }

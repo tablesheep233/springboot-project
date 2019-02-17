@@ -19,4 +19,7 @@ public interface StudentMapper {
     Student selectStuByUsername(String username);
 
     void updateStu(Student student);
+
+    @Select("select id from tb_student where user_id=#{userId}")
+    Integer selectStuId(Integer userId);
 }
