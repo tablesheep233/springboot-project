@@ -11,6 +11,8 @@ public interface UserMapper {
     @Insert("insert into tb_user (username,password,salt,uphone) values (#{username},#{password},#{salt},#{uPhone})")
     void insertUser(User user);
 
+    void updateUser(User user);
+
     @Select("select username from tb_user where username = #{name}")
     String selectUserName(String name);
 
@@ -22,4 +24,13 @@ public interface UserMapper {
 
     @Select("select uphone from tb_user where uphone = #{phone}")
     String selectPhone(String phone);
+
+    @Select("select username from tb_user where uphone = #{phone}")
+    String selectUsernameByphone(String phone);
+
+    @Select("select password from tb_user where uphone = #{phone}")
+    String selectPasswordByphone(String phone);
+
+    @Select("select id from tb_user where uphone = #{phone}")
+    Integer selectUserIdByPhone(String phone);
 }

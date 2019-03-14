@@ -3,31 +3,31 @@
 <mapper namespace="org.table.neweims.mapper.TrackMapper">
   <resultMap id="TrackResultMap" type="org.table.neweims.entities.Track">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="begin" jdbcType="VARCHAR" property="begin" />
-    <result column="end" jdbcType="VARCHAR" property="end" />
+    <result column="year" jdbcType="VARCHAR" property="year" />
+    <result column="money" jdbcType="INTEGER" property="money" />
     <result column="employee" jdbcType="VARCHAR" property="employee" />
     <result column="nature" jdbcType="VARCHAR" property="nature" />
     <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="session" jdbcType="CHAR" property="session" />
     <result column="student_id" jdbcType="INTEGER" property="studentId" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, begin, end, employee, nature, job, student_id
-  </sql>
 
   <select id="selectTrackListByStu" resultMap="TrackResultMap">
     select * from tb_track
     where student_id = #{stuId}
-    order by begin
+    order by year
   </select>
 
   <insert id="insertTrack" parameterType="org.table.neweims.entities.Track">
     insert into tb_track
     <trim prefix="(" suffixOverrides="," suffix=")">
-      <if test="begin != null  and begin != ''">
-        begin,
+      <if test="year != null  and year != ''">
+        year,
       </if>
-      <if test="end != null and end != ''">
-        end,
+      <if test="money != null and money != ''">
+        money,
       </if>
       <if test="employee != null and employee != ''">
         employee,
@@ -38,16 +38,25 @@
       <if test="job != null and job != ''">
         job,
       </if>
+      <if test="city != null and city != ''">
+        city,
+      </if>
+      <if test="industry != null and industry != ''">
+        industry,
+      </if>
+      <if test="session != null and session != ''">
+        session,
+      </if>
       <if test="studentId != null and studentId != ''">
         student_id,
       </if>
     </trim>
     <trim prefix="values(" suffixOverrides="," suffix=")">
-      <if test="begin != null and begin != ''">
-        #{begin},
+      <if test="year != null and year != ''">
+        #{year},
       </if>
-      <if test="end != null and end != ''">
-        #{end},
+      <if test="money != null and money != ''">
+        #{money},
       </if>
       <if test="employee != null and employee != ''">
         #{employee},
@@ -58,6 +67,15 @@
       <if test="job != null and job != ''">
         #{job},
       </if>
+      <if test="city != null and city != ''">
+        #{city},
+      </if>
+      <if test="industry != null and industry != ''">
+        #{industry},
+      </if>
+      <if test="session != null and session != ''">
+        #{session},
+      </if>
       <if test="studentId != null and studentId != ''">
         #{studentId},
       </if>
@@ -67,11 +85,11 @@
   <update id="updateTrack" parameterType="org.table.neweims.entities.Track">
     update tb_track
     <trim prefix="set" suffixOverrides=",">
-      <if test="begin != null and begin != ''">
-        begin = #{begin},
+      <if test="year != null and year != ''">
+        year = #{year},
       </if>
-      <if test="end != null and end != ''">
-        end = #{end},
+      <if test="money != null and money != ''">
+        money = #{money},
       </if>
       <if test="employee != null and employee != ''">
         employee = #{employee},
@@ -82,9 +100,90 @@
       <if test="job != null and job != ''">
         job = #{job},
       </if>
+      <if test="city != null and city != ''">
+        city = #{city},
+      </if>
+      <if test="industry != null and industry != ''">
+        industry = #{industry},
+      </if>
+      <if test="session != null and session != ''">
+        session = #{session},
+      </if>
     </trim>
     <where>
       id = #{id}
     </where>
   </update>
+
+  <select id="selectCity" resultType="java.lang.String">
+    select city from tb_track
+      <trim prefix="where" suffixOverrides="and">
+        <if test="session != null and session != ''">
+          session = #{session} and
+        </if>
+        <if test="year != null and year != ''">
+          year = #{year} and
+        </if>
+      </trim>
+    group by city
+    order by count(city) DESC
+  </select>
+
+  <select id="selectCityCount" resultType="java.lang.Integer">
+    select count(city) from tb_track
+    <trim prefix="where" suffixOverrides="and">
+      <if test="session != null and session != ''">
+        session = #{session} and
+      </if>
+      <if test="year != null and year != ''">
+        year = #{year} and
+      </if>
+    </trim>
+    group by city
+    order by count(city) DESC
+  </select>
+
+  <select id="selectIndustry" resultType="java.util.Map">
+    select industry as name, count(industry) as value from tb_track
+    <trim prefix="where" suffixOverrides="and">
+      <if test="session != null and session != ''">
+        session = #{session} and
+      </if>
+      <if test="year != null and year != ''">
+        year = #{year} and
+      </if>
+    </trim>
+    group by industry
+    order by count(industry) DESC
+  </select>
+
+  <select id="selectMoney" resultType="java.util.Map">
+    select
+    case
+      when money &lt; 3000 then '3000以下'
+      when money &gt;=3000 and money &lt; 4000 then '3000-4000'
+      when money &gt;=4000 and money &lt; 5000 then '4000-5000'
+      when money &gt;=5000 and money &lt; 6000 then '5000-6000'
+      when money &gt;=6000 and money &lt; 7000 then '6000-7000'
+      when money &gt;= 7000 then '7000以上' end
+    as name,
+    count(money) as value
+    from tb_track
+    <trim prefix="where" suffixOverrides="and">
+      <if test="session != null and session != ''">
+        session = #{session} and
+      </if>
+      <if test="year != null and year != ''">
+        year = #{year} and
+      </if>
+    </trim>
+    group by
+    case
+      when money &lt; 3000 then '3000以下'
+      when money &gt;=3000 and money &lt; 4000 then '3000-4000'
+      when money &gt;=4000 and money &lt; 5000 then '4000-5000'
+      when money &gt;=5000 and money &lt; 6000 then '5000-6000'
+      when money &gt;=6000 and money &lt; 7000 then '6000-7000'
+      when money &gt;= 7000 then '7000以上' end
+  </select>
 </mapper>

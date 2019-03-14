@@ -34,6 +34,9 @@
       <if test="userId!=null and userId!=''">
          e.user_id = #{userId} and
       </if>
+      <if test="statu!=null">
+        r.status = #{statu} and
+      </if>
       <if test="name!=null and name!=''">
          r.job like #{name} and
       </if>
@@ -46,6 +49,9 @@
        <if test="userId!=null and userId!=''">
          user_id = #{userId} and
        </if>
+      <if test="statu!=null">
+        status = #{statu} and
+      </if>
        <if test="name!=null and name!=''">
          job like #{name} and
        </if>
@@ -78,6 +84,7 @@
         r.job like #{name} and
       </if>
     </trim>
+    order by r.status DESC
   </select>
 
 
@@ -188,4 +195,14 @@
     </where>
   </update>
 
+  <select id="getSSData" resultType="java.util.Map">
+    select r.job as name,count(r.job) as value from tb_resume_recruitment rr
+    inner join  tb_recruitment r on r.id = rr.recruitment_id and r.user_id = #{userId}
+    <where>
+    <if test="date != null and date != ''">
+      rr.time = #{date}
+    </if>
+    </where>
+    group by  r.job
+  </select>
 </mapper>

@@ -1,12 +1,10 @@
 package org.table.neweims.mapper;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.table.neweims.entities.Track;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface TrackMapper {
@@ -22,4 +20,18 @@ public interface TrackMapper {
 
     @Delete("delete from tb_track where id=#{id}")
     void deleteTrack(Integer id);
+
+    List<String> selectCity(@Param("year") String year,@Param("session") Integer session);
+
+    List<Integer> selectCityCount(@Param("year") String year,@Param("session") Integer session);
+
+    @Select("select distinct year from tb_track")
+    List<String> selectYear();
+
+    @Select("select distinct session from tb_track")
+    List<Integer> selectSession();
+
+    List<Map<String,Object>> selectIndustry(@Param("year") String year,@Param("session") Integer session);
+
+    List<Map<String,Object>> selectMoney(@Param("year") String year,@Param("session") Integer session);
 }

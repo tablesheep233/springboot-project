@@ -1,5 +1,6 @@
 package org.table.neweims.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.table.neweims.util.SysContext;
 
 import java.util.List;
 
+@RequiresPermissions("track:*")
 @Controller
 public class TrackController {
 
@@ -24,7 +26,7 @@ public class TrackController {
 
     @GetMapping("/track")
     public String trackList(Model model){
-        List<Track> list = trackService.getTrackListFromStu();
+        List<Track> list = trackService.getTrackListFromStu(trackService.getStuId(SysContext.getCurrentUser()));
         model.addAttribute("trackList",list);
         return "student/track/list";
     }

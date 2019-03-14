@@ -33,6 +33,7 @@
         e.status = #{status} and
       </if>
     </trim>
+    order by e.status DESC
   </select>
 
   <select id="selectEnterpriseCount" resultType="INTEGER">

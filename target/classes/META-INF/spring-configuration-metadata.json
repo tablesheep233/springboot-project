@@ -33,6 +33,12 @@
     {
       "sourceType": "org.table.neweims.config.ymlpojo.Code",
       "defaultValue": 0,
+      "name": "code.reset-template-id",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "org.table.neweims.config.ymlpojo.Code",
+      "defaultValue": 0,
       "name": "code.template-id",
       "type": "java.lang.Integer"
     },

@@ -22,15 +22,42 @@
 </head>
 
 <body id="page-top">
-    <div th:replace="common/nav::topbar"></div>
+<div th:replace="common/nav::topbar(activeUri='main.html')"></div>
+<div id="wrapper">
 
-    <div id="wrapper">
-        <div th:replace="common/nav::sidebar(activeUri='main.html')"></div>
+    <div th:replace="common/nav::sidebar"></div>
 
-        <h3 shiro:hasPermission="enterprise:please">请填写企业信息</h3>
-        <h3 shiro:hasPermission="enterprise:illegal">请等待管理员审核信息</h3>
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <span shiro:hasPermission="ent:please">请填写企业信息</span>
+                                <span shiro:hasPermission="ent:illegal">请等待管理员审核信息</span>
+                                <div shiro:hasPermission="ent:legal">
+                                    <div class="col-12">
+                                        <label class="label">选择时间:</label>
+                                        <input type="text" class="form-control-sm" id="date">
+                                        <button class="btn-sm" onclick="showRR()">确定</button>
+                                    </div>
+                                    <div id="repRR" class="col-12" style="height:600px;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row" shiro:hasRole="admin">
+                                <div class="row">您还有[[${entNum}]]间企业和[[${reNum}]]份招聘信息需要审核</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     </div>
+</div>
     <!-- Scroll to Top Button-->
     <div th:replace="common/nav::topbut"></div>
 
@@ -40,6 +67,7 @@
     <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.bundle.min.js}"></script>
 
+    <script th:src="@{/mystatic/js/echarts.js}"></script>
     <!-- Page level plugin JavaScript-->
     <script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
     <script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
@@ -47,5 +75,74 @@
     <script th:src="@{/mystatic/js/sb-admin.js}"></script>
     <!-- Core plugin JavaScript-->
     <script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+    <script>
+        var rrDom = document.getElementById("repRR");
+        var myRRChart = echarts.init(rrDom);
+        rrOption = null;
+        function rrData(cb) {
+            var date = null;
+
+            if (document.getElementById("date")!=null){
+                date = document.getElementById("date").value;
+            }
+            $.ajax({
+                type: "post",
+                url: "/rr",
+                data:{"date":date},
+                success: function(data){
+                    cb(data);
+                }
+            });
+        }
+
+        // 初始 option
+        rrOption = {
+            title: {
+                text: '投递情况'
+            },
+            tooltip: {},
+            legend: {
+                data:['投递']
+            },
+            series: [{
+                name: '投递',
+                type: 'pie',
+                radius: '55%',
+                roseType: 'angle',
+                data: []
+            }]
+        };
+
+        myRRChart.showLoading();
+
+        rrData(function (data) {
+            myRRChart.hideLoading();
+            myRRChart.setOption({
+                series: [{
+                    // 根据名字对应到相应的系列
+                    name: '投递',
+                    data: data
+                }]
+            });
+        });
+        if (rrOption && typeof rrOption === "object") {
+            myRRChart.setOption(rrOption, true);
+        }
+
+        function showRR() {
+            myRRChart.showLoading();
+            rrData(function (data) {
+                myRRChart.hideLoading();
+                myRRChart.setOption({
+                    series: [{
+                        // 根据名字对应到相应的系列
+                        name: '投递',
+                        data: data
+                    }]
+                });
+            });
+        }
+
+    </script>
 </body>
 </html>

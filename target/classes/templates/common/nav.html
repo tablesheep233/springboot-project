@@ -9,7 +9,7 @@
     <!--topbar-->
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top" th:fragment="topbar">
         <input type="hidden" id="tip" th:value="${tip}" th:if="${tip!=null}">
-        <a class="navbar-brand mr-1" th:href="@{/main}">Hello</a>
+        <a th:class="${activeUri=='main.html'?'navbar-brand mr-1 active':'navbar-brand mr-1'}" th:href="@{/main}">华软就业信息管理系统</a>
 
         <ul class="navbar-nav d-md-inline-block ml-auto">
             <li class="nav-item dropdown no-arrow">
@@ -27,41 +27,35 @@
     <!-- Sidebar -->
     <div class="sidebar navbar-nav" th:fragment="sidebar">
         <ul class="nav">
-            <li class="nav-item active" th:class="${activeUri=='main.html'?'nav-item active':'nav-item'}">
-                <a class="nav-link" th:href="@{/main}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Main</span>
-                </a>
-            </li>
 
             <shiro:hasRole name="student">
             <shiro:hasPermission name="stu:real">
             <li class="nav-item" th:class="${activeUri=='info.html'?'nav-item active':'nav-item'}">
                 <a class="nav-link" th:href="@{/student}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-address-card"></i>
                     <span>学生信息</span></a>
             </li>
             <li class="nav-item" th:class="${activeUri=='resume.html'?'nav-item active':'nav-item'}">
                 <a class="nav-link" th:href="@{/resume}">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-book"></i>
                     <span>个人简历</span></a>
             </li>
             <li class="nav-item" th:class="${activeUri=='recruitment.html'?'nav-item active':'nav-item'}">
                 <a class="nav-link" th:href="@{/recruitment}">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-bookmark"></i>
                     <span>招聘信息</span></a>
             </li>
             <li class="nav-item" th:class="${activeUri=='track.html'?'nav-item active':'nav-item'}">
                 <a class="nav-link" th:href="@{/track}">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-road"></i>
                     <span>毕业动态</span></a>
             </li>
             </shiro:hasPermission>
 
             <shiro:hasPermission name="stu:need">
-            <li class="nav-item" shiro:hasPermission="student:need" th:class="${activeUri=='bind.html'?'nav-item active':'nav-item'}">
+            <li class="nav-item" th:class="${activeUri=='bind.html'?'nav-item active':'nav-item'}">
                 <a class="nav-link" th:href="@{/student}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-pencil"></i>
                     <span>绑定学生信息</span></a>
             </li>
             </shiro:hasPermission>
@@ -70,18 +64,18 @@
             <shiro:hasRole name="enterprise">
             <li class="nav-item" th:class="${activeUri=='info.html'?'nav-item active':'nav-item'}">
                 <a class="nav-link" th:href="@{/enterprise}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-building"></i>
                     <span>企业信息</span></a>
             </li>
-            <shiro:hasPermission name="enterprise:legal">
-            <li class="nav-item" th:class="${activeUri=='recruitment.html'?'nav-item active':'nav-item'}">
-                <a class="nav-link" th:href="@{/recruitment}">
-                    <i class="fas fa-fw fa-table"></i>
+            <shiro:hasPermission name="ent:legal">
+            <li class="nav-item" th:class="${activeUri=='sr.html'?'nav-item active':'nav-item'}">
+                <a class="nav-link" th:href="@{/recruitmentStatus}">
+                    <i class="fas fa-fw fa-bookmark"></i>
                     <span>招聘信息</span></a>
             </li>
             <li class="nav-item" th:class="${activeUri=='apply.html'?'nav-item active':'nav-item'}">
                 <a class="nav-link" th:href="@{/apply}">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-comment"></i>
                     <span>应聘情况</span></a>
             </li>
             </shiro:hasPermission>
@@ -90,13 +84,23 @@
             <shiro:hasRole name="admin">
                 <li class="nav-item" th:class="${activeUri=='enterprise.html'?'nav-item active':'nav-item'}">
                     <a class="nav-link" th:href="@{/allenterprise}">
-                        <i class="fas fa-fw fa-table"></i>
+                        <i class="fas fa-fw fa-cubes"></i>
                         <span>企业管理</span></a>
                 </li>
                 <li class="nav-item" th:class="${activeUri=='sr.html'?'nav-item active':'nav-item'}">
                     <a class="nav-link" th:href="@{/recruitmentStatus}">
-                        <i class="fas fa-fw fa-table"></i>
+                        <i class="fas fa-fw fa-bookmark"></i>
                         <span>招聘管理</span></a>
+                </li>
+                <li class="nav-item" th:class="${activeUri=='stu.html'?'nav-item active':'nav-item'}">
+                    <a class="nav-link" th:href="@{/stuList}">
+                        <i class="fas fa-fw fa-leaf"></i>
+                        <span>学生管理</span></a>
+                </li>
+                <li class="nav-item" th:class="${activeUri=='rep.html'?'nav-item active':'nav-item'}">
+                    <a class="nav-link" th:href="@{/rep}">
+                        <i class="fas fa-fw fa-chart-bar"></i>
+                        <span>就业分析</span></a>
                 </li>
             </shiro:hasRole>
         </ul>

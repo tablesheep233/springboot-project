@@ -2,7 +2,10 @@ package org.table.neweims.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -11,9 +14,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.table.neweims.realm.MyShiroRealm;
+import org.table.neweims.realm.SecondRealm;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 @Configuration
 public class ShiroConfig {
@@ -36,6 +39,18 @@ public class ShiroConfig {
         return myShiroRealm;
     }
 
+    @Bean(name = "secondRealm")
+    public SecondRealm secondRealm(){
+        SecondRealm myShiroRealm = new SecondRealm();
+        return myShiroRealm;
+    }
+
+    @Bean(name = "modularRealmAuthenticator")
+    public ModularRealmAuthenticator modularRealmAuthenticator(){
+        ModularRealmAuthenticator modularRealmAuthenticator = new ModularRealmAuthenticator();
+        modularRealmAuthenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
+        return modularRealmAuthenticator;
+    }
 
     /**
      * 注入securityManager
@@ -43,9 +58,14 @@ public class ShiroConfig {
      */
     @Bean(name = "securityManager")
     public SecurityManager securityManager(
-            @Qualifier ("myShiroRealm") MyShiroRealm realm){
+            @Qualifier ("myShiroRealm") MyShiroRealm realm,@Qualifier ("secondRealm") SecondRealm secondRealm,
+            @Qualifier("modularRealmAuthenticator") ModularRealmAuthenticator modularRealmAuthenticator){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(realm);
+        securityManager.setAuthenticator(modularRealmAuthenticator);
+        List<Realm> realms = new ArrayList<>();
+        realms.add(realm);
+        realms.add(secondRealm);
+        securityManager.setRealms(realms);
         return securityManager;
     }
 
@@ -88,6 +108,9 @@ public class ShiroConfig {
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/register","anon");
         filterChainDefinitionMap.put("/login","anon");
+        filterChainDefinitionMap.put("/plogin","anon");
+        filterChainDefinitionMap.put("/reset","anon");
+        filterChainDefinitionMap.put("/msg","anon");
         filterChainDefinitionMap.put("/webjars/**","anon");
         filterChainDefinitionMap.put("/user/**","anon");
         filterChainDefinitionMap.put("/logout","logout");

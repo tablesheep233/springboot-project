@@ -124,4 +124,25 @@ public class UserServiceImpl implements UserService {
             return true;
         }
     }
+
+    @Override
+    public String getU(String phone) {
+        return userMapper.selectUsernameByphone(phone);
+    }
+
+    @Override
+    public String getP(String phone) {
+        return userMapper.selectPasswordByphone(phone);
+    }
+
+    @Override
+    public Boolean reset(String phone, String password) {
+        User user = new User();
+        user.setId(userMapper.selectUserIdByPhone(phone));
+        UUID uuid = UUID.randomUUID();
+        user.setSalt(uuid.toString().replace("-",""));
+        user.setPassword(Encryption.getEncryption(password,user.getSalt()));
+        userMapper.updateUser(user);
+        return null;
+    }
 }

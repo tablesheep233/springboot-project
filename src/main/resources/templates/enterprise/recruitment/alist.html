@@ -33,8 +33,11 @@
 
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fas fa-table"></i>
+                    <i class="fas fa-bookmark"></i>
                     招聘管理
+
+                    <a shiro:hasRole="enterprise" class="btn float-md-right" th:href="@{/toaddrecruitment}">
+                        <i class="fas fa-plus"></i>发布招聘</a>
 
                     <form th:if="${page.totalPage!=0}" th:action="@{/recruitmentStatus}" class="d-none float-md-right d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                         <div class="input-group">
@@ -57,20 +60,26 @@
                                 <th>状态</th>
                                 <th>操作者</th>
                                 <th>详情</th>
-                                <th>更改</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="sr:${page.result}">
                                 <td>[[${sr.job}]]</td>
                                 <td>
-                                    <select name="status" class="form-control">
+                                    <select shiro:hasRole="admin" name="status" class="form-control">
                                         <option th:each="s:${status}" th:selected="${sr?.status==s}" th:value="${s}" th:text="${s.message}"></option>
                                     </select>
+                                    <div shiro:hasRole="enterprise">[[${sr.status.message}]]</div>
                                 </td>
                                 <td>[[${sr.reviewer}]]</td>
-                                <td><a class="btn btn-primary showRecruitment" th:value="${sr.id}">查看</a></td>
-                                <td><a class="btn btn-primary" th:value="${sr.id}">更改</a></td>
+                                <td>
+                                    <a shiro:hasRole="admin" class="btn btn-primary showRecruitment" th:value="${sr.id}">查看</a>
+                                    <a shiro:hasRole="enterprise" class="btn btn-sm btn-info" th:href="@{/recruitment/}+${sr.id}">编辑招聘</a></td>
+                                <td>
+                                    <a shiro:hasRole="admin" class="btn btn-primary upSr" th:value="${sr.id}">更改</a>
+                                    <button shiro:hasRole="enterprise" th:attr="del_url=@{/recruitment/}+${sr.id}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -97,6 +106,11 @@
                     </ul>
                 </div>
 
+                <form id="deleteForm" method="post">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <input type="hidden" name="search" th:value="${page.search}" th:if="${page.search!=null}">
+                </form>
+
             </div>
 
         </div>
@@ -109,7 +123,8 @@
 <!-- Modal-->
 <div th:replace="common/nav::logoutMod"></div>
 <div th:replace="common/nav::tipModal"></div>
-<div th:replace="common/modal::srModal"></div>
+<div  shiro:hasRole="admin" th:replace="common/modal::srModal"></div>
+<div shiro:hasRole="enterprise" th:replace="common/nav::delModal"></div>
 
 <!-- Bootstrap core JavaScript-->
 <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>

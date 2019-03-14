@@ -5,15 +5,21 @@ import org.table.neweims.enums.NatureEnum;
 public class Track {
     private Integer id;
 
-    private String begin;
-
-    private String end;
+    private String year;
 
     private String employee;
 
     private NatureEnum nature;
 
     private String job;
+
+    private int money;
+
+    private String city;
+
+    private String industry;
+
+    private String session;
 
     private Integer studentId;
 
@@ -25,20 +31,28 @@ public class Track {
         this.id = id;
     }
 
-    public String getBegin() {
-        return begin;
+    public String getYear() {
+        return year;
     }
 
-    public void setBegin(String begin) {
-        this.begin = begin == null ? null : begin.trim();
+    public void setYear(String year) {
+        this.year = year;
     }
 
-    public String getEnd() {
-        return end;
+    public int getMoney() {
+        return money;
     }
 
-    public void setEnd(String end) {
-        this.end = end == null ? null : end.trim();
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public String getSession() {
+        return session;
+    }
+
+    public void setSession(String session) {
+        this.session = session;
     }
 
     public String getEmployee() {
@@ -68,6 +82,22 @@ public class Track {
 
     public void setJob(String job) {
         this.job = job == null ? null : job.trim();
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
     }
 
     public Integer getStudentId() {

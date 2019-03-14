@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>rep</title>
+
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/webjars/font-awesome/5.3.1/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/mystatic/css/sb-admin.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+<div th:replace="common/nav::topbar"></div>
+
+<div id="wrapper">
+    <div th:replace="common/nav::sidebar(activeUri='rep.html')"></div>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <i class="fas fa-chart-bar"></i>
+                            就业分析
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="col-12">
+                                <label class="label">选择年级:</label>
+                                <select id="session" class="form-control-sm" name="session" th:if="${sdata.sessions!=null}">
+                                    <option th:each="s:${sdata.sessions}" th:value="${s}" th:text="${s}"></option>
+                                </select>
+                                <label class="label">选择年份:</label>
+                                <select id="year" class="form-control-sm" name="year" th:if="${sdata.years!=null}">
+                                    <option th:each="y:${sdata.years}" th:value="${y}" th:text="${y}"></option>
+                                </select>
+                                <button class="btn-sm" onclick="showCity()">确定</button>
+                            </div>
+                            <div id="repCity" class="col-12" style="height:400px;"></div>
+                        </div>
+                        <div class="col-6">
+                            <div class="col-12">
+                                <label class="label">选择年级:</label>
+                                <select id="isession" class="form-control-sm" th:if="${sdata.sessions!=null}">
+                                    <option th:each="s:${sdata.sessions}" th:value="${s}" th:text="${s}"></option>
+                                </select>
+                                <label class="label">选择年份:</label>
+                                <select id="iyear" class="form-control-sm" th:if="${sdata.years!=null}">
+                                    <option th:each="y:${sdata.years}" th:value="${y}" th:text="${y}"></option>
+                                </select>
+                                <button class="btn-sm" onclick="showIndustry()">确定</button>
+                            </div>
+                            <div id="repIndustry" class="col-12" style="height:400px;"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="col-12">
+                                <label class="label">选择年级:</label>
+                                <select id="msession" class="form-control-sm" name="msession" th:if="${sdata.sessions!=null}">
+                                    <option th:each="s:${sdata.sessions}" th:value="${s}" th:text="${s}"></option>
+                                </select>
+                                <label class="label">选择年份:</label>
+                                <select id="myear" class="form-control-sm" name="year" th:if="${sdata.years!=null}">
+                                    <option th:each="y:${sdata.years}" th:value="${y}" th:text="${y}"></option>
+                                </select>
+                                <button class="btn-sm" onclick="showMoney()">确定</button>
+                            </div>
+                            <div id="repMoney" class="col-12" style="height:400px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Scroll to Top Button-->
+<div th:replace="common/nav::topbut"></div>
+
+<!-- Modal-->
+<div th:replace="common/nav::logoutMod"></div>
+
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+<!-- Page level plugin JavaScript-->
+<script th:src="@{/mystatic/js/echarts.js}"></script>
+<script th:src="@{/mystatic/js/myjs-do.js}"></script>
+<script th:src="@{/mystatic/js/sb-admin.js}"></script>
+<script th:src="@{/mystatic/js/myjs-echarts.js}"></script>
+<!-- Core plugin JavaScript-->
+
+
+</body>
+</html>

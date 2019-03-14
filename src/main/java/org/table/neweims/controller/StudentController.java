@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.table.neweims.dto.Page;
 import org.table.neweims.entities.Student;
+import org.table.neweims.exception.MyException;
 import org.table.neweims.service.StudentService;
 import org.table.neweims.util.MyResult;
 
@@ -33,8 +35,13 @@ public class StudentController {
 
     @PostMapping("/student")
     public String bindStuInfo(@RequestParam("username") String username,
-                               @RequestParam("password") String password,Model model){
-        MyResult result = studentService.bindStuInfo(username,password);
+                               @RequestParam("password") String password,Model model) throws MyException {
+        MyResult result = null;
+        try {
+            result = studentService.bindStuInfo(username,password);
+        }catch (MyException e){
+            throw e;
+        }
         model.addAttribute("stuInfo",result.get("result"));
         return "student/info";
     }
@@ -46,4 +53,6 @@ public class StudentController {
         model.addAttribute("msg","success");
         return "student/info";
     }
+
+
 }

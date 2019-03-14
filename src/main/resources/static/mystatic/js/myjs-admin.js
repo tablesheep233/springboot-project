@@ -2,18 +2,25 @@
     var count = 60; //间隔函数，1秒执行
     var curCount;//当前剩余秒数
 
+
     $("#codeBtn").click(function () {
         curCount = count;
-        var uphone = $("#uPhone").val();
+        var uphone = $("#uphone").val();
+        var reset = null;
+        if($("#reset").length>0){
+            reset = $("#reset").val();
+        }
         if (uphone==null||uphone=="") {
             $("#msg").html("手机号不能为空");
-        }else if(checkPhone(uphone)){
+        }else if(checkPhone(uphone)&&$("title").html()=="Register"){
             $("#msg").html("该号码已注册");
+        } else if(!checkPhone(uphone)&&$("title").html()!="Register"){
+            $("#msg").html("该号码不存在");
         } else{
             $.ajax({
                 type: "post",
                 url: "/user/outSms",
-                data: {"uphone": uphone},
+                data: {"uphone": uphone,"reset": reset},
                 success: function (data) {
 
                 }
@@ -113,7 +120,7 @@
 
     var validate = function () {
         var smscode = $("#smscode").val();
-        var uphone = $("#uPhone").val();
+        var uphone = $("#uphone").val();
         var check=true;
         $.ajax({
             type: "post",
@@ -139,7 +146,28 @@
             document.getElementById("msg").innerHTML = " tip:两次密码不相同";
             return false;
         }
+    }
 
+    var pvalidate = function () {
+        var smscode = $("#smscode").val();
+        var uphone = $("#uphone").val();
+        var check=true;
+        $.ajax({
+            type: "post",
+            url: "/user/checkSms",
+            async: false,
+            cache: false,
+            data: {"smscode": smscode,"uphone": uphone},
+            success: function (data) {
+                check = data;
+            }
+        });
+        if (!check.rest) {
+            $("#msg").html(check.tip);
+            return false;
+        }else{
+            return true;
+        }
     }
 
 

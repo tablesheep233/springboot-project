@@ -55,11 +55,15 @@ public class TestMapper {
     @Test
     public void testUser() {
 
-        User user = new User();
-        user.setUsername("2333");
-        user.setPassword("2333");
-        user.setSalt("222");
-        userMapper.insertUser(user);
+//        List<Map<String,Object>> list = trackMapper.selectIn();
+////        for(Map.Entry<String,Integer> entry : map.entrySet()){
+////            System.out.println(entry.getKey()+","+entry.getValue());
+////        }
+//        for (Map<String,Object> l : list) {
+//            for(Map.Entry<String,Object> entry : l.entrySet()){
+//                System.out.println(entry.getKey()+","+entry.getValue());
+//            }
+//        }
     }
 
     @Test

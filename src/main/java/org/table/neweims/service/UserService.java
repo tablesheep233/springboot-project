@@ -34,4 +34,10 @@ public interface UserService {
     List<String> getUserPerms(String name);
 
     Boolean checkPhone(String phone);
+
+    String getU(String phone);
+
+    String getP(String phone);
+
+    Boolean reset(String phone,String password);
 }

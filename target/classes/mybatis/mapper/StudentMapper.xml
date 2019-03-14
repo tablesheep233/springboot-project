@@ -28,4 +28,35 @@
       id = #{id}
     </where>
   </update>
+
+  <select id="selectStuByPage" resultType="java.util.Map">
+    select s.id,s.name,s.major
+    from tb_student s
+    <trim suffixOverrides="and" prefix="where">
+      <if test="name!=null and name!=''" >
+        s.name like #{name} and
+      </if>
+      <if test="major!=null and major!=''" >
+        s.major = #{major} and
+      </if>
+      <if test="clazz!=null and clazz!=''" >
+        s.clazz = #{clazz} and
+      </if>
+    </trim>
+  </select>
+
+  <select id="selectStuCount" resultType="INTEGER">
+    select count(s.id) from tb_student s
+    <trim suffixOverrides="and" prefix="where">
+      <if test="name!=null and name!=''" >
+        s.name like #{name} and
+      </if>
+      <if test="major!=null and major!=''" >
+        s.major = #{major} and
+      </if>
+      <if test="clazz!=null and clazz!=''" >
+        s.clazz = #{clazz} and
+      </if>
+    </trim>
+  </select>
 </mapper>

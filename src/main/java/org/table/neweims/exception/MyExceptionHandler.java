@@ -6,22 +6,25 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-
+@ControllerAdvice
 public class MyExceptionHandler {
 
     private static Logger logger = LoggerFactory.getLogger(MyExceptionHandler.class);
 
     @ExceptionHandler
-    public ModelAndView allExceptionHandler(Exception e){
+    public ModelAndView myExceptionHandler(MyException e){
         ModelAndView mv = new ModelAndView();
-
+        mv.setViewName("error");
+        mv.addObject("msg",e.getMsg());
         return mv;
     }
 
     @ExceptionHandler
-    public ModelAndView myExceptionHandler(MyException e){
+    public ModelAndView allExceptionHandler(Exception e){
         ModelAndView mv = new ModelAndView();
-
+        mv.setViewName("error");
+        mv.addObject("msg","服务器异常");
         return mv;
     }
+
 }

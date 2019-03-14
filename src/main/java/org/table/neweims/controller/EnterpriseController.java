@@ -1,5 +1,6 @@
 package org.table.neweims.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.table.neweims.util.MyResult;
 
 import javax.servlet.http.HttpSession;
 
+@RequiresPermissions("enterprise:*")
 @RequestMapping("/enterprise")
 @Controller
 public class EnterpriseController {

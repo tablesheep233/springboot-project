@@ -10,6 +10,25 @@
   </resultMap>
 
 
-
+  <update id="updateUser" parameterType="org.table.neweims.entities.User">
+    update tb_user
+    <trim prefix="set" suffixOverrides=",">
+      <if test="username != null and username != ''">
+        username = #{username},
+      </if>
+      <if test="password != null and password != ''">
+        password = #{password},
+      </if>
+      <if test="salt != null and salt != ''">
+        salt = #{salt},
+      </if>
+      <if test="uPhone != null and uPhone !=''">
+        uphone = #{uPhone},
+      </if>
+    </trim>
+    <where>
+      id = #{id}
+    </where>
+  </update>
 
 </mapper>

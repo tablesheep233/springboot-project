@@ -20,5 +20,7 @@ public interface EnterpriseService {
 
     Page<EnterpriseDto> getAllEnterprise(String status, String search, Integer currPage);
 
-    Enterprise getEneeterpriseById(Integer id);
+    Enterprise getEnterpriseById(Integer id);
+
+    Integer getEnterpriseCountBy(StatusEnum statusEnum);
 }

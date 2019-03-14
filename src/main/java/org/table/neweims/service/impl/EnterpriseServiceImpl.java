@@ -52,11 +52,11 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         MyResult myResult = new MyResult();
         String status = enterpriseMapper.selectEnterpriseStatus(username);
         if (status==null||status.equals(StatusEnum.NEED.name())){
-            myResult.setResult("enterprise:please");
+            myResult.setResult("ent:please");
         }else if (status.equals(StatusEnum.WAIT.name())){
-            myResult.setResult("enterprise:illegal");
+            myResult.setResult("ent:illegal");
         }else if (status.equals(StatusEnum.REAL.name())){
-            myResult.setResult("enterprise:legal");
+            myResult.setResult("ent:legal");
         }
         return myResult;
     }
@@ -96,8 +96,13 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     }
 
     @Override
-    public Enterprise getEneeterpriseById(Integer id) {
+    public Enterprise getEnterpriseById(Integer id) {
         return  enterpriseMapper.selectEnterpriseById(id);
+    }
+
+    @Override
+    public Integer getEnterpriseCountBy(StatusEnum statusEnum) {
+        return enterpriseMapper.selectEnterpriseCount(null,statusEnum.getMessage());
     }
 
 

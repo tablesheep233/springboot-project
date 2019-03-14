@@ -13,6 +13,8 @@ public class Code {
 
     private int templateId;
 
+    private int resetTemplateId;
+
     public int getId() {
         return id;
     }
@@ -35,5 +37,13 @@ public class Code {
 
     public void setTemplateId(int templateId) {
         this.templateId = templateId;
+    }
+
+    public int getResetTemplateId() {
+        return resetTemplateId;
+    }
+
+    public void setResetTemplateId(int resetTemplateId) {
+        this.resetTemplateId = resetTemplateId;
     }
 }

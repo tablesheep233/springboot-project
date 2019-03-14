@@ -94,11 +94,11 @@
             </div>
             <div class="modal-body">
                 <div th:fragment="enterpriseBody">
-                    <div>企业名称:<span id="ename"></span></div>
-                    <div>联系号码:<span id="etel"></span></div>
-                    <div>邮箱:<span id="mail"></span></div>
-                    <div>地址:<span id="address"></span></div>
-                    <div>信用代码:<span id="creditno"></span></div>
+                    <div>企业名称: <span id="ename"></span></div>
+                    <div>联系号码: <span id="etel"></span></div>
+                    <div>邮箱: <span id="mail"></span></div>
+                    <div>地址: <span id="address"></span></div>
+                    <div>信用代码: <span id="creditno"></span><a id="re" target="_blank" href="http://www.gsxt.gov.cn/index.html">请复制信用代码至国家企业信用信息公示系统查看</a></div>
                     <div>
                         <span>简介</span>
                         <div>
@@ -131,34 +131,34 @@
                     <div class="row">
                         <div class="form-group col-lg-3">
                             <label>招聘职位</label>
-                            <input id="job" type="text" class="form-control">
+                            <input readonly id="job" type="text" class="form-control">
                         </div>
                         <div class="form-group col-lg-2">
                             <label>薪资</label>
-                            <input id="rwages" type="text" class="form-control">
+                            <input readonly id="rwages" type="text" class="form-control">
                         </div>
                         <div class="form-group col-lg-3">
                             <label>学历</label>
-                            <input id="grade" type="text" class="form-control">
+                            <input readonly id="grade" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-3">
                             <label>工作地点</label>
-                            <input id="area" name="area" type="text" class="form-control">
+                            <input readonly id="area" name="area" type="text" class="form-control">
                         </div>
                         <div class="form-group col-lg-3">
                             <label>联系号码</label>
-                            <input id="rtel" type="text" class="form-control">
+                            <input readonly id="rtel" type="text" class="form-control">
                         </div>
                         <div class="form-group col-lg-3">
                             <label>邮箱</label><br/>
-                            <input id="remail" type="email" class="form-control">
+                            <input readonly id="remail" type="email" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>要求</label>
-                        <textarea id="requirement" class="form-control" rows="14"></textarea>
+                        <textarea readonly id="requirement" class="form-control" rows="14"></textarea>
                     </div>
 
                 </div>
@@ -171,6 +171,7 @@
         </div>
     </div>
 </div>
+
 
 </body>
 

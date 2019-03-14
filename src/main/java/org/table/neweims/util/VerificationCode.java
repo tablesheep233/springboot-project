@@ -37,6 +37,22 @@ public class VerificationCode {
         return text;
     }
 
+    public String outRSms(String[] phoneNumbers){
+        String text = getText();
+        String[] params = {text};
+        SmsSingleSender ssender = new MySmsSingleSender(code.getId(),code.getKey());
+        try {
+            SmsSingleSenderResult result = ssender.sendWithParam("86",phoneNumbers[0],code.getResetTemplateId(),params,"","","");
+        } catch (HTTPException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text;
+    }
+
     private String getText(){
         StringBuffer sbf = new StringBuffer();
         for(int i = 0 ; i < 4 ; i++){

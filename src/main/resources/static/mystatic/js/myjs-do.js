@@ -4,10 +4,14 @@ $(document).ready(function () {
         "info":false,
         "lengthChange":false,
         "paging":false,
-        "searching": false
+        "searching": false,
+        "ordering": false
     });
 
     $('#dataTable').DataTable();
+
+
+
 
     //按删除时给表单初始化action,并弹出模态框
     $(".deleteBtn").click(function () {
@@ -29,9 +33,16 @@ $(document).ready(function () {
 
     //当查找时给分页按钮添加查找值
     if ($("#searchAurl").length>0) {
+        var href = $(this).attr("href")+"&search="+$("#searchAurl").val();
+        if ($("#msearch").length>0){
+            href = href+"&major="+$("#msearch").val();
+        }
+        if ($("#csearch").length>0){
+            href = href+"&clazz="+$("#csearch").val();
+        }
         $(".aurl").click(function () {
             event.preventDefault();
-            $(location).attr("href",$(this).attr("href")+"&search="+$("#searchAurl").val());
+            $(location).attr("href",href);
         })
     }
 
@@ -130,6 +141,27 @@ $(document).ready(function () {
         })
     }
 
+    $(".upSr").click(function () {
+        var url = "/upSr";
+        var recruitmentId = $(this).attr("value");
+        var status = $(this).parent().parent("tr").children("td").eq(1).children("select").val();
+        var user;
+        $.ajax({
+            type:"post",
+            url:url,
+            async:false,
+            data:{"recruitmentId":recruitmentId,"status":status},
+            success: function (data){
+                user = data.user;
+                $("#tipbody").html("成功");
+                $("#tipModal").modal({
+                    keyboard:true
+                })
+            }
+        });
+        $(this).parent().parent("tr").children("td").eq(2).html(user);
+    })
+
     $(".enterpriseBtn").click(function () {
         var url = "/getEnterprise/"+$(this).attr("value");
         $.ajax({
@@ -173,4 +205,6 @@ $(document).ready(function () {
         });
         $(this).parent().parent("tr").children("td").eq(2).html(user);
     })
+
+
 })

@@ -1,21 +1,28 @@
 package org.table.neweims.controller;
 
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.table.neweims.dto.EnterpriseDto;
 import org.table.neweims.dto.Page;
+import org.table.neweims.dto.RecruitmentDto;
 import org.table.neweims.entities.Enterprise;
+import org.table.neweims.entities.Recruitment;
+import org.table.neweims.entities.Student;
+import org.table.neweims.entities.Track;
 import org.table.neweims.enums.StatusEnum;
-import org.table.neweims.service.EnterpriseService;
-import org.table.neweims.service.UserService;
+import org.table.neweims.service.*;
 import org.table.neweims.util.SysContext;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiresPermissions("admin:*")
 @Controller
 public class AdminController {
 
@@ -23,13 +30,23 @@ public class AdminController {
     private EnterpriseService enterpriseService;
 
     @Autowired
+    private RecruitmentService recruitmentService;
+
+    @Autowired
     private UserService userService;
 
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private TrackService trackService;
+
     @GetMapping("/allenterprise")
-    public String getAllEnterprise(Model model, String status,String search,Integer currPage){
+    public String getAllEnterprise(Model model, String statu,String search,Integer currPage){
         currPage = currPage==null?1:currPage;
-        Page<EnterpriseDto> page = enterpriseService.getAllEnterprise(status,search,currPage);
-        model.addAttribute("status",StatusEnum.values());
+        Page<EnterpriseDto> page = enterpriseService.getAllEnterprise(statu,search,currPage);
+        StatusEnum[] enums = {StatusEnum.WAIT,StatusEnum.REAL,StatusEnum.UNREAL};
+        model.addAttribute("status",enums);
         model.addAttribute("page",page);
         return "enterprise/list";
     }
@@ -37,7 +54,7 @@ public class AdminController {
     @ResponseBody
     @GetMapping("/getEnterprise/{id}")
     public Enterprise getEnterprise(@PathVariable("id") Integer id){
-        return enterpriseService.getEneeterpriseById(id);
+        return enterpriseService.getEnterpriseById(id);
     }
 
     @ResponseBody
@@ -52,5 +69,82 @@ public class AdminController {
         map.put("result","success");
         map.put("user",userService.getUserInfo(SysContext.getCurrentUser()).getUsername());
         return map;
+    }
+
+    @ResponseBody
+    @PostMapping("/upSr")
+    public Map<String,Object> upSr(@RequestParam("recruitmentId") Integer recruitmentId, @RequestParam("status") StatusEnum status){
+        Recruitment recruitment = new Recruitment();
+        recruitment.setId(recruitmentId);
+        recruitment.setStatus(status);
+        recruitment.setReviewer(SysContext.getCurrentUser());
+        recruitmentService.saveRecruitment(recruitment);
+        Map<String,Object> map = new HashMap<>();
+        map.put("result","success");
+        map.put("user",userService.getUserInfo(SysContext.getCurrentUser()).getUsername());
+        return map;
+    }
+
+    @GetMapping("/stuList")
+    public String getStuList(Model model,String name,@ModelAttribute("major") String major,@ModelAttribute("clazz") String clazz,Integer currPage){
+        currPage = currPage==null?1:currPage;
+        Page<Student> page = studentService.getStuList(name,major,clazz,currPage);
+        model.addAttribute("page",page);
+        model.addAttribute("mList",studentService.getMajorList());
+        model.addAttribute("cList",studentService.getClazzList());
+        return "student/list";
+    }
+
+    @GetMapping("/getStu/{id}")
+    public String getStu(@PathVariable("id")Integer id, Model model){
+        Student student = studentService.getStu(id);
+        List<Track> tracks = trackService.getTrackListFromStu(id);
+        Map<String,Object> map = new HashMap<>();
+        map.put("stu",student);
+        map.put("tracks",tracks);
+        model.addAttribute("map",map);
+        return "admin/stu";
+    }
+
+    @GetMapping("/rep")
+    public String rep(Model model){
+        model.addAttribute("sdata",trackService.getSerachData());
+        return "admin/sturep";
+    }
+
+    @ResponseBody
+    @PostMapping("/city")
+    public Map<String,Object> city(String year,Integer session){
+        Map<String,Object> map = trackService.getCityData(year,session);
+        return map;
+    }
+
+    @ResponseBody
+    @PostMapping("/industry")
+    public List<Map<String, Object>> industry(String year,Integer session){
+        return trackService.getIndustry(year,session);
+    }
+
+    @ResponseBody
+    @PostMapping("/money")
+    public List<Map<String, Object>> money(String year,Integer session){
+        return trackService.getMoney(year,session);
+    }
+
+    @RequiresPermissions(value = {"admin:*","ent:legal"},logical = Logical.OR)
+    @GetMapping("/recruitmentStatus")
+    public String getRecruitmentStatus(Integer currPage,String search, Model model){
+        currPage = currPage==null?1:currPage;
+        Page<RecruitmentDto> page = recruitmentService.queryRecruitmentStatusByPage(currPage,search);
+        StatusEnum[] enums = {StatusEnum.WAIT,StatusEnum.REAL,StatusEnum.UNREAL};
+        model.addAttribute("status",enums);
+        model.addAttribute("page",page);
+        return "enterprise/recruitment/alist";
+    }
+
+    @ResponseBody
+    @GetMapping("/getSr/{id}")
+    public Map<String, Object> getSr(@PathVariable("id") Integer id){
+        return recruitmentService.queryRecruitmentById(id);
     }
 }

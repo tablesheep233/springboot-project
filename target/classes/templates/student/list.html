@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>stu list</title>
+
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/webjars/font-awesome/5.3.1/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/mystatic/css/sb-admin.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+<div th:replace="common/nav::topbar"></div>
+
+<div id="wrapper">
+    <div th:replace="common/nav::sidebar(activeUri='stu.html')"></div>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-leaf"></i>
+                    学生管理
+
+                    <form th:if="${page.totalPage!=0}" th:action="@{/stuList}" class="d-none float-md-right d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                        <div class="row">
+                        <div class="input-group">
+                            <select class="form-control" name="major" th:if="${mList!=null}">
+                                <option th:selected="${major==null}?selected" value="">选择专业</option>
+                                <option th:each="m:${mList}" th:selected="${major==m}" th:value="${m}" th:text="${m}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <select class="form-control" name="clazz" th:if="${cList!=null}">
+                                <option th:selected="${clazz==null}?selected" value="">选择班级</option>
+                                <option th:each="c:${cList}" th:selected="${clazz==c}" th:value="${c}" th:text="${c}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" th:value="${page?.search!=null}?${page.search}" name="search" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-body" th:if="${page.totalPage!=0}">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>专业</th>
+                                <th>详情</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="s:${page.myResult}">
+                                <td>[[${s.id}]]</td>
+                                <td>[[${s.name}]]</td>
+                                <td>[[${s.major}]]</td>
+                                <td>
+                                    <a class="btn btn-primary stuBtn" th:href="@{/getStu/}+${s.id}">查看</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-footer" th:if="${page.totalPage!=1&&page.totalPage!=0}">
+                    <ul class="pagination">
+                        <li class="paginate_button page-item"><a class="page-link aurl" th:href="@{/stuList?}+'currPage=1'">首页</a></li>
+                        <li class="paginate_button page-item" th:if="${page.currPage!=1}"><a class="page-link aurl" th:href="@{/stuList?}+'currPage='+${page.currPage-1}">上一页</a></li>
+                        <li class="paginate_button page-item active"><a class="page-link aurl" th:href="@{/stuList?}+'currPage='+${page.currPage}">[[${page.currPage}]]</a></li>
+                        <li class="paginate_button page-item" th:if="${page.currPage!=page.totalPage}"><a class="page-link aurl" th:href="@{/stuList?}+'currPage='+${page.currPage+1}">下一页</a></li>
+                        <li class="paginate_button page-item"><a class="page-link aurl" th:href="@{/stuList?}+'currPage='+${page.totalPage}">尾页</a></li>
+                        <li class="paginate_button page-item">
+                            <form class="form-inline" th:action="@{/stuList}">
+                                <input type="hidden" id="searchAurl" name="search" th:value="${page.search}" th:if="${page.search!=null}">
+                                <input type="hidden" id="msearch" name="major" th:value="${major}" th:if="${major!=null}">
+                                <input type="hidden" id="csearch" name="clazz" th:value="${clazz}" th:if="${clazz!=null}">
+                                <select class="paginate_button page-link" name="currPage">
+                                    <option th:each="i:${#numbers.sequence(1,page.totalPage)}" th:selected="${page.currPage==i}?selected" th:value="${i}">[[${i}]]</option>
+                                </select>
+                                <span class="paginate_button page-link">/[[${page.totalPage}]]</span>
+                                <input class="paginate_button page-link" type="submit" value="跳转">
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Scroll to Top Button-->
+<div th:replace="common/nav::topbut"></div>
+
+<!-- Modal-->
+<div th:replace="common/nav::logoutMod"></div>
+<div th:replace="common/nav::tipModal"></div>
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Page level plugin JavaScript-->
+<script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
+<script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
+
+<script th:src="@{/mystatic/js/myjs-do.js}"></script>
+<script th:src="@{/mystatic/js/sb-admin.js}"></script>
+<!-- Core plugin JavaScript-->
+<script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+
+</body>
+</html>

@@ -10,6 +10,7 @@ import org.table.neweims.config.ymlpojo.PageConf;
 import org.table.neweims.dto.Page;
 import org.table.neweims.dto.RecruitmentDto;
 import org.table.neweims.entities.Recruitment;
+import org.table.neweims.enums.StatusEnum;
 import org.table.neweims.mapper.RecruitmentMapper;
 import org.table.neweims.mapper.RoleMapper;
 import org.table.neweims.service.RecruitmentService;
@@ -54,10 +55,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
         data.put("currPage", currPage);
         data.put("pageSize", pageSize);
+        StatusEnum statu = StatusEnum.REAL;
 
-        List<Map<String,Object>> recruitments = recruitmentMapper.getAllRecruitmentByPage(userId,search,data);
+        List<Map<String,Object>> recruitments = recruitmentMapper.getAllRecruitmentByPage(userId,search,data,statu);
 
-        Integer count = recruitmentMapper.selectRecritmentCount(userId,search);
+        Integer count = recruitmentMapper.selectRecritmentCount(userId,search,statu);
         Page<Recruitment> page = new Page<>(currPage,pageSize,count);
         page.setSearch(name);
         page.setMyResult(recruitments);
@@ -79,6 +81,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         String time = sdf.format(new Date());
         if (recruitment.getId() != null){
             recruitment.setCreateTime(time);
+            recruitment.setStatus(StatusEnum.WAIT);
             recruitmentMapper.updateRecruitment(recruitment);
         }else {
             recruitment.setCreateTime(time);
@@ -119,12 +122,22 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
         List<RecruitmentDto> recruitments = recruitmentMapper.getAllSRByPage(userId,search,data);
 
-        Integer count = recruitmentMapper.selectRecritmentCount(userId,search);
+        Integer count = recruitmentMapper.selectRecritmentCount(userId,search,null);
         Page<RecruitmentDto> page = new Page<>(currPage,pageSize,count);
         page.setSearch(name);
         page.setResult(recruitments);
 
         return page;
+    }
+
+    @Override
+    public Integer getRecruitmentCountByStatus(StatusEnum statusEnum) {
+        return recruitmentMapper.selectRecritmentCount(null,null,statusEnum);
+    }
+
+    @Override
+    public List<Map<String,Object>> getSSData(String date, Integer userId) {
+        return recruitmentMapper.getSSData(date,userId);
     }
 
 }

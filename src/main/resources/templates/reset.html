@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Reset</title>
+
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/webjars/font-awesome/5.3.1/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/mystatic/css/sb-admin.css}" rel="stylesheet">
+
+</head>
+<body class="bg-dark">
+<div class="container">
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header">重 置 密 码<span id="msg"></span></div>
+        <div class="card-body">
+            <form method="post" th:action="@{/user/reset}" onsubmit="return validate()">
+                <div class="form-group">
+                    <div class="form-label-group">
+                        <input type="password" id="password" name="password" class="form-control"  autofocus="autofocus" placeholder="password" required="required">
+                        <label for="password">密 码</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label-group">
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" required="required">
+                        <label for="confirmPassword">再次输入密码</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label-group">
+                        <input type="text" id="uphone" name="uphone" placeholder="uphone" class="form-control" required="required">
+                        <label for="uphone">手机号码</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-inline">
+                        <input type="text" id="smscode" name="smscode" class="form-control" required="required">
+                        <input type="hidden" id="reset" value="1">
+                        <input type="button" id="codeBtn" class="btn" value="获取验证码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-block" value="重置">
+                </div>
+            </form>
+            <div class="text-center">
+                <a class="d-block small mt-3" th:href="@{/register}">注册</a>
+                <a class="d-block small" th:href="@{/login}">登录</a>
+                <a class="d-block small" th:href="@{/plogin}">手机登录</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+<script th:src="@{/mystatic/js/myjs-admin.js}"></script>
+</body>
+
+</html>

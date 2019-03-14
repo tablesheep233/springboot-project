@@ -5,6 +5,8 @@ import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.table.neweims.config.ymlpojo.PageConf;
+import org.table.neweims.dto.Page;
 import org.table.neweims.entities.Student;
 import org.table.neweims.entities.User;
 import org.table.neweims.enums.GenderEnum;
@@ -15,9 +17,16 @@ import org.table.neweims.util.HRSysCrawler;
 import org.table.neweims.util.MyResult;
 import org.table.neweims.util.SysContext;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Service(value = "studentService")
 @Transactional
 public class StudentServiceImpl implements StudentService {
+
+    @Autowired
+    private PageConf pageConf;
 
     @Autowired
     private StudentMapper studentMapper;
@@ -67,5 +76,44 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Integer getStuId(Integer userId) {
         return studentMapper.selectStuId(userId);
+    }
+
+    @Override
+    public Page<Student> getStuList(String name,String major,String clazz,Integer currPage) {
+        Map<String, Object> data = new HashMap<>();
+        Integer pageSize = pageConf.getApplyLimit();
+
+        data.put("currPage",currPage);
+        data.put("pageSize",pageSize);
+
+
+        if (name!=null&&!name.equals("")){
+            name = "%"+name+"%";
+        }
+
+        List<Map<String,Object>> list = studentMapper.selectStuByPage(name,major,clazz,data);
+
+        Integer totalCount = studentMapper.selectStuCount(name,major,clazz);
+
+        Page<Student> page = new Page<>(currPage,pageSize,totalCount);
+
+        page.setMyResult(list);
+
+        return page;
+    }
+
+    @Override
+    public Student getStu(Integer id) {
+        return studentMapper.selectStuById(id);
+    }
+
+    @Override
+    public List<String> getMajorList() {
+        return studentMapper.selectMajorList();
+    }
+
+    @Override
+    public List<String> getClazzList() {
+        return studentMapper.selectClazzList();
     }
 }
