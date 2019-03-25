@@ -88,4 +88,10 @@ public class ResumeController {
         return map;
     }
 
+
+    @GetMapping("/delivery")
+    public String delivery(Model model){
+        model.addAttribute("deliverys",resumeService.getDeliveryList());
+        return "student/resume/delivery";
+    }
 }

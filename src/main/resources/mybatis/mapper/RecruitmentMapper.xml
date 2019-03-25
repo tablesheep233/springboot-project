@@ -38,7 +38,7 @@
         r.status = #{statu} and
       </if>
       <if test="name!=null and name!=''">
-         r.job like #{name} and
+         r.job like #{name} or e.name like #{name} and
       </if>
     </trim>
   </select>
@@ -53,7 +53,7 @@
         status = #{statu} and
       </if>
        <if test="name!=null and name!=''">
-         job like #{name} and
+         job like #{name} and or e.name like #{name} and
        </if>
     </trim>
   </select>

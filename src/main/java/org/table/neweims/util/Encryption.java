@@ -9,7 +9,7 @@ public class Encryption {
 
     private static int hashIterations = 2333;
 
-    public static String getEncryption(Object credentials,Object salt){
+    public synchronized static String getEncryption(Object credentials,Object salt){
         salt = ByteSource.Util.bytes(salt);
         Object result =  new SimpleHash(hashAlgorithmName,credentials,salt,hashIterations);
         return result.toString();

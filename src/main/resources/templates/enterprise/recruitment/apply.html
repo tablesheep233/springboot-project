@@ -37,6 +37,13 @@
                     简历筛选
 
                     <form th:if="${page.totalPage!=0}" th:action="@{/apply}" class="d-none float-md-right d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                        <div class="row">
+                        <div class="input-group">
+                            <select class="form-control" name="statu">
+                                <option th:selected="${statu==null}?selected" value="">选择状态</option>
+                                <option th:each="s:${status}" th:selected="${statu==s}" th:value="${s}" th:text="${s.message}"></option>
+                            </select>
+                        </div>
                         <div class="input-group">
                             <input type="text" th:value="${page?.search!=null}?${page.search}" name="search" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
@@ -44,6 +51,7 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
+                        </div>
                         </div>
                     </form>
                 </div>
@@ -59,16 +67,22 @@
                                 <th>学历</th>
                                 <th>申请时间</th>
                                 <th>简历详情</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="apply:${page.myResult}">
-                                <td>[[${apply.job}]]</td>
+                                <td th:value="${apply.id}">[[${apply.job}]]</td>
                                 <td>[[${apply.intention}]]</td>
                                 <td>[[${apply.sname}]]</td>
                                 <td>[[${apply.education}]]</td>
-                                <td>[[${apply.ctime}]]</td>
-                                <td><a class="btn btn-primary showResume" th:value="${apply.id}">查看</a></td>
+                                <td>[[${apply.time}]]</td>
+                                <td><a class="btn btn-primary showResume" th:value="${apply.rid}">查看</a></td>
+                                <td>
+                                    <select class="form-control collect">
+                                        <option th:each="s:${status}" th:selected="${apply.status==s}" th:value="${s}" th:text="${s.message}"></option>
+                                    </select>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -103,7 +117,7 @@
 
 <!-- Scroll to Top Button-->
 <div th:replace="common/nav::topbut"></div>
-
+<div th:replace="common/nav::tipModal"></div>
 <!-- Modal-->
 <div th:replace="common/nav::logoutMod"></div>
 <div th:replace="common/modal::resumeModal"></div>

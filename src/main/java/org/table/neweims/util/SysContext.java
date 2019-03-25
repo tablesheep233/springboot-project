@@ -5,7 +5,7 @@ import org.apache.shiro.session.Session;
 
 public class SysContext {
 
-    public static Integer getCurrentUser(){
+    public synchronized static Integer getCurrentUser(){
         Session session = SecurityUtils.getSubject().getSession();
         Integer userId = (Integer) session.getAttribute("loginUser");
         return userId;

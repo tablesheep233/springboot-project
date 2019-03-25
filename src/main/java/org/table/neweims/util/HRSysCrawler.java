@@ -4,6 +4,8 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.table.neweims.entities.Student;
 import org.table.neweims.enums.GenderEnum;
 import org.table.neweims.exception.MyException;
@@ -14,7 +16,11 @@ import java.io.IOException;
  * 学生信息爬取类
  *
  */
+@Component("hRSysCrawler")
 public class HRSysCrawler {
+
+    @Autowired
+    private CardInfo cardInfo;
 
     public Student pyStuInfo(String login,String pw){
 
@@ -63,7 +69,7 @@ public class HRSysCrawler {
             student.setName(table.getCellAt(0,3).asText());
             student.setMajor(table.getCellAt(0,7).asText());
             student.setClazz(table.getCellAt(2,1).asText());
-            String arg[] = CardInfo.getGenderAndBirth(table.getCellAt(1,1).asText());
+            String arg[] = cardInfo.getGenderAndBirth(table.getCellAt(1,1).asText());
             student.setGender(arg[0]);
             student.setBirth(arg[1]);
         }

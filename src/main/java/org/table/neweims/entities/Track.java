@@ -21,6 +21,8 @@ public class Track {
 
     private String session;
 
+    private String detail;
+
     private Integer studentId;
 
     public Integer getId() {
@@ -106,5 +108,13 @@ public class Track {
 
     public void setStudentId(Integer studentId) {
         this.studentId = studentId;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }

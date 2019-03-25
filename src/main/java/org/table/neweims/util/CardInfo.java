@@ -1,8 +1,11 @@
 package org.table.neweims.util;
 
+import org.springframework.stereotype.Component;
+
+@Component("cardInfo")
 public class CardInfo {
 
-    public static String[] getGenderAndBirth(String cno){
+    public String[] getGenderAndBirth(String cno){
 
         String[] arg = new String[2];
 
@@ -20,5 +23,15 @@ public class CardInfo {
         return arg;
     }
 
-
+    public String resumeReplace(String mystr){
+        if(mystr == null || mystr == "" ) {
+            return("&nbsp;");
+        }
+        else {
+            mystr = mystr.replace("\n\r","<br>");
+            mystr = mystr.replace("\r","<br>");
+            mystr = mystr.replace("\t","　　");
+            return(mystr);
+        }
+    }
 }

@@ -31,6 +31,9 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentMapper studentMapper;
 
+    @Autowired
+    private HRSysCrawler hrSysCrawler;
+
     @Override
     public MyResult getStuInfo(Integer userId) {
         Student student = null;
@@ -58,7 +61,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public MyResult bindStuInfo(String username, String password) throws MyException {
 
-        HRSysCrawler hrSysCrawler = new HRSysCrawler();
 
         Student student = hrSysCrawler.pyStuInfo(username,password);
         student.setUserId(SysContext.getCurrentUser());

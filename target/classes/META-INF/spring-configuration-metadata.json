@@ -2,6 +2,11 @@
   "hints": [],
   "groups": [
     {
+      "sourceType": "org.table.neweims.config.ymlpojo.Upload",
+      "name": "",
+      "type": "org.table.neweims.config.ymlpojo.Upload"
+    },
+    {
       "sourceType": "org.table.neweims.config.ymlpojo.Code",
       "name": "code",
       "type": "org.table.neweims.config.ymlpojo.Code"
@@ -66,6 +71,11 @@
       "sourceType": "org.table.neweims.config.ymlpojo.PageConf",
       "name": "page.stu-recruitment-limit",
       "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "org.table.neweims.config.ymlpojo.Upload",
+      "name": "upload-path",
+      "type": "java.lang.String"
     }
   ]
 }

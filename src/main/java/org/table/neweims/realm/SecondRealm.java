@@ -70,7 +70,10 @@ public class SecondRealm extends AuthorizingRealm {
 
 
         if (role!=null&&role.equals("enterprise")){
-            perms.add((String) enterpriseService.isLegalEnterprise(username).get("result"));
+            List<String> permsList = enterpriseService.isLegalEnterprise(username);
+            for (String p : permsList) {
+                perms.add(p);
+            }
         } else if(role!=null&&role.equals("student")){
             MyResult result = studentService.getStuInfo(username);
             if (!result.getTest()){

@@ -44,12 +44,17 @@
                         <div class="col-6">
                             <div class="col-12">
                                 <label class="label">选择年级:</label>
-                                <select id="session" class="form-control-sm" name="session" th:if="${sdata.sessions!=null}">
+                                <select id="session" class="form-control-sm" th:if="${sdata.sessions!=null}">
                                     <option th:each="s:${sdata.sessions}" th:value="${s}" th:text="${s}"></option>
                                 </select>
                                 <label class="label">选择年份:</label>
-                                <select id="year" class="form-control-sm" name="year" th:if="${sdata.years!=null}">
+                                <select id="year" class="form-control-sm" th:if="${sdata.years!=null}">
                                     <option th:each="y:${sdata.years}" th:value="${y}" th:text="${y}"></option>
+                                </select>
+                                <label class="label">选择专业:</label>
+                                <select id="major" class="form-control-sm" style="width: 150px" th:if="${sdata.majors!=null}">
+                                    <option value="">选择专业</option>
+                                    <option th:each="m:${sdata.majors}" th:value="${m}" th:text="${m}"></option>
                                 </select>
                                 <button class="btn-sm" onclick="showCity()">确定</button>
                             </div>
@@ -65,6 +70,11 @@
                                 <select id="iyear" class="form-control-sm" th:if="${sdata.years!=null}">
                                     <option th:each="y:${sdata.years}" th:value="${y}" th:text="${y}"></option>
                                 </select>
+                                <label class="label">选择专业:</label>
+                                <select id="imajor" class="form-control-sm" style="width: 150px" th:if="${sdata.majors!=null}">
+                                    <option value="">选择专业</option>
+                                    <option th:each="m:${sdata.majors}" th:value="${m}" th:text="${m}"></option>
+                                </select>
                                 <button class="btn-sm" onclick="showIndustry()">确定</button>
                             </div>
                             <div id="repIndustry" class="col-12" style="height:400px;"></div>
@@ -74,12 +84,17 @@
                         <div class="col-6">
                             <div class="col-12">
                                 <label class="label">选择年级:</label>
-                                <select id="msession" class="form-control-sm" name="msession" th:if="${sdata.sessions!=null}">
+                                <select id="msession" class="form-control-sm" th:if="${sdata.sessions!=null}">
                                     <option th:each="s:${sdata.sessions}" th:value="${s}" th:text="${s}"></option>
                                 </select>
                                 <label class="label">选择年份:</label>
-                                <select id="myear" class="form-control-sm" name="year" th:if="${sdata.years!=null}">
+                                <select id="myear" class="form-control-sm" th:if="${sdata.years!=null}">
                                     <option th:each="y:${sdata.years}" th:value="${y}" th:text="${y}"></option>
+                                </select>
+                                <label class="label">选择专业:</label>
+                                <select id="mmajor" class="form-control-sm" style="width: 150px" th:if="${sdata.majors!=null}">
+                                    <option value="">选择专业</option>
+                                    <option th:each="m:${sdata.majors}" th:value="${m}" th:text="${m}"></option>
                                 </select>
                                 <button class="btn-sm" onclick="showMoney()">确定</button>
                             </div>

@@ -16,6 +16,7 @@ import org.table.neweims.entities.Student;
 import org.table.neweims.entities.Track;
 import org.table.neweims.enums.StatusEnum;
 import org.table.neweims.service.*;
+import org.table.neweims.util.CardInfo;
 import org.table.neweims.util.SysContext;
 
 import java.util.HashMap;
@@ -41,8 +42,11 @@ public class AdminController {
     @Autowired
     private TrackService trackService;
 
+    @Autowired
+    private CardInfo cardInfo;
+
     @GetMapping("/allenterprise")
-    public String getAllEnterprise(Model model, String statu,String search,Integer currPage){
+    public String getAllEnterprise(Model model, StatusEnum statu,String search,Integer currPage){
         currPage = currPage==null?1:currPage;
         Page<EnterpriseDto> page = enterpriseService.getAllEnterprise(statu,search,currPage);
         StatusEnum[] enums = {StatusEnum.WAIT,StatusEnum.REAL,StatusEnum.UNREAL};
@@ -114,21 +118,21 @@ public class AdminController {
 
     @ResponseBody
     @PostMapping("/city")
-    public Map<String,Object> city(String year,Integer session){
-        Map<String,Object> map = trackService.getCityData(year,session);
+    public Map<String,Object> city(String year,Integer session,String major){
+        Map<String,Object> map = trackService.getCityData(year,session,major);
         return map;
     }
 
     @ResponseBody
     @PostMapping("/industry")
-    public List<Map<String, Object>> industry(String year,Integer session){
-        return trackService.getIndustry(year,session);
+    public List<Map<String, Object>> industry(String year,Integer session,String major){
+        return trackService.getIndustry(year,session,major);
     }
 
     @ResponseBody
     @PostMapping("/money")
-    public List<Map<String, Object>> money(String year,Integer session){
-        return trackService.getMoney(year,session);
+    public List<Map<String, Object>> money(String year,Integer session,String major){
+        return trackService.getMoney(year,session,major);
     }
 
     @RequiresPermissions(value = {"admin:*","ent:legal"},logical = Logical.OR)
@@ -142,9 +146,12 @@ public class AdminController {
         return "enterprise/recruitment/alist";
     }
 
+    @RequiresPermissions("student:*")
     @ResponseBody
     @GetMapping("/getSr/{id}")
     public Map<String, Object> getSr(@PathVariable("id") Integer id){
-        return recruitmentService.queryRecruitmentById(id);
+        Map<String,Object> recruitment = recruitmentService.queryRecruitmentById(id);
+        recruitment.put("requirement",cardInfo.resumeReplace(recruitment.get("requirement").toString()));
+        return recruitment;
     }
 }

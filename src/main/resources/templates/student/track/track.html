@@ -68,6 +68,10 @@
                             <label>平均薪资</label>
                             <input name="money" type="text" class="form-control" th:value="${track!=null}?${track.money}">
                         </div>
+                        <div class="form-group">
+                            <label>详情</label>
+                            <textarea name="detail" class="form-control" rows="4">[[${track!=null}?${track.detail}]]</textarea>
+                        </div>
                     </div>
 
 

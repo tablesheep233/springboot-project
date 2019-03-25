@@ -40,8 +40,13 @@
 
                     <div class="card-body">
 
-                        <div>
-                            <h5>[[${recruitment.job}]]</h5>
+                        <div class="row">
+                            <div class="col-6">
+                                <h5>[[${recruitment.job}]]</h5>
+                            </div>
+                            <div class="col-6 float-md-right">
+                                <h5>[[${recruitment.ename}]]</h5>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-2">
@@ -68,14 +73,16 @@
                             </div>
                         </div>
                         <div>
-                            <label>职位描述</label>
-                            <textarea class="form-control" readonly rows="14">[[${recruitment.requirement}]]</textarea>
+                            <label>职位描述:</label>
+                            <div id="requirement"></div>
+                            <input id="rStr" type="hidden" th:value="${recruitment.requirement}">
                         </div>
 
                     </div>
 
                     <div class="card-footer">
-                        <button type="button" id="chooseRecruitment" class="btn btn-primary">申请职位</button>
+                        <button type="button" id="chooseRecruitment" class="btn btn-primary" th:if="${isChoose==true}">申请职位</button>
+                        <button type="button" disabled="disabled" class="btn btn-primary" th:if="${isChoose==false}">已投递</button>
                     </div>
             </div>
 
@@ -124,6 +131,11 @@
 <script th:src="@{/mystatic/js/sb-admin.js}"></script>
 <!-- Core plugin JavaScript-->
 <script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
-
+<script>
+    var requirement = document.getElementById("requirement");
+    var rStr = document.getElementById("rStr").value;
+    //console.log(rStr);
+    requirement.innerHTML = rStr;
+</script>
 </body>
 </html>

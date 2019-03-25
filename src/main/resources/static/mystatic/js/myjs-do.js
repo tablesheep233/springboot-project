@@ -59,10 +59,14 @@ $(document).ready(function () {
     $("#chooseRecruitment").click(function () {
         $("#chooseBody").empty();
         $.getJSON("/chooseresume",function (result) {
-            $.each(result,function (i,obj) {
-                $("#chooseBody").append("<div class='form-control'><input class='fa fa-square-o' type='radio' name='resume' value='"+obj.id+"'>"
-                    + obj.rname + obj.intention+"</div>")
-            })
+            if(result==null||result==""){
+                $("#chooseBody").append("<div><b>您还没有简历</b></div>");
+            }else{
+                $.each(result,function (i,obj) {
+                    $("#chooseBody").append("<div class='form-control'><input class='fa fa-square-o' type='radio' name='resume' value='"+obj.id+"'>"
+                        + obj.rname + obj.intention+"</div>");
+                })
+            }
         });
         $("#chooseModal").modal({
             keyboard:true
@@ -74,6 +78,9 @@ $(document).ready(function () {
      */
     $("#choosebut").click(function () {
         var resumeId = $("input:radio[name='resume']:checked").val();
+        if(resumeId==null||resumeId==""){
+            return;
+        }
         var recruitmentId = $("#recruitmentId").val();
         $.ajax({
             type: "post",
@@ -100,7 +107,6 @@ $(document).ready(function () {
     })
     
     function showApplyResume(data) {
-        $("#resume").html(data.rname);
         $("#name").html(data.name);
         $("#birth").html(data.birth);
         $("#tel").html(data.tel);
@@ -109,13 +115,21 @@ $(document).ready(function () {
         $("#intention").html(data.intention);
         $("#education").html(data.education);
         $("#wages").html(data.wages);
-        $("#introduce").text(data.introduce);
-        $("#skill").text(data.skill);
-        $("#experience").text(data.experience);
+        $("#introduce").html(data.introduce);
+        $("#skill").html(data.skill);
+        $("#experience").html(data.experience);
         $("#resumeModal").modal({
             keyboard:true
         })
     }
+
+    $(".showDetail").click(function () {
+        var detail = $(this).attr("value");
+        $("#detail").html(detail);
+        $("#detailModal").modal({
+            keyboard:true
+        })
+    })
 
     $(".showRecruitment").click(function () {
         var url = "/getSr/"+$(this).attr("value");
@@ -129,12 +143,12 @@ $(document).ready(function () {
     })
 
     function showRecruitment(data) {
-        $("#job").val(data.job);
-        $("#rwages").val(data.wages);
-        $("#grade").val(data.grade);
-        $("#area").val(data.area);
-        $("#rtel").val(data.tel);
-        $("#remail").val(data.email);
+        $("#job").html(data.job);
+        $("#rwages").html(data.wages);
+        $("#grade").html(data.grade);
+        $("#area").html(data.area);
+        $("#rtel").html(data.tel);
+        $("#remail").html(data.email);
         $("#requirement").html(data.requirement);
         $("#srModal").modal({
             keyboard:true
@@ -179,7 +193,8 @@ $(document).ready(function () {
         $("#mail").html(data.email);
         $("#address").html(data.address);
         $("#creditno").html(data.creditNo);
-        $("#introduction").text(data.introduction);
+        $("#introduction").html(data.introduction);
+        $("#ephoto").attr("src",data.imgPath);
         $("#enterpriseModal").modal({
             keyboard:true
         })
@@ -204,6 +219,24 @@ $(document).ready(function () {
             }
         });
         $(this).parent().parent("tr").children("td").eq(2).html(user);
+    })
+
+    $(".collect").bind("change",function () {
+        var status = $(this).val();
+        var id = $(this).parent().parent("tr").children("td").eq(0).attr("value");
+        var url = "/collectResume";
+        $.ajax({
+            type:"post",
+            url:url,
+            async:true,
+            data:{"id":id,"status":status},
+            success:function (data) {
+                $("#tipbody").html(data.msg);
+                $("#tipModal").modal({
+                    keyboard:true
+                })
+            }
+        });
     })
 
 

@@ -1,0 +1,55 @@
+Manifest-Version: 1.0
+Class-Path: json-path-2.4.0.jar commons-lang3-3.7.jar spring-boot-star
+ ter-thymeleaf-2.0.5.RELEASE.jar commons-net-3.6.jar shiro-cache-1.4.0
+ .jar spring-expression-5.0.9.RELEASE.jar xml-apis-1.4.01.jar mockito-
+ core-2.15.0.jar asm-5.0.4.jar spring-boot-starter-mail-2.0.5.RELEASE.
+ jar font-awesome-5.3.1.jar mysql-connector-java-5.1.47.jar httpcore-4
+ .4.10.jar shiro-crypto-cipher-1.4.0.jar jquery-3.3.1.jar spring-webmv
+ c-5.0.9.RELEASE.jar snakeyaml-1.19.jar neko-htmlunit-2.33.jar hiberna
+ te-validator-6.0.12.Final.jar spring-boot-configuration-processor-2.0
+ .5.RELEASE.jar commons-io-2.6.jar spring-boot-starter-2.0.5.RELEASE.j
+ ar jul-to-slf4j-1.7.25.jar mybatis-spring-boot-starter-1.3.2.jar jett
+ y-http-9.4.12.v20180830.jar shiro-web-1.4.0.jar accessors-smart-1.2.j
+ ar htmlunit-cssparser-1.2.0.jar jquery-3.3.1.jar jboss-logging-3.3.2.
+ Final.jar jackson-databind-2.9.6.jar spring-boot-2.0.5.RELEASE.jar sp
+ ring-boot-starter-web-2.0.5.RELEASE.jar jackson-datatype-jsr310-2.9.6
+ .jar spring-test-5.0.9.RELEASE.jar serializer-2.7.2.jar bootstrap-fil
+ einput-4.5.2.jar junit-4.12.jar datatables-1.10.19.jar spring-tx-5.0.
+ 9.RELEASE.jar thymeleaf-extras-shiro-2.0.0.jar hamcrest-library-1.3.j
+ ar jetty-util-9.4.12.v20180830.jar spring-context-support-5.0.9.RELEA
+ SE.jar objenesis-2.6.jar assertj-core-3.9.1.jar json-smart-2.3.jar sp
+ ring-boot-test-autoconfigure-2.0.5.RELEASE.jar commons-codec-1.11.jar
+  mybatis-spring-1.3.2.jar bootstrap-4.1.3.jar spring-boot-starter-tes
+ t-2.0.5.RELEASE.jar jetty-xml-9.4.12.v20180830.jar activation-1.1.jar
+  jackson-module-parameter-names-2.9.6.jar jetty-io-9.4.12.v20180830.j
+ ar xalan-2.7.2.jar javax.mail-1.6.2.jar thymeleaf-extras-java8time-3.
+ 0.1.RELEASE.jar classmate-1.3.4.jar android-json-0.0.20131108.vaadin1
+ .jar spring-boot-starter-jdbc-2.0.5.RELEASE.jar logback-classic-1.2.3
+ .jar qcloudsms-1.0.6.jar xercesImpl-2.12.0.jar shiro-crypto-core-1.4.
+ 0.jar websocket-common-9.4.12.v20180830.jar mybatis-3.4.6.jar mybatis
+ -spring-boot-autoconfigure-1.3.2.jar druid-1.1.10.jar spring-core-5.0
+ .9.RELEASE.jar commons-collections-3.2.2.jar popper.js-1.14.3.jar val
+ idation-api-2.0.1.Final.jar bootstrap-4.3.1.jar thymeleaf-spring5-3.0
+ .9.RELEASE.jar jetty-client-9.4.12.v20180830.jar shiro-core-1.4.0.jar
+  tomcat-embed-el-8.5.34.jar websocket-client-9.4.12.v20180830.jar log
+ 4j-api-2.10.0.jar spring-aop-5.0.9.RELEASE.jar httpmime-4.5.6.jar htm
+ lunit-core-js-2.33.jar logback-core-1.2.3.jar commons-text-1.4.jar un
+ bescape-1.1.5.RELEASE.jar spring-jdbc-5.0.9.RELEASE.jar tomcat-embed-
+ websocket-8.5.34.jar jsonassert-1.5.0.jar jackson-core-2.9.6.jar spri
+ ng-boot-test-2.0.5.RELEASE.jar spring-boot-starter-json-2.0.5.RELEASE
+ .jar httpclient-4.5.6.jar xmlunit-core-2.5.1.jar thymeleaf-3.0.9.RELE
+ ASE.jar spring-boot-starter-logging-2.0.5.RELEASE.jar HikariCP-2.7.9.
+ jar commons-beanutils-1.9.3.jar fastjson-1.2.54.jar spring-boot-start
+ er-tomcat-2.0.5.RELEASE.jar byte-buddy-agent-1.7.11.jar jackson-datat
+ ype-jdk8-2.9.6.jar attoparser-2.0.4.RELEASE.jar slf4j-api-1.7.25.jar 
+ spring-boot-autoconfigure-2.0.5.RELEASE.jar jquery-easing-original-1.
+ 4.1.jar tomcat-embed-core-8.5.34.jar jackson-annotations-2.9.0.jar sp
+ ring-jcl-5.0.9.RELEASE.jar shiro-lang-1.4.0.jar log4j-to-slf4j-2.10.0
+ .jar hamcrest-core-1.3.jar spring-web-5.0.9.RELEASE.jar shiro-spring-
+ 1.4.0.jar shiro-event-1.4.0.jar spring-beans-5.0.9.RELEASE.jar javax.
+ annotation-api-1.3.2.jar json-20170516.jar websocket-api-9.4.12.v2018
+ 0830.jar shiro-config-core-1.4.0.jar spring-context-5.0.9.RELEASE.jar
+  htmlunit-2.33.jar shiro-crypto-hash-1.4.0.jar byte-buddy-1.7.11.jar 
+ shiro-config-ogdl-1.4.0.jar
+Main-Class: org.table.neweims.NeweimsApplication
+

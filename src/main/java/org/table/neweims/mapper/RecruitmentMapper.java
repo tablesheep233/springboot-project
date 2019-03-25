@@ -30,4 +30,7 @@ public interface RecruitmentMapper {
     List<RecruitmentDto> getAllSRByPage(@Param("userId") Integer userId, @Param("name") String name, @Param("data") Map<String,Object> data);
 
     List<Map<String,Object>> getSSData(@Param("date")String date,@Param("userId")Integer userId);
+
+    @Select("select resume_id from tb_resume_recruitment where recruitment_id = #{recruitmentId}")
+    List<Integer> selectResumeByRecruitment(Integer recruitmentId);
 }

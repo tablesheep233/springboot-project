@@ -26,4 +26,6 @@ public interface RecruitmentService {
     Integer getRecruitmentCountByStatus(StatusEnum statusEnum);
 
     List<Map<String,Object>> getSSData(String date,Integer userId);
+
+    boolean isChoose(Integer recruitmentId,Integer userId);
 }

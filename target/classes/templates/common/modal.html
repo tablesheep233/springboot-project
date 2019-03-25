@@ -21,9 +21,8 @@
                     <!-- 左侧 -->
                     <div class="col-sm-3">
                         <div class="panel panel-default">
-                            <div class="panel-heading text-danger text-lg-left" id="resume"></div>
                             <div class="panel-body">
-                                <i class="fa fa-user mr-1"></i><span class="text-center text-primary" id="name"></span>
+                                <i class="fa fa-user mr-1"></i><span class="text-center" id="name"></span>
                                 <address>
                                     <div><i class="fa fa-birthday-cake mr-1"></i><span id="birth"></span></div>
                                     <div><i class="fa fa-venus-mars mr-1"></i><span id="gender"></span></div>
@@ -36,37 +35,34 @@
                     <!-- 右侧 -->
                     <div class="col-sm-9">
                         <div>
-                            <div><i class="fa fa-anchor mr-1"></i>求职意向<span class="ml-1" id="intention"></span></div>
-                            <div><i class="fa fa-graduation-cap mr-1"></i>学历<span class="ml-1" id="education"></span></div>
-                            <div><i class="fa fa-university mr-1"></i>期望薪资<span class="ml-1" id="wages"></span></div>
+                            <div><i class="fa fa-anchor mr-1"></i><b>求职意向</b><span class="ml-1" id="intention"></span></div>
+                            <div><i class="fa fa-graduation-cap mr-1"></i><b>学历</b><span class="ml-1" id="education"></span></div>
+                            <div><i class="fa fa-university mr-1"></i><b>期望薪资</b><span class="ml-1" id="wages"></span></div>
                         </div>
 
                         <div class="panel-group">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <div class="panel-title">
-                                        <i class="fa fa-eercast mr-1"></i>个人简介
+                                        <i class="fa fa-bookmark mr-1"></i><b>个人简介</b>
                                     </div>
-                                    <div class="panel-body">
-                                        <textarea class="form-control" rows="6" id="introduce" readonly></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="panel-heading">
-                                    <div class="panel-title">
-                                        <i class="fa fa-eercast mr-1"></i>个人技能
-                                    </div>
-                                    <div class="panel-body">
-                                        <textarea class="form-control" rows="4" id="skill" readonly></textarea>
+                                    <div class="panel-body" id="introduce">
                                     </div>
                                 </div>
 
                                 <div class="panel-heading">
                                     <div class="panel-title">
-                                        <i class="fa fa-eercast mr-1"></i>工作经验
+                                        <i class="fa fa-cogs mr-1"></i><b>个人技能</b>
                                     </div>
-                                    <div class="panel-body">
-                                        <textarea class="form-control" rows="7" id="experience" readonly></textarea>
+                                    <div class="panel-body" id="skill">
+                                    </div>
+                                </div>
+
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <i class="fa fa-bars mr-1"></i><b>工作经验</b>
+                                    </div>
+                                    <div class="panel-body" id="experience">
                                     </div>
                                 </div>
 
@@ -94,16 +90,23 @@
             </div>
             <div class="modal-body">
                 <div th:fragment="enterpriseBody">
-                    <div>企业名称: <span id="ename"></span></div>
-                    <div>联系号码: <span id="etel"></span></div>
-                    <div>邮箱: <span id="mail"></span></div>
-                    <div>地址: <span id="address"></span></div>
-                    <div>信用代码: <span id="creditno"></span><a id="re" target="_blank" href="http://www.gsxt.gov.cn/index.html">请复制信用代码至国家企业信用信息公示系统查看</a></div>
-                    <div>
-                        <span>简介</span>
-                        <div>
-                            <textarea class="form-control" rows="7" id="introduction" readonly></textarea>
+                    <div class="row">
+                        <div class="col-6">
+                            <div><b>企业名称: </b><span id="ename"></span></div>
+                            <div><b>联系号码: </b><span id="etel"></span></div>
+                            <div><b>邮箱: </b><span id="mail"></span></div>
+                            <div><b>地址: </b><span id="address"></span></div>
+                            <div><b>信用代码: </b><span id="creditno"></span><br><a id="re" target="_blank" href="http://www.gsxt.gov.cn/index.html">请复制信用代码至企业信息公示系统查看</a></div>
                         </div>
+                        <div class="col-6">
+                            <div class="thumbnail">
+                                <img id="ephoto" style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span><b>简介: </b></span>
+                        <div id="introduction"></div>
                     </div>
                 </div>
             </div>
@@ -127,40 +130,15 @@
             </div>
             <div class="modal-body">
                 <div class="card-body">
-
-                    <div class="row">
-                        <div class="form-group col-lg-3">
-                            <label>招聘职位</label>
-                            <input readonly id="job" type="text" class="form-control">
-                        </div>
-                        <div class="form-group col-lg-2">
-                            <label>薪资</label>
-                            <input readonly id="rwages" type="text" class="form-control">
-                        </div>
-                        <div class="form-group col-lg-3">
-                            <label>学历</label>
-                            <input readonly id="grade" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-3">
-                            <label>工作地点</label>
-                            <input readonly id="area" name="area" type="text" class="form-control">
-                        </div>
-                        <div class="form-group col-lg-3">
-                            <label>联系号码</label>
-                            <input readonly id="rtel" type="text" class="form-control">
-                        </div>
-                        <div class="form-group col-lg-3">
-                            <label>邮箱</label><br/>
-                            <input readonly id="remail" type="email" class="form-control">
-                        </div>
-                    </div>
                     <div class="form-group">
-                        <label>要求</label>
-                        <textarea readonly id="requirement" class="form-control" rows="14"></textarea>
+                        <div><b>招聘职位: </b><span id="job"></span></div>
+                        <div><b>薪资: </b><span id="rwages"></span></div>
+                        <div><b>学历: </b><span id="grade"></span></div>
+                        <div><b>工作地点: </b><span id="area"></span></div>
+                        <div><b>联系号码: </b><span id="rtel"></span></div>
+                        <div><b>邮箱: </b><span id="remail"></span></div>
+                        <div><b>要求: </b><div id="requirement"></div></div>
                     </div>
-
                 </div>
 
 
@@ -172,6 +150,31 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="detailModal" th:fragment="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">工作详情</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <div class="form-group">
+                        <div><b>详情: </b><div id="detail"></div></div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 

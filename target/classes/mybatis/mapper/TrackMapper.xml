@@ -11,6 +11,7 @@
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="industry" jdbcType="VARCHAR" property="industry" />
     <result column="session" jdbcType="CHAR" property="session" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
     <result column="student_id" jdbcType="INTEGER" property="studentId" />
   </resultMap>
 
@@ -47,6 +48,9 @@
       <if test="session != null and session != ''">
         session,
       </if>
+      <if test="detail != null and detail != ''">
+        detail,
+      </if>
       <if test="studentId != null and studentId != ''">
         student_id,
       </if>
@@ -75,6 +79,9 @@
       </if>
       <if test="session != null and session != ''">
         #{session},
+      </if>
+      <if test="detail != null and detail != ''">
+        #{detail},
       </if>
       <if test="studentId != null and studentId != ''">
         #{studentId},
@@ -106,6 +113,9 @@
       <if test="industry != null and industry != ''">
         industry = #{industry},
       </if>
+      <if test="detail != null and detail != ''">
+        detail = #{detail},
+      </if>
       <if test="session != null and session != ''">
         session = #{session},
       </if>
@@ -116,74 +126,90 @@
   </update>
 
   <select id="selectCity" resultType="java.lang.String">
-    select city from tb_track
+    select t.city from tb_track t
+    inner join tb_student s on t.student_id = s.id
       <trim prefix="where" suffixOverrides="and">
         <if test="session != null and session != ''">
-          session = #{session} and
+          t.session = #{session} and
         </if>
         <if test="year != null and year != ''">
-          year = #{year} and
+          t.year = #{year} and
+        </if>
+        <if test="major != null and major != ''">
+          s.major = #{major} and
         </if>
       </trim>
-    group by city
-    order by count(city) DESC
+    group by t.city
+    order by count(t.city) DESC
   </select>
 
   <select id="selectCityCount" resultType="java.lang.Integer">
-    select count(city) from tb_track
+    select count(t.city) from tb_track t
+    inner join tb_student s on t.student_id = s.id
     <trim prefix="where" suffixOverrides="and">
       <if test="session != null and session != ''">
-        session = #{session} and
+        t.session = #{session} and
       </if>
       <if test="year != null and year != ''">
-        year = #{year} and
+        t.year = #{year} and
+      </if>
+      <if test="major != null and major != ''">
+        s.major = #{major} and
       </if>
     </trim>
-    group by city
-    order by count(city) DESC
+    group by t.city
+    order by count(t.city) DESC
   </select>
 
   <select id="selectIndustry" resultType="java.util.Map">
-    select industry as name, count(industry) as value from tb_track
+    select t.industry as name, count(t.industry) as value from tb_track t
+    inner join tb_student s on t.student_id = s.id
     <trim prefix="where" suffixOverrides="and">
       <if test="session != null and session != ''">
-        session = #{session} and
+        t.session = #{session} and
       </if>
       <if test="year != null and year != ''">
-        year = #{year} and
+        t.year = #{year} and
+      </if>
+      <if test="major != null and major != ''">
+        s.major = #{major} and
       </if>
     </trim>
-    group by industry
-    order by count(industry) DESC
+    group by t.industry
+    order by count(t.industry) DESC
   </select>
 
   <select id="selectMoney" resultType="java.util.Map">
     select
     case
-      when money &lt; 3000 then '3000以下'
-      when money &gt;=3000 and money &lt; 4000 then '3000-4000'
-      when money &gt;=4000 and money &lt; 5000 then '4000-5000'
-      when money &gt;=5000 and money &lt; 6000 then '5000-6000'
-      when money &gt;=6000 and money &lt; 7000 then '6000-7000'
-      when money &gt;= 7000 then '7000以上' end
+      when t.money &lt; 3000 then '3000以下'
+      when t.money &gt;=3000 and t.money &lt; 4000 then '3000-4000'
+      when t.money &gt;=4000 and t.money &lt; 5000 then '4000-5000'
+      when t.money &gt;=5000 and t.money &lt; 6000 then '5000-6000'
+      when t.money &gt;=6000 and t.money &lt; 7000 then '6000-7000'
+      when t.money &gt;= 7000 then '7000以上' end
     as name,
-    count(money) as value
-    from tb_track
+    count(t.money) as value
+    from tb_track t
+    inner join tb_student s on t.student_id = s.id
     <trim prefix="where" suffixOverrides="and">
       <if test="session != null and session != ''">
-        session = #{session} and
+        t.session = #{session} and
       </if>
       <if test="year != null and year != ''">
-        year = #{year} and
+        t.year = #{year} and
+      </if>
+      <if test="major != null and major != ''">
+        s.major = #{major} and
       </if>
     </trim>
     group by
     case
-      when money &lt; 3000 then '3000以下'
-      when money &gt;=3000 and money &lt; 4000 then '3000-4000'
-      when money &gt;=4000 and money &lt; 5000 then '4000-5000'
-      when money &gt;=5000 and money &lt; 6000 then '5000-6000'
-      when money &gt;=6000 and money &lt; 7000 then '6000-7000'
-      when money &gt;= 7000 then '7000以上' end
+      when t.money &lt; 3000 then '3000以下'
+      when t.money &gt;=3000 and t.money &lt; 4000 then '3000-4000'
+      when t.money &gt;=4000 and t.money &lt; 5000 then '4000-5000'
+      when t.money &gt;=5000 and t.money &lt; 6000 then '5000-6000'
+      when t.money &gt;=6000 and t.money &lt; 7000 then '6000-7000'
+      when t.money &gt;= 7000 then '7000以上' end
   </select>
 </mapper>

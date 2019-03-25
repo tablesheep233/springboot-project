@@ -45,6 +45,11 @@
                     <i class="fas fa-fw fa-bookmark"></i>
                     <span>招聘信息</span></a>
             </li>
+            <li class="nav-item" th:class="${activeUri=='delivery.html'?'nav-item active':'nav-item'}">
+                <a class="nav-link" th:href="@{/delivery}">
+                    <i class="fas fa-fw fa-star"></i>
+                    <span>我的投递</span></a>
+            </li>
             <li class="nav-item" th:class="${activeUri=='track.html'?'nav-item active':'nav-item'}">
                 <a class="nav-link" th:href="@{/track}">
                     <i class="fas fa-fw fa-road"></i>
@@ -67,7 +72,14 @@
                     <i class="fas fa-fw fa-building"></i>
                     <span>企业信息</span></a>
             </li>
-            <shiro:hasPermission name="ent:legal">
+            <shiro:hasPermission name="ent:illegal">
+            <li class="nav-item" th:class="${activeUri=='license.html'?'nav-item active':'nav-item'}">
+                <a class="nav-link" th:href="@{/license}">
+                    <i class="fas fa-fw fa-building"></i>
+                    <span>营业执照</span></a>
+            </li>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="ent:legal,ent:havephoto">
             <li class="nav-item" th:class="${activeUri=='sr.html'?'nav-item active':'nav-item'}">
                 <a class="nav-link" th:href="@{/recruitmentStatus}">
                     <i class="fas fa-fw fa-bookmark"></i>

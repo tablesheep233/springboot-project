@@ -34,9 +34,10 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
-                                <span shiro:hasPermission="ent:please">请填写企业信息</span>
-                                <span shiro:hasPermission="ent:illegal">请等待管理员审核信息</span>
-                                <div shiro:hasPermission="ent:legal">
+                                <span shiro:hasPermission="ent:please"><a th:href="@{/enterprise}">请填写企业信息</a></span>
+                                <span shiro:hasPermission="ent:illegal,ent:nophoto">请上传营业执照</span>
+                                <span shiro:hasPermission="ent:illegal,ent:havephoto">请等待管理员审核信息</span>
+                                <div shiro:hasPermission="ent:legal,ent:havephoto">
                                     <div class="col-12">
                                         <label class="label">选择时间:</label>
                                         <input type="text" class="form-control-sm" id="date">

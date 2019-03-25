@@ -1,7 +1,5 @@
 package org.table.neweims.service.impl;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,8 +8,10 @@ import org.table.neweims.dto.ApplyResume;
 import org.table.neweims.dto.Page;
 import org.table.neweims.entities.Resume;
 import org.table.neweims.enums.GenderEnum;
+import org.table.neweims.enums.StatusEnum;
 import org.table.neweims.mapper.ResumeMapper;
 import org.table.neweims.service.ResumeService;
+import org.table.neweims.util.CardInfo;
 import org.table.neweims.util.SysContext;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +29,9 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Autowired
     private PageConf pageConf;
+
+    @Autowired
+    private CardInfo cardInfo;
 
     @Override
     public List<Map<String, Object>> getResumeList(Integer userId) {
@@ -63,15 +66,9 @@ public class ResumeServiceImpl implements ResumeService {
         resumeMapper.insertResumeRecruitment(date,resumeId,recruitmentId);
     }
 
-    /**
-     *  获取投递至某企业的简历
-     *  可以模糊查询职业
-     * @param userId
-     * @param name
-     * @return
-     */
+
     @Override
-    public Page<Resume> getApplyResume(Integer userId, String search,Integer currPage) {
+    public Page<Resume> getApplyResume(Integer userId, String search,StatusEnum statusEnum,Integer currPage) {
 
         Map<String, Object> data = new HashMap<>();
         Integer pageSize = pageConf.getApplyLimit();
@@ -85,9 +82,9 @@ public class ResumeServiceImpl implements ResumeService {
             search = "%"+search+"%";
         }
 
-        List<Map<String,Object>> applyList = resumeMapper.selectApplyResumeByPage(userId,search,data);
+        List<Map<String,Object>> applyList = resumeMapper.selectApplyResumeByPage(userId,search,statusEnum,data);
 
-        Integer totalCount = resumeMapper.selectApplyResumeCount(userId,search);
+        Integer totalCount = resumeMapper.selectApplyResumeCount(userId,search,statusEnum);
 
         Page<Resume> page = new Page<>(currPage,pageSize,totalCount);
 
@@ -105,7 +102,21 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public ApplyResume getApplyResumeById(Integer id) {
         ApplyResume applyResume = resumeMapper.selectApplyResumeById(id);
+        applyResume.setIntroduce(cardInfo.resumeReplace(applyResume.getIntroduce()));
+        applyResume.setSkill(cardInfo.resumeReplace(applyResume.getSkill()));
+        applyResume.setExperience(cardInfo.resumeReplace(applyResume.getExperience()));
         applyResume.setGender(GenderEnum.valueOf(applyResume.getGender()).getText());
         return applyResume;
     }
+
+    @Override
+    public List<Map<String, Object>> getDeliveryList() {
+        return resumeMapper.selectDelivery(SysContext.getCurrentUser());
+    }
+
+    @Override
+    public void collectResume(Integer id,StatusEnum statusEnum) {
+        resumeMapper.updateRecruitmentResume(id, statusEnum);
+    }
+
 }

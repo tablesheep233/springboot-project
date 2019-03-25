@@ -4,17 +4,20 @@ cityOption = null;
 function fetchData(cb) {
     var session = null;
     var year = null;
-
+    var major = null;
     if (document.getElementById("session")!=null){
         session = document.getElementById("session").value;
     }
     if (document.getElementById("year")!=null){
         year = document.getElementById("year").value;
     }
+    if (document.getElementById("major")!=null){
+        major = document.getElementById("major").value;
+    }
     $.ajax({
         type: "post",
         url: "/city",
-        data:{"year":year,"session":session},
+        data:{"year":year,"session":session,"major":major},
         success: function(data){
             cb(data);
         }
@@ -85,17 +88,20 @@ industryOption = null;
 function industryData(cb) {
     var session = null;
     var year = null;
-
+    var major = null;
     if (document.getElementById("isession")!=null){
         session = document.getElementById("isession").value;
     }
     if (document.getElementById("iyear")!=null){
         year = document.getElementById("iyear").value;
     }
+    if (document.getElementById("imajor")!=null){
+        major = document.getElementById("imajor").value;
+    }
     $.ajax({
         type: "post",
         url: "/industry",
-        data:{"year":year,"session":session},
+        data:{"year":year,"session":session,"major":major},
         success: function(data){
             cb(data);
         }
@@ -157,17 +163,20 @@ moneyOption = null;
 function moneyData(cb) {
     var session = null;
     var year = null;
-
+    var major = null;
     if (document.getElementById("msession")!=null){
         session = document.getElementById("msession").value;
     }
     if (document.getElementById("myear")!=null){
         year = document.getElementById("myear").value;
     }
+    if (document.getElementById("mmajor")!=null){
+        major = document.getElementById("mmajor").value;
+    }
     $.ajax({
         type: "post",
         url: "/money",
-        data:{"year":year,"session":session},
+        data:{"year":year,"session":session,"major":major},
         success: function(data){
             cb(data);
         }

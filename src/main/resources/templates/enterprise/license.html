@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>license</title>
+
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/webjars/font-awesome/5.3.1/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" rel="stylesheet">
+    <link th:href="@{/webjars/bootstrap-fileinput/4.5.2/css/fileinput.css}" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link th:href="@{/mystatic/css/sb-admin.css}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+<div th:replace="common/nav::topbar"></div>
+
+<div id="wrapper">
+    <div th:replace="common/nav::sidebar(activeUri='license.html')"></div>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input id="file-pic" name="uploadImgFile" type="file" value="上传"/>
+                    <p class="help-block">上传营业执照</p>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<!-- Scroll to Top Button-->
+<div th:replace="common/nav::topbut"></div>
+
+<!-- Logout Modal-->
+<div th:replace="common/nav::logoutMod"></div>
+
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Page level plugin JavaScript-->
+<script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
+<script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.js}"></script>
+<script th:src="@{/webjars/bootstrap-fileinput/4.5.2/js/fileinput.js}"></script>
+<script th:src="@{/webjars/bootstrap-fileinput/4.5.2/js/locales/zh.js}"></script>
+<script th:src="@{/mystatic/js/sb-admin.js}"></script>
+<!-- Core plugin JavaScript-->
+<script th:src="@{/webjars/jquery-easing-original/1.4.1/jquery.easing.min.js}"></script>
+<script>
+
+    $('#file-pic').fileinput({
+        //初始化上传文件框
+        language: "zh",//配置语言
+        showUpload : true, //显示整体上传的按钮
+        showRemove : true,//显示整体删除的按钮
+        uploadAsync: true,//默认异步上传
+        uploadLabel: "上传",//设置整体上传按钮的汉字
+        removeLabel: "移除",//设置整体删除按钮的汉字
+        uploadClass: "btn btn-primary",//设置上传按钮样式
+        showCaption: true,//是否显示标题
+        dropZoneEnabled: true,//是否显示拖拽区域
+        uploadUrl:"/uploadlicense",
+        maxFileSize : 10240,//文件大小限制
+        maxFileCount: 1,//允许最大上传数，可以多个，
+        enctype: 'multipart/form-data',
+        allowedFileExtensions : ["jpg", "png"],/*上传文件格式限制*/
+        msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        dropZoneTitle:"拖拽文件到这里",
+        showBrowse: true,
+        browseOnZoneClick: true
+    });
+
+</script>

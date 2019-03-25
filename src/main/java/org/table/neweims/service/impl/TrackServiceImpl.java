@@ -29,10 +29,10 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public Map<String, Object> getCityData(String year, Integer session) {
+    public Map<String, Object> getCityData(String year, Integer session,String major) {
         Map<String,Object> map = new HashMap<>();
-        map.put("city",trackMapper.selectCity(year,session));
-        map.put("data",trackMapper.selectCityCount(year,session));
+        map.put("city",trackMapper.selectCity(year,session,major));
+        map.put("data",trackMapper.selectCityCount(year,session,major));
         return map;
     }
 
@@ -41,17 +41,18 @@ public class TrackServiceImpl implements TrackService {
         Map<String,Object> map = new HashMap<>();
         map.put("years",trackMapper.selectYear());
         map.put("sessions",trackMapper.selectSession());
+        map.put("majors",studentMapper.selectMajorList());
         return map;
     }
 
     @Override
-    public List<Map<String, Object>> getIndustry(String year, Integer session) {
-        return trackMapper.selectIndustry(year,session);
+    public List<Map<String, Object>> getIndustry(String year, Integer session,String major) {
+        return trackMapper.selectIndustry(year,session,major);
     }
 
     @Override
-    public List<Map<String, Object>> getMoney(String year, Integer session) {
-        return trackMapper.selectMoney(year,session);
+    public List<Map<String, Object>> getMoney(String year, Integer session,String major) {
+        return trackMapper.selectMoney(year,session,major);
     }
 
     @Override

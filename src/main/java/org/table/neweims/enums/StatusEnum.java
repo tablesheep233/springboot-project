@@ -2,7 +2,7 @@ package org.table.neweims.enums;
 
 public enum StatusEnum {
 
-    NEED(1,"需要审核"),WAIT(2,"待审"),REAL(3,"通过"),UNREAL(4,"不通过");
+    NEED(1,"需要审核"),WAIT(2,"待审"),REAL(3,"通过"),UNREAL(4,"不通过"),COLLECT(5,"收藏"),READ(6,"已读"),NOTREAD(7,"未读");
 
     private Integer code;
 

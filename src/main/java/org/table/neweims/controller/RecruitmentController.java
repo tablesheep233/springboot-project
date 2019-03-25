@@ -14,6 +14,7 @@ import org.table.neweims.entities.Recruitment;
 import org.table.neweims.enums.StatusEnum;
 import org.table.neweims.service.EnterpriseService;
 import org.table.neweims.service.RecruitmentService;
+import org.table.neweims.util.CardInfo;
 import org.table.neweims.util.SysContext;
 
 import javax.servlet.http.HttpSession;
@@ -29,6 +30,9 @@ public class RecruitmentController {
 
     @Autowired
     private EnterpriseService enterpriseService;
+
+    @Autowired
+    private CardInfo cardInfo;
 
     @RequiresPermissions("student:*")
     @GetMapping("/recruitment")
@@ -85,8 +89,12 @@ public class RecruitmentController {
     @GetMapping("/chooserecruitment/{id}")
     public String getRecruitmentToStu(@PathVariable("id")Integer id, Model model){
         Map<String,Object> recruitment = recruitmentService.queryRecruitmentById(id);
-//        recruitmentService.recruitmentStatus(id);
+        recruitment.put("requirement",cardInfo.resumeReplace(recruitment.get("requirement").toString()));
         model.addAttribute("recruitment",recruitment);
+
+        boolean b = recruitmentService.isChoose(id,SysContext.getCurrentUser());
+        model.addAttribute("isChoose",b);
+
         return "enterprise/recruitment/choose";
     }
 

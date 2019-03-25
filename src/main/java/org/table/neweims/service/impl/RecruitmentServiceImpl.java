@@ -12,8 +12,10 @@ import org.table.neweims.dto.RecruitmentDto;
 import org.table.neweims.entities.Recruitment;
 import org.table.neweims.enums.StatusEnum;
 import org.table.neweims.mapper.RecruitmentMapper;
+import org.table.neweims.mapper.ResumeMapper;
 import org.table.neweims.mapper.RoleMapper;
 import org.table.neweims.service.RecruitmentService;
+import org.table.neweims.util.CardInfo;
 import org.table.neweims.util.SysContext;
 
 import java.text.SimpleDateFormat;
@@ -29,10 +31,14 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     private RecruitmentMapper recruitmentMapper;
 
     @Autowired
+    private ResumeMapper resumeMapper;
+
+    @Autowired
     private RoleMapper roleMapper;
 
     @Autowired
     private PageConf pageConf;
+
 
     @Override
     public Page<Recruitment> queryRecruitmentByPage(int currPage,String name) {
@@ -138,6 +144,23 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     @Override
     public List<Map<String,Object>> getSSData(String date, Integer userId) {
         return recruitmentMapper.getSSData(date,userId);
+    }
+
+    @Override
+    public boolean isChoose(Integer recruitmentId, Integer userId) {
+        List<Integer> dResume= recruitmentMapper.selectResumeByRecruitment(recruitmentId);
+        if (dResume.isEmpty()){
+//            list.forEach(System.out::println);
+            return true;
+        }else{
+            List<Integer> rlist = resumeMapper.selectResumeByUserId(userId);
+            for (Integer i:rlist) {
+                if (dResume.contains(i)){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }

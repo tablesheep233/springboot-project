@@ -97,6 +97,7 @@
                                 <th>职位</th>
                                 <th>公司</th>
                                 <th>平均薪资</th>
+                                <th>详情</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -108,6 +109,7 @@
                                 <td>[[${track.job==null?'无':track.job}]]</td>
                                 <td>[[${track.employee==null?'无':track.employee}]]</td>
                                 <td>[[${track.money==null?'无':track.money}]]</td>
+                                <td><a class="btn btn-primary showDetail" th:value="${track.detail}">详情</a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -125,7 +127,7 @@
 <!-- Modal-->
 <div th:replace="common/nav::logoutMod"></div>
 <div th:replace="common/nav::tipModal"></div>
-
+<div th:replace="common/modal::detailModal"></div>
 
 <!-- Bootstrap core JavaScript-->
 <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>

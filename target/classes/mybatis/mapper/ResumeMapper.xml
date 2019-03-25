@@ -33,7 +33,18 @@
     <result column="introduce" jdbcType="VARCHAR" property="introduce" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
-  
+
+  <resultMap id="ResumeDto" type="org.table.neweims.dto.ResumeDto">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="intention" jdbcType="VARCHAR" property="intention" />
+    <result column="sname" jdbcType="VARCHAR" property="sname" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="rid" jdbcType="INTEGER" property="rid" />
+  </resultMap>
+
   <resultMap id="ResumeListMap" type="java.util.HashMap">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -43,8 +54,9 @@
     select id , name as rname ,intention from tb_resume where user_id = #{userId}
   </select>
 
-  <select id="selectApplyResumeByPage" resultType="java.util.Map">
-    select rec.job as job ,res.intention as intention ,stu.name as sname,res.education as education,r.time as ctime,r.resume_id as id
+  <select id="selectApplyResumeByPage" resultMap="ResumeDto">
+    select r.id as id ,r.status as status, rec.job as job ,res.intention as intention ,stu.name as sname,
+    res.education as education,r.time as time,r.resume_id as rid
     from tb_resume_recruitment r
     inner join tb_recruitment rec on rec.id = r.recruitment_id
     inner join tb_resume res on r.resume_id = res.id
@@ -56,8 +68,11 @@
       <if test="search!=null and search!=''">
         rec.job like #{search} and
       </if>
+      <if test="status!=null">
+        r.status = #{status} and
+      </if>
     </trim>
-    order by rec.job
+    order by rec.job DESC
   </select>
 
   <select id="selectApplyResumeCount" resultType="INTEGER">
@@ -72,18 +87,28 @@
       <if test="search!=null and search!=''">
         rec.job like #{search} and
       </if>
+      <if test="status!=null">
+        r.status = #{status} and
+      </if>
     </trim>
   </select>
 
   <select id="selectApplyResumeById" parameterType="INTEGER" resultMap="ApplyResumeMap">
     select r.id as id,s.name as name,s.major as major,s.gender as gender,s.birth as birth,
-     r.name as rname,r.email as email,r.tel as tel,r.intention as intention, r.education as education,
+     r.email as email,r.tel as tel,r.intention as intention, r.education as education,
      r.wages as wages,r.skill as skill,r.experience as experience,r.introduce as introduce,r.user_id as userId
      from db_eims.tb_resume r
      inner join db_eims.tb_student s on s.user_id = r.user_id
       where r.id = #{id}
   </select>
 
+  <select id="selectDelivery" resultType="java.util.Map">
+    select resume.name name,e.name ename, recruitment.job job,resume.id id,recruitment.id rid
+    from tb_resume_recruitment rr left join tb_resume resume on resume.user_id=#{id} and resume.id = rr.`resume_id`
+    left join tb_recruitment recruitment on rr.recruitment_id = recruitment.id
+    left join tb_enterprise  e on e.user_id = recruitment.user_id
+  </select>
+  
   <update id="updateResume" parameterType="org.table.neweims.entities.Resume">
     update tb_resume
     <trim prefix="set" suffixOverrides=",">

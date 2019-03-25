@@ -29,7 +29,7 @@
       <if test="name!=null and name!=''">
         e.name like #{name} and
       </if>
-      <if test="status!=null and status!=''">
+      <if test="status!=null">
         e.status = #{status} and
       </if>
     </trim>
@@ -42,7 +42,7 @@
       <if test="name!=null and name!=''">
         e.name like #{name} and
       </if>
-      <if test="status!=null and status!=''">
+      <if test="status!=null">
         e.status = #{status} and
       </if>
     </trim>
@@ -131,6 +131,9 @@
       <if test="reviewer != null and reviewer != ''">
         reviewer = #{reviewer},
       </if>
+      <if test="imgPath != null and imgPath != ''">
+        img_path = #{imgPath},
+      </if>
     </trim>
     <where>
       id = #{id}
@@ -139,6 +142,12 @@
 
   <select id="selectEnterpriseStatus" parameterType="string" resultType="string">
     SELECT e.status FROM tb_enterprise e
+	LEFT JOIN tb_user u ON u.id=e.user_id
+	WHERE u.username=#{username}
+  </select>
+
+  <select id="selectEnterprisePhoto" parameterType="string" resultType="string">
+    SELECT e.img_path FROM tb_enterprise e
 	LEFT JOIN tb_user u ON u.id=e.user_id
 	WHERE u.username=#{username}
   </select>

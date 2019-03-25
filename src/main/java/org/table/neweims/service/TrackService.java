@@ -17,11 +17,11 @@ public interface TrackService {
 
     Integer getStuId(Integer id);
 
-    Map<String,Object> getCityData(String year,Integer session);
+    Map<String,Object> getCityData(String year,Integer session,String major);
 
     Map<String,Object> getSerachData();
 
-    List<Map<String,Object>> getIndustry(String year,Integer session);
+    List<Map<String,Object>> getIndustry(String year,Integer session,String major);
 
-    List<Map<String,Object>> getMoney(String year,Integer session);
+    List<Map<String,Object>> getMoney(String year,Integer session,String major);
 }
